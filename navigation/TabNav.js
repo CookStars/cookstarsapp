@@ -29,6 +29,7 @@ export default function TabNav() {
         activeTintColor: "tomato",
         inactiveTintColor: "gray",
         showLabel: false,
+        style: { backgroundColor: "#F4F1DE" },
       }}
     >
       <Tab.Screen name="Leaderboard" component={Leaderboard} />
