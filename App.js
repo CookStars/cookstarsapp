@@ -15,7 +15,7 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="TabNav" component={TabNav} />
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="SingleRecipe" compoenet={SingleRecipe} />
+        <Stack.Screen name="SingleRecipe" component={SingleRecipe} />
         <Stack.Screen name="SecondScreen" component={SecondScreen} />
       </Stack.Navigator>
     </NavigationContainer>

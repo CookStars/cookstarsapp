@@ -1,17 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, VirtualizedList, SafeAreaView} from 'react-native';
+import { StyleSheet, Text, ScrollView, View, Button, Image} from 'react-native';
 import Constants from 'expo-constants';
 
-// const item = ({title, summary, ingredients}) => (
-//   <View style = {styles.item}>
-//     <Text style= {styles.title}>{title}</Text>
-//     <Text style={styles.title}>{summary}</Text>
-//     <Text style={styles.title}>{ingredients}</Text>
-//   </View>
-// )
 
-
-export default function SingleRecipe({ navigation}){
+export default function SingleRecipe({ navigation }){
   const recipe = {
     id: 1,
     title: "Broccoli Cheddar Soup, A Panera Bread Co. Copycat",
@@ -235,51 +227,64 @@ export default function SingleRecipe({ navigation}){
     vegan: false
   
   }
-  // const renderItem = ({item}) => (
-  //   <Item title={item.title} summary={item.summary} ingredients={item.ingredients}/>
-  // )
+  // ingredientList = () => {
+  //   recipe.summary = recipe.summary.split('<b>')
+
+    
+  // }
+  
   return(
-    <View>
+    <ScrollView>
+    <View style={styles.container}>
       <View>
-      <Text>{recipe.title}</Text>
+      <Text style={styles.title}>{recipe.title}</Text>
+      </View>
+      <View style={styles.image}> 
+        <Image source={{
+          width:350,
+          height:300,
+          uri: recipe.imageURL
+          }}/>
       </View>
     <View>
-      <Text>{recipe.summary}</Text>
-      <Text>{recipe.ingredients}</Text>
+      <Text style={styles.text}>{recipe.summary}</Text>
+      <Text style={styles.text}>
+        <Text style={{fontWeight:'bold'}}>Ingredients: </Text>
+        {recipe.ingredients}
+        </Text>
     </View>
     </View>
+    </ScrollView>
   )
 }
-
-// const styles = StyleSheet.create({
-//   container:{
-//     flex: 1,
-//     backgroundColor: '#718f94',
-//     alignItems: 'center',
-//     justifyContent: 'center'
-//   }
-// })
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight,
-  },
-  item: {
-    backgroundColor: '#718f94',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    backgroundColor: '#F4F1DE'
   },
   title: {
     fontSize: 32,
+    textAlign: "center", 
+    marginTop: 10,
+    fontWeight: 'bold',
+    color: '#F18F01',   
+    backgroundColor: '#f4f1de'
   },
+  image: {
+    top: 10,
+    alignItems: "center",
+    resizeMode: "contain",
+    overflow: "hidden", 
+    borderRadius: 37
+  }, 
+  text: {
+    padding: 18,
+    fontSize: 18,
+    fontFamily: 'Georgia',
+    backgroundColor: '#F4F1DE',
+    textAlign: 'justify'
+  },
+
 });
 
-
-
-
-//recipe name
-//recipe image
-//details
-//ingredients
