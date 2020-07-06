@@ -1,4 +1,4 @@
-const users = [
+export const users = [
   {
     firstName: "Grace",
     lastName: "Shopper",
@@ -26,7 +26,7 @@ const users = [
 ]
 
 
-const recipes = [
+export const recipes = [
 
   {
     title: "Julia Child's Coq au Vin",
