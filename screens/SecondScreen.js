@@ -6,6 +6,7 @@ export default function SecondScreen({ navigation }) {
     <View style={styles.container}>
       <Text>Second Screen</Text>
       <Button title='Go To Home' onPress={() => navigation.navigate('Home')} />
+      <Button title='Go To SingleRecipe' onPress={() => navigation.navigate('SingleRecipe')} />
     </View>
   );
 }

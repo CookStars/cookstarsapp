@@ -13,7 +13,7 @@ import favicon from '../assets/favicon.png';
 import CardView from '../components/CardView';
 import Cards from '../components/Cards';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const days = {
     monday: 'Monday',
     tuesday: 'Tuesday',
@@ -35,6 +35,7 @@ export default function HomeScreen() {
         <Cards day={days.thursday} />
         <Cards day={days.friday} />
       </ScrollView>
+      <Button title='Go To SingleRecipe' onPress={() => navigation.navigate('SingleRecipe')} />
     </View>
   );
 }
