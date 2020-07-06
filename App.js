@@ -1,32 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { SecondScreen, Home, Login } from './screens';
-import TabNav from './navigation/TabNav.js';
-
-const Stack = createStackNavigator();
+import React from "react";
+import AppNavigator from "./navigation/AppNavigator.js";
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      {/* <TabNav /> */}
-      <Stack.Navigator initialRouteName='Login' style={styles.container}>
-        <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name='TabNav' component={TabNav} />
-        <Stack.Screen name='Home' component={Home} />
-        <Stack.Screen name='SecondScreen' component={SecondScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  return <AppNavigator />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
