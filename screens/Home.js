@@ -11,19 +11,29 @@ import {
 } from 'react-native';
 import favicon from '../assets/favicon.png';
 import CardView from '../components/CardView';
+import Cards from '../components/Cards';
 
 export default function HomeScreen() {
+  const days = {
+    monday: 'Monday',
+    tuesday: 'Tuesday',
+    wednesday: 'Wednesday',
+    thursday: 'Thursday',
+    friday: 'Friday',
+  };
   return (
     <View style={styles.container}>
       <CardView style={styles.card} />
-      <Text>Recipes of the Week</Text>
+      <Text style={styles.Text}>Recipes of the Week</Text>
       <ScrollView
+        horizontal={true}
         contentContainerStyle={styles.scrollArea_contentContainerStyle}
       >
-        {/* <CardView style={styles.card} />
-        <CardView style={styles.card} />
-        <CardView style={styles.card} />
-        <CardView style={styles.card} /> */}
+        <Cards day={days.monday} />
+        <Cards day={days.tuesday} />
+        <Cards day={days.wednesday} />
+        <Cards day={days.thursday} />
+        <Cards day={days.friday} />
       </ScrollView>
     </View>
   );
@@ -36,8 +46,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  scrollArea_contentContainerStyle: {
-    alignItems: 'center',
-    width: Dimensions.get('window').width,
+  scrollArea_contentContainerStyle: {},
+  Text: {
+    fontSize: 30,
   },
 });

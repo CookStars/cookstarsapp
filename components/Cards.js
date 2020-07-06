@@ -11,7 +11,9 @@ import {
 import { recipes } from '../Seed';
 const img = recipes[0].imageURL;
 
-export default function CardView(props) {
+export default function Cards(props) {
+  const { day } = props;
+
   return (
     <View style={styles.cardContainer}>
       <TouchableOpacity activeOpacity={0.7}>
@@ -20,10 +22,10 @@ export default function CardView(props) {
             source={{
               uri: img,
             }}
-            style={{ width: Dimensions.get('screen').width, height: 300 }}
+            style={{ width: 200, height: 200, borderRadius: 100 }}
           />
           <View style={styles.labelContainer}>
-            <Text style={styles.recipeOfTheDay}>Recipe of the Day</Text>
+            <Text style={styles.recipeOfTheDay}>{day}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -34,20 +36,21 @@ export default function CardView(props) {
 const styles = StyleSheet.create({
   cardContainer: {
     borderRadius: 5,
-    width: Dimensions.get('window').width,
+    width: 150,
     height: 300,
   },
   imgContainer: {
-    width: 411,
-    height: 205,
+    width: 200,
+    height: 200,
+    borderRadius: 10,
   },
   labelContainer: {
     position: 'absolute',
-    top: 50,
-    left: -20,
+    top: 150,
     height: 37,
-    width: 190,
+    width: 100,
     borderRadius: 15,
+    alignSelf: 'center',
     backgroundColor: 'rgba(255,255,255,1)',
   },
   recipeOfTheDay: {
@@ -56,6 +59,6 @@ const styles = StyleSheet.create({
     color: 'rgba(35,40,58,1)',
     fontSize: 19,
     marginTop: 7,
-    marginLeft: 31,
+    textAlign: 'center',
   },
 });
