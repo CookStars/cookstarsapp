@@ -1,24 +1,25 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { SecondScreen, Login } from "../screens";
-import TabNav from "./TabNav.js";
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { SecondScreen, Login, SingleRecipe } from '../screens';
+import TabNav from './TabNav.js';
+import { config, db } from '../firebaseconfig';
 
 const Stack = createStackNavigator();
 
 function getHeaderTitle(route) {
   const routeName = route.state
     ? route.state.routes[route.state.index].name
-    : route.params?.screen || "Home";
+    : route.params?.screen || 'Home';
 
   switch (routeName) {
-    case "Home":
-      return "Home";
-    case "Leaderboard":
-      return "Leaderboard";
-    case "Profile":
-      return "Profile";
+    case 'Home':
+      return 'Home';
+    case 'Leaderboard':
+      return 'Leaderboard';
+    case 'Profile':
+      return 'Profile';
   }
 }
 
@@ -27,19 +28,20 @@ export default class AppNavigator extends React.Component {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Login"
+          initialRouteName='Login'
           style={styles.container}
           screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name='Login' component={Login} />
           <Stack.Screen
-            name="TabNav"
+            name='TabNav'
             component={TabNav}
             options={({ route }) => ({
               headerTitle: getHeaderTitle(route),
             })}
           />
-          <Stack.Screen name="SecondScreen" component={SecondScreen} />
+          <Stack.Screen name='SingleRecipe' component={SingleRecipe} />
+          <Stack.Screen name='SecondScreen' component={SecondScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );
@@ -49,8 +51,8 @@ export default class AppNavigator extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

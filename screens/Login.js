@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,20 +7,39 @@ import {
   TouchableHighlight,
   Image,
   Alert,
-} from "react-native";
+  ActivityIndicator,
+} from 'react-native';
+import * as firebase from 'firebase';
 
 export default class Login extends Component {
-  constructor(props) {
-    super(props);
-    state = {
-      email: "",
-      password: "",
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   state = {
+  //     email: '',
+  //     password: '',
+  //   };
+  // }
+  state = {
+    email: '',
+    password: '',
+    errorMessage: null,
+  };
 
   onClickListener = (viewId) => {
-    Alert.alert("Alert", "Button pressed " + viewId);
+    Alert.alert('Alert', 'Button pressed ' + viewId);
     // this.props.navigation.navigate("UserPage");
+  };
+
+  handleLogin = () => {
+    const { email, password } = this.state;
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch((error) => this.setState({ errorMessage: error.message }));
+
+    this.props.navigation.navigate('TabNav');
+
+    // this.props.navigation.navigate('Home');
   };
 
   render() {
@@ -34,46 +53,60 @@ export default class Login extends Component {
             style={styles.welcomeImage}
           /> */}
         </View>
+        <View style={styles.errorMessage}>
+          {this.state.errorMessage && (
+            <Text style={styles.error}>{this.state.errorMessage}</Text>
+          )}
+        </View>
+
+        {/* Email Field */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.inputs}
-            placeholder="Email"
-            keyboardType="email-address"
-            underlineColorAndroid="transparent"
+            placeholder='Email'
+            keyboardType='email-address'
+            underlineColorAndroid='transparent'
             onChangeText={(email) => this.setState({ email })}
+            value={this.state.email}
           />
         </View>
 
+        {/* Password Field */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.inputs}
-            placeholder="Password"
-            secureTextEntry={true}
-            underlineColorAndroid="transparent"
+            placeholder='Password'
+            secureTextEntry
+            underlineColorAndroid='transparent'
             onChangeText={(password) => this.setState({ password })}
+            value={this.state.password}
           />
         </View>
 
+        {/* Login Button */}
         <TouchableHighlight
           style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => this.props.navigation.navigate("TabNav")}
+          onPress={() => this.handleLogin()}
         >
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 
+        {/* Forgot password Button */}
         <TouchableHighlight
           style={styles.buttonContainer}
-          onPress={() => this.onClickListener("restore_password")}
+          onPress={() => this.onClickListener('restore_password')}
         >
           <Text>Forgot your password?</Text>
         </TouchableHighlight>
 
+        {/* Register Button */}
         <TouchableHighlight
           style={styles.buttonContainer}
-          onPress={() => this.onClickListener("register")}
+          onPress={() => this.onClickListener('register')}
         >
           <Text>Register</Text>
         </TouchableHighlight>
+        <ActivityIndicator size='large'></ActivityIndicator>
       </View>
     );
   }
@@ -82,57 +115,57 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F4F1DE",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F4F1DE',
   },
   inputContainer: {
-    borderBottomColor: "#F2CC8F",
-    backgroundColor: "#FFFFFF",
+    borderBottomColor: '#F2CC8F',
+    backgroundColor: '#FFFFFF',
     borderRadius: 30,
     borderBottomWidth: 1,
     width: 250,
     height: 45,
     marginBottom: 20,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   inputs: {
     height: 45,
     marginLeft: 16,
-    borderBottomColor: "#F2CC8F",
+    borderBottomColor: '#F2CC8F',
     flex: 1,
   },
   inputIcon: {
     width: 30,
     height: 30,
     marginLeft: 15,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   buttonContainer: {
     height: 45,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 20,
     width: 250,
     borderRadius: 30,
   },
   loginButton: {
-    backgroundColor: "#F18F01",
+    backgroundColor: '#F18F01',
   },
   loginText: {
-    color: "white",
+    color: 'white',
   },
   welcomeContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 10,
     marginBottom: 20,
   },
   welcomeImage: {
     width: 300,
     height: 250,
-    resizeMode: "contain",
+    resizeMode: 'contain',
     marginTop: 3,
     marginLeft: -10,
   },

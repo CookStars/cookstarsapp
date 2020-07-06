@@ -35,7 +35,10 @@ export default function HomeScreen({ navigation }) {
         <Cards day={days.thursday} />
         <Cards day={days.friday} />
       </ScrollView>
-      <Button title='Go To SingleRecipe' onPress={() => navigation.navigate('SingleRecipe')} />
+      <Button
+        title='Go To SingleRecipe'
+        onPress={() => navigation.navigate('SingleRecipe')}
+      />
     </View>
   );
 }
