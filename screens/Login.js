@@ -37,7 +37,7 @@ export default class Login extends Component {
       .signInWithEmailAndPassword(email, password)
       .catch((error) => this.setState({ errorMessage: error.message }));
 
-    this.state.errorMessage ? this.props.navigation.navigate('Home') : null;
+    this.props.navigation.navigate('TabNav');
 
     // this.props.navigation.navigate('Home');
   };
