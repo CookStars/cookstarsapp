@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SecondScreen, Login } from '../screens';
+import { SecondScreen, Login, SingleRecipe } from '../screens';
 import TabNav from './TabNav.js';
 import { config, db } from '../firebaseconfig';
 
@@ -40,6 +40,7 @@ export default class AppNavigator extends React.Component {
               headerTitle: getHeaderTitle(route),
             })}
           />
+          <Stack.Screen name='SingleRecipe' component={SingleRecipe} />
           <Stack.Screen name='SecondScreen' component={SecondScreen} />
         </Stack.Navigator>
       </NavigationContainer>
