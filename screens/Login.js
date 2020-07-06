@@ -9,16 +9,9 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import * as firebase from 'firebase';
+import { firebase } from '../firebaseconfig';
 
 export default class Login extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   state = {
-  //     email: '',
-  //     password: '',
-  //   };
-  // }
   state = {
     email: '',
     password: '',
@@ -30,16 +23,16 @@ export default class Login extends Component {
     // this.props.navigation.navigate("UserPage");
   };
 
-  handleLogin = () => {
+  handleLogin = async () => {
     const { email, password } = this.state;
-    firebase
+    await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
+      .then((response) => {
+        const uid = response.user.uid;
+        this.props.navigation.navigate('TabNav');
+      })
       .catch((error) => this.setState({ errorMessage: error.message }));
-
-    this.props.navigation.navigate('TabNav');
-
-    // this.props.navigation.navigate('Home');
   };
 
   render() {
