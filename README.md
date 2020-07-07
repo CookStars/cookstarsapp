@@ -18,6 +18,7 @@ Express - The JavaScript library used to handle HTTP requests.
 Axios - The JavaScript library used to make HTTP requests.
 ESlint - The tool used to maintain code quality.
 Prettier - The tool used to format code.
+FireStore - A flexible, scalable database for mobile, web, and server development from Firebase
 
 Authors
 Erica Liu - Initial work - ELiu925
