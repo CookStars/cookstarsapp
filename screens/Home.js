@@ -10,8 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import favicon from "../assets/favicon.png";
-import CardView from "../components/CardView";
-import Cards from "../components/Cards";
+import {CardView, Cards} from "../components"
 import { recipes } from "../Seed";
 
 export default function HomeScreen({ navigation }) {
