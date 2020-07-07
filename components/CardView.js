@@ -12,9 +12,10 @@ import { recipes } from '../Seed';
 const img = recipes[0].imageURL;
 
 export default function CardView(props) {
+
   return (
     <View style={styles.cardContainer}>
-      <TouchableOpacity activeOpacity={0.7}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => console.log('hello')}>
         <View style={styles.imgContainer}>
           <Image
             source={{

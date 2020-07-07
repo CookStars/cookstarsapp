@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { recipes } from "../Seed";
 import Constants from "expo-constants";
-
 export default class SingleRecipe extends Component {
   constructor(props) {
     super(props);

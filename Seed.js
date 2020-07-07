@@ -1793,7 +1793,8 @@ export const recipes = [
       ],
       "originalId": null,
       "spoonacularSourceUrl": "https://spoonacular.com/amazing-braised-beef-short-ribs-632299"
-    },
+    }]
+    const extraRecipes = [
     {
       "recipeId": 642287,
       "title": "Eggplant Fries with Tzatziki Sauce",

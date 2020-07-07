@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   Modal,
   Dimensions,
-} from 'react-native';
-import { recipes } from '../Seed';
+} from "react-native";
+import { recipes } from "../Seed";
+ 
 const img = recipes[0].imageURL;
 
 export default function Cards(props) {
@@ -16,8 +17,9 @@ export default function Cards(props) {
 
   return (
     <View style={styles.cardContainer}>
-      <TouchableOpacity activeOpacity={0.7}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => console.log(day)}>
         <View style={styles.imgContainer}>
+          {/* {showRecipeImg()} */}
           <Image
             source={{
               uri: img,
@@ -36,8 +38,9 @@ export default function Cards(props) {
 const styles = StyleSheet.create({
   cardContainer: {
     borderRadius: 5,
-    width: 150,
+    width: "50%",
     height: 300,
+    alignItems: "center"
   },
   imgContainer: {
     width: 200,
@@ -45,20 +48,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   labelContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 150,
     height: 37,
     width: 100,
     borderRadius: 15,
-    alignSelf: 'center',
-    backgroundColor: 'rgba(255,255,255,1)',
+    alignSelf: "center",
+    backgroundColor: "rgba(255,255,255,1)",
   },
   recipeOfTheDay: {
     opacity: 0.9,
-    backgroundColor: 'transparent',
-    color: 'rgba(35,40,58,1)',
+    backgroundColor: "transparent",
+    color: "rgba(35,40,58,1)",
     fontSize: 19,
     marginTop: 7,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
