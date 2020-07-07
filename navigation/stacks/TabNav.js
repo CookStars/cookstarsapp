@@ -23,6 +23,7 @@ export default function TabNav() {
 
           return <AntDesign name={iconName} size={size} color={color} />;
         },
+        headerShown: false,
       })}
       tabBarOptions={{
         activeTintColor: "tomato",
