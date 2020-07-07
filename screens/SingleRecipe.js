@@ -14,10 +14,8 @@ import Constants from "expo-constants";
 export default class SingleRecipe extends Component {
   constructor(props) {
     super(props);
-    state = {
-      day: "Monday",
-    };
   }
+
   checkDay() {
     const weekdays = [
       "Sunday",
@@ -29,8 +27,8 @@ export default class SingleRecipe extends Component {
       "Saturday",
     ];
     const today = weekdays[new Date().getDay()];
-
-    if (state.day === today) {
+    const { index } = this.props.route.params;
+    if (weekdays[index] === today) {
       return (
         <View style={styles.startButton}>
           <Button
@@ -45,18 +43,20 @@ export default class SingleRecipe extends Component {
   }
 
   render() {
-    const { summary, title, imageURL, ingredients } = recipes[0];
+    // const { index, day} = this.props.route.params
+    const { index } = this.props.route.params;
+    const { summary, title, imageURL, ingredients } = recipes[index];
     const noTagsSummary = summary.split("<b>").map((sentence) => {
       if (sentence.includes("</b>")) {
         let sentences = sentence.split("</b>");
 
         return (
-          <Text>
+          <Text key={Math.random()}>
             <Text style={{ fontWeight: "bold" }}>{sentences[0]}</Text>
             <Text>{sentences[1]}</Text>
           </Text>
         );
-      } else return <Text>{sentence}</Text>;
+      } else return <Text key={Math.random()}>{sentence}</Text>;
     });
 
     return (

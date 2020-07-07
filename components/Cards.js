@@ -11,11 +11,11 @@ import {
 import { recipes } from "../Seed";
 
 export default function Cards(props) {
-  const { day, index } = props;
+  const { day, index, navigation } = props;
   const img = recipes[index].imageURL;
   return (
     <View style={styles.cardContainer}>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => console.log(index)}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("SingleRecipe",{index:index,day:day})}>
         <View style={styles.imgContainer}>
           {/* {showRecipeImg()} */}
           <Image

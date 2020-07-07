@@ -9,14 +9,19 @@ import {
   Dimensions,
 } from "react-native";
 import { recipes } from "../Seed";
-const img = recipes[0].imageURL;
 
 export default function CardView(props) {
+  const {navigation} = props
+  const today = new Date().getDay();
+  const img = recipes[today].imageURL;
+
   return (
     <View style={styles.cardContainer}>
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => console.log("hello")}
+        onPress={() =>
+          navigation.navigate("SingleRecipe", { index: today})
+        }
       >
         <View style={styles.imgContainer}>
           <Image

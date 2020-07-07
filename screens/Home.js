@@ -26,12 +26,12 @@ export default function HomeScreen({ navigation }) {
   ];
   const cards = () => {
     return weekdays.map((weekday, index) => (
-      <Cards key={index} day={weekday} index={index} />
+      <Cards key={index} day={weekday} index={index} navigation={navigation}/>
     ));
   };
   return (
     <View style={styles.container}>
-      <CardView style={styles.card} />
+      <CardView style={styles.card} navigation={navigation}/>
       <Text style={styles.Text}>Recipes of the Week</Text>
       <ScrollView
         vertical={true}

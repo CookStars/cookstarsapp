@@ -487,10 +487,8 @@ export const recipes = [
     servings: 1,
     imageURL: "https://spoonacular.com/recipeImages/633721-556x370.jpg",
     summary:
-      'Baked Pork Buns might be just the hor d\'oeuvre you are searching for. For <b>$3.61 per serving</b>, this recipe <b>covers 46%</b> of your daily requirements of vitamins and minerals. This recipe makes 1 servings with <b>835 calories</b>, <b>31g of protein</b>, and <b>47g of fat</b> each. 7 people have tried and liked this recipe. From preparation to the plate, this recipe takes roughly <b>30 minutes</b>. If you have hoisin sauce, mushrooms, cup warm water, and a few other ingredients on hand, you can make it. All things considered, we decided this recipe <b>deserves a spoonacular score of 92%</b>. This score is awesome. Try <a href="https://spoonacular.com/recipes/baked-barbecued-pork-buns-633445">Baked Barbecued Pork Buns</a>, <a href="https://spoonacular.com/recipes/sous-vide-pork-belly-buns-with-pork-braise-mayonnaise-and-quick-pickled-cucumbers-157157">Sous-Vide Pork Belly Buns With Pork Braise Mayonnaise and Quick-Pickled Cucumbers</a>, and <a href="https://spoonacular.com/recipes/homemade-pork-buns-540514">Homemade Pork Buns</a> for similar recipes.',
-    diets: [],
-    occasions: [],
-    winePairing: {},
+      'Baked Pork Buns might be just the hor d\'oeuvre you are searching for. For <b>$3.61 per serving</b>, this recipe <b>covers 46%</b> of your daily requirements of vitamins and minerals. This recipe makes 1 servings with <b>835 calories</b>, <b>31g of protein</b>, and <b>47g of fat</b> each. 7 people have tried and liked this recipe. From preparation to the plate, this recipe takes roughly <b>30 minutes</b>. If you have hoisin sauce, mushrooms, cup warm water, and a few other ingredients on hand, you can make it. All things considered, we decided this recipe <b>deserves a spoonacular score of 92%</b>. This score is awesome. ',
+    ingredients: "2 teaspoons dry active yeast, 2 tablespoons mixed cornstarch, 1 egg yolk, 3 tablespoons flour, 2 cloves garlic, ½ cups green onions, 4 teaspoons hoisin sauce, ½ cups milk, 8 dried mushrooms, 4 teaspoons oyster sauce, 1.5 cups pork, 1 tablespoon sugar, 2 tablespoons vegetable oil",
     instructions:
       "<ol><li>Sweet, soft toasty-brown buns surround a tangy barbecued pork filling.</li><li>Makes 12 buns.</li><li>Cooking Time: 30 minutes.</li><li>Preparation :In a large bowl, dissolve 2 tablespoons of the sugar in milk and water.</li><li>Sprinkle yeast over top of the milk mixture and let stand at room temperature for 10 minutes or until frothy. Gradually mix in remaining 2 tablespoons sugar, flour, and salt. On a lightly floured surface, knead dough for about 5 minutes or until smooth and elastic. Shape into a ball and place in a lightly greased bowl. Cover with a damp cloth and let rise in a warm area for about 1 hour or until doubled. Meanwhile, soak mushrooms in enough warm water to cover for 30 minutes; drain. Cut off and discard stems; coarsely chop caps. Set aside. Cooking</li><li>Place wok or wide frying pan over high heat until hot. Add oil, swirling to coat sides. Add green onions, garlic, and mushrooms; stir-fry for 1 minute. Stir in water, hoisin sauce, and sugar; mix well. Add cornstarch solution and cook, stirring until sauce boils down and thickens. Add pork, mix well. Remove from heat and let cool. Punch down dough, then roll on a lightly floured surface into a 12-inch long cylinder. 7Bake in a 350 degree F oven for 18 to 20 minutes or until golden brown.</li><li>Bake in a 350 degree F oven for 18 to 20 minutes or until golden brown.</li><li>Tips: Traditionally, these buns are steamed over boiling water, pleated side up, for 12 to 15 minutes rather than baked. Follow the same procedure for preparing dough except do not brush tops of buns with egg yolk. Try other fillings, such as minced chicken, pork or shrimp.</li></ol>",
     analyzedInstructions: [
@@ -760,167 +758,136 @@ export const recipes = [
     spoonacularSourceUrl: "https://spoonacular.com/baked-pork-buns-633721",
   },
   {
-    recipeId: 715573,
-    title: "Simple Skillet Lasagna",
-    readyInMinutes: 35,
-    servings: 5,
-    imageURL: "https://spoonacular.com/recipeImages/715573-556x370.jpg",
-    summary:
-      'Simple Skillet Lasagna might be just the main course you are searching for. This recipe makes 5 servings with <b>814 calories</b>, <b>34g of protein</b>, and <b>46g of fat</b> each. For <b>$2.47 per serving</b>, this recipe <b>covers 35%</b> of your daily requirements of vitamins and minerals. 231 person have tried and liked this recipe. If you have pepper flakes, onion, oregano flakes, and a few other ingredients on hand, you can make it. From preparation to the plate, this recipe takes about <b>35 minutes</b>. This recipe is typical of Mediterranean cuisine. All things considered, we decided this recipe <b>deserves a spoonacular score of 96%</b>. This score is excellent. Try <a href="https://spoonacular.com/recipes/simple-vegetarian-skillet-lasagna-714495">Simple Vegetarian Skillet Lasagna</a>, <a href="https://spoonacular.com/recipes/quick-and-simple-springtime-skillet-lasagna-with-a-mediterranean-kick-549476">Quick and Simple Springtime Skillet Lasagna with a Mediterranean Kick</a>, and <a href="https://spoonacular.com/recipes/simple-lasagna-383790">Simple Lasagna</a> for similar recipes.',
-    instructions:
-      "In a large saute pan, heat oil on high. Add sausage and cook until browned, about 3-5 minutes. Transfer to a side bowl and set aside.Reduce the heat to medium low and add your onion, garlic, and pepper flakes. Cook until onions are softened, about 8 minutes. Add your oregano, tomatoes and their juices (crushing the whole tomatoes with your hands or a mixer if you prefer), the basil sprig, and the cooked sausage. Add salt and pepper and simmer for about 5 minutes.Break half of the lasagna noodles in half and place into the meat mixture under the sausage. Distribute them evenly throughout. Take the other half of the noodles and use a spoon to submerge them down into the pan.Dollop Ricotta over lasagna and mix in with the sauce. Top with Mozzarella and bake in the oven on 325 degrees for 15 minutes. Top with basil, then remove from heat and allow to cool before serving.",
-    analyzedInstructions: [
+    recipeId: 652433,
+    "title": "Moroccan Lemon Shish Kebabs",
+    "readyInMinutes": 45,
+    "servings": 8,
+    "imageURL": "https://spoonacular.com/recipeImages/652433-556x370.jpg",
+    ingredients: "1 pound lean boneless skinless chicken breast fillets, some lemon, 1 teaspoon fresh rosemary leaves, 2 teaspoons fresh thyme leaves, 2 cloves garlic, 1 teaspoon black peppercorns, 1 lemon (juice), 2 teaspoons olive oil",
+    "summary": "Moroccan Lemon Shish Kebabs could be just the <b>gluten free, dairy free, paleolithic, and primal</b> recipe you've been looking for. This recipe makes 8 servings with <b>78 calories</b>, <b>12g of protein</b>, and <b>3g of fat</b> each. For <b>62 cents per serving</b>, this recipe <b>covers 7%</b> of your daily requirements of vitamins and minerals. A mixture of olive oil, garlic, thyme leaves, and a handful of other ingredients are all it takes to make this recipe so delicious. 9 people were impressed by this recipe. It works best as a main course, and is done in approximately <b>approximately 45 minutes</b>. It is brought to you by Foodista. With a spoonacular <b>score of 35%</b>, this dish is rather bad.",
+    "instructions": "The chicken breast fillets trimmed of fat, cut into 1\" cubes\nFor Moroccan lemon marinade\nPut everything in a bowl\nAdd this Marinated chicken cubes, mix well, cover with Plastic Wrap and let stand at least 1/2 hour before use ... I like to leave more time in the fridge\nThe time for rest, place the bamboo skewers or metal rods in a tray with water (to cover only), that is to avoid burning\nThread the meat on each rod are more or less as 4 pieces of meat\nShish Kebbab cooking on the grill, skillet or the oven ... I like the first option, you know the smell of charcoal, wood ...\nOnce the Shish Kebab cooked, serve immediately on a bed of Rice, Mediterranean Cous Cous, etc. ... or only with Pita Bread and ready",
+    "analyzedInstructions": [
       {
-        name: "",
-        steps: [
+        "name": "",
+        "steps": [
           {
-            number: 1,
-            step: "In a large saute pan, heat oil on high.",
-            ingredients: [],
-            equipment: [
+            "number": 1,
+            "step": "The chicken breast fillets trimmed of fat, cut into 1\" cubes",
+            "ingredients": [
               {
-                id: 404645,
-                name: "frying pan",
-                localizedName: "frying pan",
-                image: "pan.png",
-              },
+                "id": 5062,
+                "name": "chicken breast",
+                "localizedName": "chicken breast",
+                "image": "chicken-breasts.png"
+              }
             ],
+            "equipment": []
           },
           {
-            number: 2,
-            step: "Add sausage and cook until browned, about 3-5 minutes.",
-            ingredients: [],
-            equipment: [],
-            length: {
-              number: 5,
-              unit: "minutes",
-            },
+            "number": 2,
+            "step": "For Moroccan lemon marinade",
+            "ingredients": [
+              {
+                "id": 9150,
+                "name": "lemon",
+                "localizedName": "lemon",
+                "image": "lemon.png"
+              }
+            ],
+            "equipment": []
           },
           {
-            number: 3,
-            step:
-              "Transfer to a side bowl and set aside.Reduce the heat to medium low and add your onion, garlic, and pepper flakes. Cook until onions are softened, about 8 minutes.",
-            ingredients: [
+            "number": 3,
+            "step": "Put everything in a bowl",
+            "ingredients": [],
+            "equipment": [
               {
-                id: 11215,
-                name: "garlic",
-                localizedName: "garlic",
-                image: "garlic.png",
-              },
-              {
-                id: 11282,
-                name: "onion",
-                localizedName: "onion",
-                image: "brown-onion.png",
-              },
-            ],
-            equipment: [
-              {
-                id: 404783,
-                name: "bowl",
-                localizedName: "bowl",
-                image: "bowl.jpg",
-              },
-            ],
-            length: {
-              number: 8,
-              unit: "minutes",
-            },
+                "id": 404783,
+                "name": "bowl",
+                "localizedName": "bowl",
+                "image": "bowl.jpg"
+              }
+            ]
           },
           {
-            number: 4,
-            step:
-              "Add your oregano, tomatoes and their juices (crushing the whole tomatoes with your hands or a mixer if you prefer), the basil sprig, and the cooked sausage.",
-            ingredients: [
+            "number": 4,
+            "step": "Add this Marinated chicken cubes, mix well, cover with Plastic Wrap and let stand at least 1/2 hour before use ... I like to leave more time in the fridge",
+            "ingredients": [],
+            "equipment": [
               {
-                id: 2027,
-                name: "oregano",
-                localizedName: "oregano",
-                image: "oregano.jpg",
-              },
-              {
-                id: 2044,
-                name: "basil",
-                localizedName: "basil",
-                image: "basil.jpg",
-              },
+                "id": 404730,
+                "name": "plastic wrap",
+                "localizedName": "plastic wrap",
+                "image": "plastic-wrap.jpg"
+              }
             ],
-            equipment: [
-              {
-                id: 404726,
-                name: "blender",
-                localizedName: "blender",
-                image: "blender.png",
-              },
-            ],
+            "length": {
+              "number": 120,
+              "unit": "minutes"
+            }
           },
           {
-            number: 5,
-            step:
-              "Add salt and pepper and simmer for about 5 minutes.Break half of the lasagna noodles in half and place into the meat mixture under the sausage. Distribute them evenly throughout. Take the other half of the noodles and use a spoon to submerge them down into the pan.Dollop Ricotta over lasagna and mix in with the sauce. Top with Mozzarella and bake in the oven on 325 degrees for 15 minutes. Top with basil, then remove from heat and allow to cool before serving.",
-            ingredients: [
+            "number": 5,
+            "step": "The time for rest, place the bamboo skewers or metal rods in a tray with water (to cover only), that is to avoid burning",
+            "ingredients": [],
+            "equipment": [
               {
-                id: 10620420,
-                name: "lasagne noodles",
-                localizedName: "lasagne noodles",
-                image: "lasagna-noodles.jpg",
-              },
-              {
-                id: 1102047,
-                name: "salt and pepper",
-                localizedName: "salt and pepper",
-                image: "salt-and-pepper.jpg",
-              },
-              {
-                id: 1026,
-                name: "mozzarella",
-                localizedName: "mozzarella",
-                image: "mozzarella.png",
-              },
-              {
-                id: 20420,
-                name: "pasta",
-                localizedName: "pasta",
-                image: "fusilli.jpg",
-              },
-              {
-                id: 1036,
-                name: "ricotta cheese",
-                localizedName: "ricotta cheese",
-                image: "ricotta.png",
-              },
-              {
-                id: 2044,
-                name: "basil",
-                localizedName: "basil",
-                image: "basil.jpg",
-              },
-            ],
-            equipment: [
-              {
-                id: 404784,
-                name: "oven",
-                localizedName: "oven",
-                image: "oven.jpg",
-              },
-              {
-                id: 404645,
-                name: "frying pan",
-                localizedName: "frying pan",
-                image: "pan.png",
-              },
-            ],
-            length: {
-              number: 20,
-              unit: "minutes",
-            },
+                "id": 3065,
+                "name": "skewers",
+                "localizedName": "skewers",
+                "image": "wooden-skewers.jpg"
+              }
+            ]
           },
-        ],
-      },
+          {
+            "number": 6,
+            "step": "Thread the meat on each rod are more or less as 4 pieces of meat",
+            "ingredients": [
+              {
+                "id": 1065062,
+                "name": "meat",
+                "localizedName": "meat",
+                "image": "whole-chicken.jpg"
+              }
+            ],
+            "equipment": []
+          },
+          {
+            "number": 7,
+            "step": "Shish Kebbab cooking on the grill, skillet or the oven ... I like the first option, you know the smell of charcoal, wood ...",
+            "ingredients": [],
+            "equipment": [
+              {
+                "id": 404645,
+                "name": "frying pan",
+                "localizedName": "frying pan",
+                "image": "pan.png"
+              },
+              {
+                "id": 404706,
+                "name": "grill",
+                "localizedName": "grill",
+                "image": "grill.jpg"
+              },
+              {
+                "id": 404784,
+                "name": "oven",
+                "localizedName": "oven",
+                "image": "oven.jpg"
+              }
+            ]
+          },
+          {
+            "number": 8,
+            "step": "Once the Shish Kebab cooked, serve immediately on a bed of Rice, Mediterranean Cous Cous, etc. ... or only with Pita Bread and ready",
+            "ingredients": [],
+            "equipment": []
+          }
+        ]
+      }
     ],
-    originalId: null,
-    spoonacularSourceUrl:
-      "https://spoonacular.com/simple-skillet-lasagna-715573",
+    "originalId": null,
+    "spoonacularSourceUrl": "https://spoonacular.com/moroccan-lemon-shish-kebabs-652433"
   },
   {
     recipeId: 649502,
@@ -928,8 +895,9 @@ export const recipes = [
     readyInMinutes: 45,
     servings: 4,
     imageURL: "https://spoonacular.com/recipeImages/649502-556x370.jpg",
+    ingredients: "¼ teaspoons black pepper, 125 grams butter, 2 Tbs corn flour, ½ cups cream, 2 teaspoons fresh rosemary, ½ cups lemon juice, 1 teaspoon lemon rind, 1 cup olive oil, 1 teaspoon black pepper, ½ cups sour cream, 4 veal cutlets",
     summary:
-      'Lemon and pepper veal cutlets might be just the main course you are searching for. This gluten free and ketogenic recipe serves 4 and costs <b>$5.74 per serving</b>. One serving contains <b>665 calories</b>, <b>38g of protein</b>, and <b>53g of fat</b>. Only a few people made this recipe, and 7 would say it hit the spot. If you have lemon rind, salt, lemon juice, and a few other ingredients on hand, you can make it. To use up the fresh rosemary you could follow this main course with the <a href="https://spoonacular.com/recipes/vanilla-yogurt-with-grape-and-blueberry-compote-with-honey-and-fresh-rosemary-an-easy-breakfast-or-dessert-801305">Vanilla Yogurt with Grape and Blueberry Compote with Honey and Fresh Rosemary: An Easy Breakfast or Dessert</a> as a dessert. All things considered, we decided this recipe <b>deserves a spoonacular score of 59%</b>. This score is good. Try <a href="https://spoonacular.com/recipes/veal-cutlets-with-lemon-caper-sauce-736">Veal Cutlets With Lemon Caper Sauce</a>, <a href="https://spoonacular.com/recipes/grilled-chicken-cutlets-with-lemon-and-black-pepper-and-arugula-tomato-salad-357481">Grilled Chicken Cutlets with Lemon and Black Pepper and Arugula-Tomato Salad</a>, and <a href="https://spoonacular.com/recipes/sauteed-veal-cutlets-saltimbocca-598869">Sauteed Veal Cutlets | Saltimbocca</a> for similar recipes.',
+      'Lemon and pepper veal cutlets might be just the main course you are searching for. This gluten free and ketogenic recipe serves 4 and costs <b>$5.74 per serving</b>. One serving contains <b>665 calories</b>, <b>38g of protein</b>, and <b>53g of fat</b>. Only a few people made this recipe, and 7 would say it hit the spot. If you have lemon rind, salt, lemon juice, and a few other ingredients on hand, you can make it.',
     instructions:
       "<ol><li>Slightly flatten the cutlets with a meat mallet.</li><li>Combine corn flour, salt and pepper, dredge the cutlets through the mixture.</li><li>Cook veal in butter and olive oil in a large pan for 3 minutes on each side or until browned and cooked as desired.</li><li>Remove veal from the pan and set aside. Cover to keep warm.</li><li>Mix and combine cream, sour cream, lemon rind, lemon juice, rosemary, pepper and salt.</li><li>Add the mix to the same pan, bring to the boil. Reduce flame and simmer, uncovered, for 5 minutes until sauce thickens slightly.</li><li>Return the chops to the pan, coat with sauce.</li><li>Serve with pilaf and green salad.</li></ol>",
     analyzedInstructions: [
@@ -1087,9 +1055,9 @@ export const recipes = [
     servings: 4,
 
     imageURL: "https://spoonacular.com/recipeImages/663824-556x370.jpg",
-
+    ingredients: "2 pounds bone in chicken thighs, ½ diced yellow onion, 3 garlic cloves, 1 Tsp fresh thyme, 1 Tsp scotch bonnet pepper, ¼ Tsps powdered ginger, ¼ teaspoons curry powder, 1 Tsp coconut oil, 1 scallion, 1 Tbsp vegetable oil, ½ yellow onion, 3 garlic cloves, 1.5 Tbsps curry powder, 1 Tsp amchar masala, ½ Tsps cumin, 2 potatoes",
     summary:
-      'If you want to add more <b>Indian</b> recipes to your recipe box, Trinidadian Chicken Potato Curry might be a recipe you should try. Watching your figure? This gluten free, dairy free, and whole 30 recipe has <b>554 calories</b>, <b>35g of protein</b>, and <b>37g of fat</b> per serving. For <b>$1.54 per serving</b>, this recipe <b>covers 24%</b> of your daily requirements of vitamins and minerals. This recipe serves 4. This recipe from Foodista requires , thyme, coconut oil, and . 11 person have tried and liked this recipe. A few people really liked this main course. From preparation to the plate, this recipe takes about <b>about 45 minutes</b>. All things considered, we decided this recipe <b>deserves a spoonacular score of 64%</b>. This score is solid. Similar recipes are <a href="https://spoonacular.com/recipes/toms-trinidadian-chicken-curry-17227">Tom’s Trinidadian Chicken Curry</a>, <a href="https://spoonacular.com/recipes/trinidadian-chicken-curry-with-coconut-grits-collard-greens-716731">Trinidadian Chicken Curry with Coconut Grits & Collard Greens</a>, and <a href="https://spoonacular.com/recipes/chicken-sweet-potato-curry-220244">Chicken & sweet potato curry</a>.',
+      'If you want to add more <b>Indian</b> recipes to your recipe box, Trinidadian Chicken Potato Curry might be a recipe you should try. Watching your figure? This gluten free, dairy free, and whole 30 recipe has <b>554 calories</b>, <b>35g of protein</b>, and <b>37g of fat</b> per serving. For <b>$1.54 per serving</b>, this recipe <b>covers 24%</b> of your daily requirements of vitamins and minerals. This recipe serves 4. This recipe from Foodista requires , thyme, coconut oil, and . 11 person have tried and liked this recipe. A few people really liked this main course. From preparation to the plate, this recipe takes about <b>about 45 minutes</b>. All things considered, we decided this recipe <b>deserves a spoonacular score of 64%</b>. This score is solid.' ,
     instructions:
       "Wash and pat dry chicken thighs. In a sealable container, combine all marinade ingredients. Toss chicken in marinade, cover and refrigerate for at least 2 hours.\nIn a Dutch oven, heat vegetable oil over medium high heat. Add onions and saut until tender. Add garlic and continue to saut until fragrant.\nSprinkle onions and garlic with curry powder and stir to evenly coat. Add 1 tablespoon of water and cook for one minute, stirring constantly.\nAdd chicken and marinade. Saut until lightly browned, about 5 minutes.\nIf you want a thick curry add potatoes now, otherwise set aside.\nSprinkle chicken with amchar masala, cumin and salt. Toss to coat. Pour in one cup of water and bring to a boil.\nReduce heat, cover pot and simmer for 20 minutes. If you reserved the potatoes for a thinner curry, add them to the pot after twenty minutes.\nContinue to simmer for an additional twenty minutes until chicken reaches an internal temperature of 165 F and potatoes are cooked through.\nServe warm with roti or rice.",
     analyzedInstructions: [
@@ -1323,8 +1291,9 @@ export const recipes = [
     readyInMinutes: 45,
     servings: 6,
     imageURL: "https://spoonacular.com/recipeImages/632299-556x370.jpg",
+    ingredients: "4 strips bacon, 3 tablespoons olive oil, 5 pounds beef short ribs, 1 teaspoon sea salt, 1 teaspoon fresh ground pepper, 1 pound white button mushrooms, 2 diced yellow onions, 1 diced carrot, 4 cloves garlic, 2 cups cabernet sauvignon, 2 cups beef stock, 2 tablespoons tomato paste, 2 tablespoons beef base, 1 tablespoon dried fresh thyme, 2 bay leaves, 1 teaspoon black fresh ground pepper",
     summary:
-      'If you have approximately <b>about 45 minutes</b> to spend in the kitchen, Amazing Braised Beef Short Ribs might be a tremendous <b>gluten free and dairy free</b> recipe to try. This recipe serves 6. One serving contains <b>788 calories</b>, <b>60g of protein</b>, and <b>48g of fat</b>. For <b>$6.36 per serving</b>, this recipe <b>covers 37%</b> of your daily requirements of vitamins and minerals. 6 people were impressed by this recipe. This recipe from Foodista requires bacon, carrot, ground pepper, and beef stock. It works well as a main course. Overall, this recipe earns a <b>good spoonacular score of 72%</b>. If you like this recipe, you might also like recipes such as <a href="https://spoonacular.com/recipes/braised-beef-short-ribs-245460">Braised Beef Short Ribs</a>, <a href="https://spoonacular.com/recipes/braised-beef-short-ribs-570525">Braised Beef Short Ribs</a>, and <a href="https://spoonacular.com/recipes/braised-beef-short-ribs-601461">Braised Beef Short Ribs</a>.',
+      'If you have approximately <b>about 45 minutes</b> to spend in the kitchen, Amazing Braised Beef Short Ribs might be a tremendous <b>gluten free and dairy free</b> recipe to try. This recipe serves 6. One serving contains <b>788 calories</b>, <b>60g of protein</b>, and <b>48g of fat</b>. For <b>$6.36 per serving</b>, this recipe <b>covers 37%</b> of your daily requirements of vitamins and minerals. 6 people were impressed by this recipe. This recipe from Foodista requires bacon, carrot, ground pepper, and beef stock. It works well as a main course. Overall, this recipe earns a <b>good spoonacular score of 72%</b>. ',
     instructions:
       "Preheat your oven to 300 degrees.  Place a large heavy bottomed pot on the stove top (like a Le Creuset pot).\nOver medium heat cook 4 strips of Bacon in the large heavy bottomed pot until crisp.  Remove from the heat and allow to drain on paper towels.  Later you will crumble the Bacon into the finished Sauce.  Reserve the Bacon Fat in the pot.\nDry off any moisture on your Beef Short Ribs using paper towel.  The meat will brown better and caramelize instead of steam if it is dry.  This browning will produce a lot of flavor in the finished dish.\nCut the Short Ribs into 3-4 inch sections.  Trim some of the excess outer fat, leaving some for flavor.  Season the Short Ribs with Sea Salt and Black Pepper.\nOver medium high add 3 T of Olive Oil to the Bacon Fat and brown all sides of the Short Ribs until they get a good dark brown sear.  Give the Short Ribs room between each other so they do not steam and brown properly.  You will have to do this in 2 to 3 batches to brown all the Short Ribs well.   You will not be cooking through all the way, just browning at this stage.  The Short Ribs will be raw in the middle.\nPlace the first batch after browning in a bowl to catch any drippings.\nAfter all the Short Ribs are browned well, remove them from the pot and set aside in the large bowl to collect any drippings as they sit.  Next remove the used Bacon Fat and Olive Oil from the pot leaving any of the cooked on bits stuck to the bottom of the pot.  Reduce the heat to medium and add 3 T of fresh Olive Oil and saute the sliced Mushrooms until browned and crisp. 7-10 minutes.\nThen over medium heat add the diced Onions and Carrot and saute until soft, 5-7 minutes.  Add the minced Garlic and cook for 1 minute more.\nDeglaze the pot by adding 2 cups of Cabernet Sauvignon.  As soon as you add the Wine increase the heat to high and stir rapidly, scraping the bottom of the pot releasing the cooked on brown bits stuck to the bottom.  Bring to the boil then add 2 cups of Beef Stock and the Tomato Paste, Beef Base, Thyme, Bay Leaves, Sea Salt and Black Pepper.  Allow to boil, stirring continuously for 3 minutes.\nAdd the Beef Short Ribs and any juices that collected in the bowl to the boiling pot.  Put them in snugly against each other and boil for 2 minutes.\nThen place the lid on the pot and place in the center of the oven and cook for 3 hours at 300 degrees undisturbed.  Don't peek and release the moist heat that will make these Short Ribs fall of the bone.\nAfter 3 hours remove from the oven and take off the lid.  Prepare for a steam facial!  Remove the Cooked Beef Short Ribs to a large bowl.  Be gentle, it will be falling off the bone.  Allow the Sauce to sit for 3 minutes so the fat rises to the top.  Skim off the fat using a large spoon and discard it.  Remove as much as you can.  Remove the Bay Leaves and stems from the Thyme if you used fresh Thyme.\nRemember, the pot is HOT, it just came from the oven!!!  Use pot holders and place the pot of defatted Sauce over medium high heat and bring to a boil, stirring frequently, and reduce by a third.  This will concentrate the Sauce into a rich incredible Sauce. Taste the Sauce and add Sea Salt and or Black Pepper is needed at this point.  Crumble the Bacon and add to the Sauce stirring in well.\nAdd the Beef Short Ribs back to the pot of reduced Sauce and remove from the heat.  Coat the Short Ribs in the Sauce well.  Serve Immediately over Yukon Gold Mashed Potatoes or Polenta.",
     analyzedInstructions: [
@@ -1858,9 +1827,9 @@ const extraRecipes = [
     servings: 2,
 
     imageURL: "https://spoonacular.com/recipeImages/642287-556x370.jpg",
-
+    ingredients: "½ eggplants, 1 cup bread crumbs, ¼ cups low fat plain yogurt, 1 egg",
     summary:
-      'Eggplant Fries with Tzatziki Sauce might be just the <b>Mediterranean</b> recipe you are searching for. For <b>85 cents per serving</b>, this recipe <b>covers 16%</b> of your daily requirements of vitamins and minerals. This recipe makes 2 servings with <b>294 calories</b>, <b>13g of protein</b>, and <b>6g of fat</b> each. This recipe from Foodista has 49 fans. It works well as a side dish. Head to the store and pick up eggplants, egg, yogurt, and a few other things to make it today. From preparation to the plate, this recipe takes approximately <b>approximately 45 minutes</b>. Overall, this recipe earns a <b>solid spoonacular score of 66%</b>. If you like this recipe, you might also like recipes such as <a href="https://spoonacular.com/recipes/crispy-baked-eggplant-fries-with-marinara-dipping-sauce-aka-eggplant-parmesan-fries-249194">Crispy Baked Eggplant Fries with Marinara Dipping Sauce (akan Eggplant Parmesan Fries!)</a>, <a href="https://spoonacular.com/recipes/sunnys-beer-battered-eggplant-fries-with-nunya-business-tzatziki-dip-772904">Sunny\'s Beer-Battered Eggplant Fries with Nunya Business Tzatziki Dip</a>, and <a href="https://spoonacular.com/recipes/eggplant-fries-with-marinara-sauce-677261">Eggplant Fries with Marinara Sauce</a>.',
+      'Eggplant Fries with Tzatziki Sauce might be just the <b>Mediterranean</b> recipe you are searching for. For <b>85 cents per serving</b>, this recipe <b>covers 16%</b> of your daily requirements of vitamins and minerals. This recipe makes 2 servings with <b>294 calories</b>, <b>13g of protein</b>, and <b>6g of fat</b> each. This recipe from Foodista has 49 fans. It works well as a side dish. Head to the store and pick up eggplants, egg, yogurt, and a few other things to make it today. From preparation to the plate, this recipe takes approximately <b>approximately 45 minutes</b>. Overall, this recipe earns a <b>solid spoonacular score of 66%</b>. ',
     instructions:
       "-Preheat oven to 450F\n-Mix salt, garlic powder, italian seasonings, and paprika in a bowl.\n- In another bowl, mix yogurt & egg together.\n-First place the eggplant strips into egg/yogurt mixture then coat them in flour mixture evenly.\n-Place them in a parchment paper or greased baking pan and bake for 10-15 minutes rotating once and until slightly brown.\nFor the tzatziki sauce:\n- In a food processor, put cucumber (seeded, peeled), yogurt, dill, lemon juice, garlic cloves, salt together until smooth.",
     analyzedInstructions: [
@@ -2007,6 +1976,7 @@ const extraRecipes = [
     readyInMinutes: 45,
     servings: 8,
     imageURL: "https://spoonacular.com/recipeImages/659907-556x370.jpg",
+    ingredients: "28 ounces diced canned tomatoes, ¾ cups dry white wine, 1 fennel bulb, 6 ounces feta cheese, 2 tablespoons fresh parsley, 6 garlic, some lemon wedges, 2 cups low sodium chicken broth, 3 tablespoons olive oil, 1 diced onion, 4 teaspoons canned fresh dried oregano, 1 pound orzo pasta, ¾ teaspoons crushed red pepper flakes, 1.5 pounds dry shrimp",
     summary:
       'Shrimp & Orzo might be just the main course you are searching for. For <b>$3.37 per serving</b>, this recipe <b>covers 26%</b> of your daily requirements of vitamins and minerals. One serving contains <b>480 calories</b>, <b>31g of protein</b>, and <b>13g of fat</b>. Only a few people made this recipe, and 4 would say it hit the spot. Head to the store and pick up orzo pasta, chicken broth, parsley, and a few other things to make it today. To use up the lemon wedges you could follow this main course with the <a href="https://spoonacular.com/recipes/rolled-baklava-68365">Rolled Baklava</a> as a dessert. From preparation to the plate, this recipe takes approximately <b>45 minutes</b>. All things considered, we decided this recipe <b>deserves a spoonacular score of 76%</b>. This score is solid. Similar recipes include <a href="https://spoonacular.com/recipes/shrimp-and-orzo-578433">Shrimp and Orzo</a>, <a href="https://spoonacular.com/recipes/shrimp-and-tomato-orzo-479802">Shrimp and Tomato Orzo</a>, and <a href="https://spoonacular.com/recipes/roasted-shrimp-and-orzo-507612">Roasted Shrimp and Orzo</a>.',
     instructions:
@@ -2283,7 +2253,7 @@ const extraRecipes = [
     servings: 2,
     image: "https://spoonacular.com/recipeImages/658655-556x370.jpg",
     summary:
-      'If you have approximately <b>approximately 45 minutes</b> to spend in the kitchen, Roasted red peppers and tomatoes salad might be a great <b>gluten free, dairy free, paleolithic, and lacto ovo vegetarian</b> recipe to try. This recipe serves 2 and costs 63 cents per serving. This side dish has <b>92 calories</b>, <b>1g of protein</b>, and <b>7g of fat</b> per serving. This recipe from Foodista requires bell pepper, tomato, coarse salt, and capers. 8 people were glad they tried this recipe. Overall, this recipe earns a <b>great spoonacular score of 90%</b>. Try <a href="https://spoonacular.com/recipes/chicken-breasts-stuffed-with-asiago-cheese-tomatoes-and-roasted-red-peppers-560255">Chicken Breasts Stuffed with Asiago Cheese, Tomatoes and Roasted Red Peppers</a>, <a href="https://spoonacular.com/recipes/chopped-mexican-salad-with-roasted-peppers-corn-tomatoes-and-95943">Chopped Mexican Salad With Roasted Peppers, Corn, Tomatoes, And</a>, and <a href="https://spoonacular.com/recipes/roasted-red-peppers-and-almond-salad-509604">Roasted Red Peppers And Almond Salad</a> for similar recipes.',
+      'If you have approximately <b>approximately 45 minutes</b> to spend in the kitchen, Roasted red peppers and tomatoes salad might be a great <b>gluten free, dairy free, paleolithic, and lacto ovo vegetarian</b> recipe to try. This recipe serves 2 and costs 63 cents per serving. This side dish has <b>92 calories</b>, <b>1g of protein</b>, and <b>7g of fat</b> per serving. This recipe from Foodista requires bell pepper, tomato, coarse salt, and capers. 8 people were glad they tried this recipe. Overall, this recipe earns a <b>great spoonacular score of 90%</b>.',
     instructions:
       "Char the red bell pepper over a grill or gas flame, or on a cookie sheet under the broiler. Turn the peppers as their skin blisters and chars on all sides. Transfer to a bowl and cover.\nWhen peppers are cool to the touch, peel off the skin with your fingers, pull off stems, then tear them open and remove and discard seeds. Cut into large pieces\nArrange 1 thickly sliced ripe tomato and the large bell peppers pieces.\nScatter with thinly sliced red onion and capers.\nDrizzle with olive oil, season to taste with coarse salt and cracked black pepper and garnish with thyme.",
     analyzedInstructions: [
