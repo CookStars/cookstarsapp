@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { firebase } from '../firebaseconfig';
+import 'firebase/functions';
 
 export default class Login extends Component {
   state = {
@@ -25,16 +26,21 @@ export default class Login extends Component {
 
   handleLogin = async () => {
     const { email, password } = this.state;
-    await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        const uid = response.user.uid;
-        this.props.navigation.navigate('TabNav');
-      })
-      .catch((error) => this.setState({ errorMessage: error.message }));
+    // await firebase
+    //   .auth()
+    //   .signInWithEmailAndPassword(email, password)
+    //   .then((response) => {
+    //     const uid = response.user.uid;
+    //     this.props.navigation.navigate('TabNav');
+    //   })
+    //   .catch((error) => this.setState({ errorMessage: error.message }));
+    var hello = firebase.functions().httpsCallable('katya');
+    await hello({ message: 'hello' }).then((result) => {
+      var hi = result.data.hello;
+      this.onClickListener(hi);
+    });
   };
-
+  //
   render() {
     return (
       <View style={styles.container}>

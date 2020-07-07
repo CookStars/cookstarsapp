@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,37 +8,36 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
-} from 'react-native';
-import favicon from '../assets/favicon.png';
-import CardView from '../components/CardView';
-import Cards from '../components/Cards';
+} from "react-native";
+import favicon from "../assets/favicon.png";
+import {CardView, Cards} from "../components"
+import { recipes } from "../Seed";
 
 export default function HomeScreen({ navigation }) {
-  const days = {
-    monday: 'Monday',
-    tuesday: 'Tuesday',
-    wednesday: 'Wednesday',
-    thursday: 'Thursday',
-    friday: 'Friday',
+  const weekdays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const cards = () => {
+    return weekdays.map((weekday, index) => (
+      <Cards key={index} day={weekday} index={index} navigation={navigation}/>
+    ));
   };
   return (
     <View style={styles.container}>
-      <CardView style={styles.card} />
+      <CardView style={styles.card} navigation={navigation}/>
       <Text style={styles.Text}>Recipes of the Week</Text>
       <ScrollView
-        horizontal={true}
+        vertical={true}
         contentContainerStyle={styles.scrollArea_contentContainerStyle}
       >
-        <Cards day={days.monday} />
-        <Cards day={days.tuesday} />
-        <Cards day={days.wednesday} />
-        <Cards day={days.thursday} />
-        <Cards day={days.friday} />
+        {cards()}
       </ScrollView>
-      <Button
-        title='Go To SingleRecipe'
-        onPress={() => navigation.navigate('SingleRecipe')}
-      />
     </View>
   );
 }
@@ -46,11 +45,16 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  scrollArea_contentContainerStyle: {},
+  scrollArea_contentContainerStyle: {
+    flexWrap: "wrap",
+    alignContent: "space-around",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
   Text: {
     fontSize: 30,
   },
