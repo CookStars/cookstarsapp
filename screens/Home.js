@@ -39,10 +39,6 @@ export default function HomeScreen({ navigation }) {
       >
         {cards()}
       </ScrollView>
-      <Button
-        title="Go To SingleRecipe"
-        onPress={() => navigation.navigate("SingleRecipe")}
-      />
     </View>
   );
 }
