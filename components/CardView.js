@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -7,21 +7,23 @@ import {
   TouchableOpacity,
   Modal,
   Dimensions,
-} from 'react-native';
-import { recipes } from '../Seed';
+} from "react-native";
+import { recipes } from "../Seed";
 const img = recipes[0].imageURL;
 
 export default function CardView(props) {
-
   return (
     <View style={styles.cardContainer}>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => console.log('hello')}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => console.log("hello")}
+      >
         <View style={styles.imgContainer}>
           <Image
             source={{
               uri: img,
             }}
-            style={{ width: Dimensions.get('screen').width, height: 300 }}
+            style={{ width: Dimensions.get("screen").width, height: 300 }}
           />
           <View style={styles.labelContainer}>
             <Text style={styles.recipeOfTheDay}>Recipe of the Day</Text>
@@ -35,7 +37,7 @@ export default function CardView(props) {
 const styles = StyleSheet.create({
   cardContainer: {
     borderRadius: 5,
-    width: Dimensions.get('window').width,
+    width: Dimensions.get("window").width,
     height: 300,
   },
   imgContainer: {
@@ -43,18 +45,18 @@ const styles = StyleSheet.create({
     height: 205,
   },
   labelContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 50,
     left: -20,
     height: 37,
     width: 190,
     borderRadius: 15,
-    backgroundColor: 'rgba(255,255,255,1)',
+    backgroundColor: "rgba(255,255,255,1)",
   },
   recipeOfTheDay: {
     opacity: 0.9,
-    backgroundColor: 'transparent',
-    color: 'rgba(35,40,58,1)',
+    backgroundColor: "transparent",
+    color: "rgba(35,40,58,1)",
     fontSize: 19,
     marginTop: 7,
     marginLeft: 31,

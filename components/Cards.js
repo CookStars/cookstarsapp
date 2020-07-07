@@ -9,15 +9,13 @@ import {
   Dimensions,
 } from "react-native";
 import { recipes } from "../Seed";
- 
-const img = recipes[0].imageURL;
 
 export default function Cards(props) {
-  const { day } = props;
-
+  const { day, index } = props;
+  const img = recipes[index].imageURL;
   return (
     <View style={styles.cardContainer}>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => console.log(day)}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => console.log(index)}>
         <View style={styles.imgContainer}>
           {/* {showRecipeImg()} */}
           <Image
@@ -40,7 +38,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: "50%",
     height: 300,
-    alignItems: "center"
+    alignItems: "center",
   },
   imgContainer: {
     width: 200,
