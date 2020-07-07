@@ -2,7 +2,12 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SecondScreen, Login, SingleRecipe, RegistrationScreen } from '../screens';
+import {
+  SecondScreen,
+  Login,
+  SingleRecipe,
+  RegistrationScreen,
+} from '../screens';
 import TabNav from './TabNav.js';
 import { config, db } from '../firebaseconfig';
 
@@ -11,7 +16,7 @@ const Stack = createStackNavigator();
 function getHeaderTitle(route) {
   const routeName = route.state
     ? route.state.routes[route.state.index].name
-    : route.params ?.screen || 'Home';
+    : route.params?.screen || 'Home';
 
   switch (routeName) {
     case 'Home':
@@ -42,7 +47,7 @@ export default class AppNavigator extends React.Component {
           />
           <Stack.Screen name='SingleRecipe' component={SingleRecipe} />
           <Stack.Screen name='SecondScreen' component={SecondScreen} />
-          <Stack.Screen name='RegistrationScreen' component={RegistrationScreen} />
+          {/* <Stack.Screen name='RegistrationScreen' component={RegistrationScreen} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     );
