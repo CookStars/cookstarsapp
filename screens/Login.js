@@ -8,17 +8,11 @@ import {
   Image,
   Alert,
   ActivityIndicator,
-} from "react-native";
-import * as firebase from "firebase";
+} from 'react-native';
+import { firebase } from '../firebaseconfig';
+import 'firebase/functions';
 
 export default class Login extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   state = {
-  //     email: '',
-  //     password: '',
-  //   };
-  // }
   state = {
     email: "",
     password: "",
@@ -30,16 +24,22 @@ export default class Login extends Component {
     // this.props.navigation.navigate("UserPage");
   };
 
-  handleLogin = () => {
+  handleLogin = async () => {
     const { email, password } = this.state;
-    firebase
+    await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
+      .then((response) => {
+        const uid = response.user.uid;
+        this.props.log();
+        this.props.navigation.navigate('TabNav');
+      })
       .catch((error) => this.setState({ errorMessage: error.message }));
-    this.props.log();
-    this.props.navigation.navigate("TabNav");
-
-    // this.props.navigation.navigate('Home');
+//     var hello = firebase.functions().httpsCallable('katya');
+//     await hello({ message: 'hello' }).then((result) => {
+//       var hi = result.data.hello;
+//       this.onClickListener(hi);
+//     });
   };
 
   render() {
