@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { TabNav, AuthStack } from "./index";
+import { TabNav, AuthStack } from "./stacks/index";
 // import { config, db } from "../firebaseconfig";
 
 const Stack = createStackNavigator();
@@ -11,12 +11,17 @@ export default class AppNavigator extends React.Component {
   constructor() {
     super();
     this.state = {
-      isLoggenIn: false,
+      isLoggedIn: false,
     };
+    this.log = this.log.bind(this);
+  }
+
+  log() {
+    this.setState({ isLoggedIn: true });
   }
 
   render() {
-    // console.log(this.props.user);
+    console.log(this.state.isLoggedIn);
     return (
       <NavigationContainer>
         <Stack.Navigator
@@ -34,7 +39,7 @@ export default class AppNavigator extends React.Component {
             />
           ) : (
             <Stack.Screen name="Login">
-              {(props) => <AuthStack {...props} />}
+              {(props) => <AuthStack {...props} log={this.log} />}
             </Stack.Screen>
           )}
         </Stack.Navigator>
