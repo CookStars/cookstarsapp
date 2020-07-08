@@ -45,7 +45,8 @@ export default class SingleRecipe extends Component {
   render() {
     // const { index, day} = this.props.route.params
     const { index } = this.props.route.params;
-    const { summary, title, imageURL, ingredients } = recipes[index];
+    const { summary, title, image, ingredients } = recipes[index];
+    console.log(ingredients)
     const noTagsSummary = summary.split("<b>").map((sentence) => {
       if (sentence.includes("</b>")) {
         let sentences = sentence.split("</b>");
@@ -58,6 +59,8 @@ export default class SingleRecipe extends Component {
         );
       } else return <Text key={Math.random()}>{sentence}</Text>;
     });
+
+
 
     return (
       <SafeAreaView>
@@ -72,7 +75,7 @@ export default class SingleRecipe extends Component {
                   source={{
                     width: 350,
                     height: 300,
-                    uri: imageURL,
+                    uri: image,
                   }}
                 />
               </View>
@@ -80,7 +83,7 @@ export default class SingleRecipe extends Component {
                 <Text style={styles.text}>{noTagsSummary}</Text>
                 <Text style={styles.text}>
                   <Text style={{ fontWeight: "bold" }}>Ingredients: </Text>
-                  {ingredients}
+                  {/* {ingredients} */}
                 </Text>
               </View>
             </View>

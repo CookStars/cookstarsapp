@@ -8,12 +8,12 @@ import {
   Modal,
   Dimensions,
 } from "react-native";
-import { recipes } from "../Seed";
+import { recipes, recipesVeganAPI, users } from "../Seed";
 
 export default function CardView(props) {
   const {navigation} = props
   const today = new Date().getDay();
-  const img = recipes[today].imageURL;
+  const img = recipes[today].image;
 
   return (
     <View style={styles.cardContainer}>

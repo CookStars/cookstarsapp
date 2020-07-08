@@ -11,7 +11,15 @@ import {
 } from "react-native";
 import favicon from "../assets/favicon.png";
 import {CardView, Cards} from "../components"
-import { recipes } from "../Seed";
+import { recipes, recipesVeganAPI, users } from "../Seed";
+let currUser = users[0];
+let useRecipe;
+
+const checkUserPref = (user) => {
+  if (!currUser.vegan) useRecipe = recipes;
+  else useRecipe = recipesVeganAPI;
+};
+checkUserPref(currUser);
 
 export default function HomeScreen({ navigation }) {
   const weekdays = [
@@ -25,7 +33,7 @@ export default function HomeScreen({ navigation }) {
   ];
   const cards = () => {
     return weekdays.map((weekday, index) => (
-      <Cards key={index} day={weekday} index={index} navigation={navigation}/>
+      <Cards key={index} day={weekday} index={index} navigation={navigation} recipes={useRecipe}/>
     ));
   };
   return (

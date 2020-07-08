@@ -8,11 +8,10 @@ import {
   Modal,
   Dimensions,
 } from "react-native";
-import { recipes } from "../Seed";
-
+// import { recipes,recipesVeganAPI } from "../Seed";
 export default function Cards(props) {
-  const { day, index, navigation } = props;
-  const img = recipes[index].imageURL;
+  const { day, index, navigation, recipes} = props;
+  const img = recipes[index].image;
   return (
     <View style={styles.cardContainer}>
       <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("SingleRecipe",{index:index,day:day})}>
