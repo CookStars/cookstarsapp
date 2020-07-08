@@ -6,7 +6,10 @@ const User = createStackNavigator();
 
 export default function UserProfileStack() {
   return (
-    <User.Navigator initialRouteName="Profile">
+    <User.Navigator
+      initialRouteName="Profile"
+      screenOptions={{ headerShown: false }}
+    >
       <User.Screen name="Profile" component={UserProfile} />
       {/* ADD LOGOUT COMPONENT HERE IF NEEDED */}
     </User.Navigator>

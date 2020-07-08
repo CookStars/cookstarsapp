@@ -26,20 +26,21 @@ export default class Login extends Component {
 
   handleLogin = async () => {
     const { email, password } = this.state;
-    // await firebase
-    //   .auth()
-    //   .signInWithEmailAndPassword(email, password)
-    //   .then((response) => {
-    //     const uid = response.user.uid;
-    //     this.props.log();
-    //     this.props.navigation.navigate('TabNav');
-    //   })
+    await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((response) => {
+        const uid = response.user.uid;
+        this.props.log();
+        // this.props.navigation.navigate('TabNav');
+      });
     //   .catch((error) => this.setState({ errorMessage: error.message }));
     //     var hello = firebase.functions().httpsCallable('katya');
     //     await hello({ message: 'hello' }).then((result) => {
     //       var hi = result.data.hello;
     //       this.onClickListener(hi);
     //     });
+    // this.props.navigation.goBack()
   };
 
   render() {
@@ -102,7 +103,7 @@ export default class Login extends Component {
         {/* Register Button */}
         <TouchableHighlight
           style={styles.buttonContainer}
-          onPress={() => this.onClickListener('register')}
+          onPress={() => this.props.navigation.navigate('Registration')}
         >
           <Text>Register</Text>
         </TouchableHighlight>

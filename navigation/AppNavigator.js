@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { TabNav, AuthStack } from "./stacks/index";
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { TabNav, AuthStack } from './stacks/index';
 // import { config, db } from "../firebaseconfig";
 
 const Stack = createStackNavigator();
@@ -29,16 +29,18 @@ export default class AppNavigator extends React.Component {
           style={styles.container}
           screenOptions={{ headerShown: false }}
         >
+          {console.log('iam here')}
           {this.state.isLoggedIn ? (
             <Stack.Screen
-              name="TabNav"
+              name='TabNav'
               component={TabNav}
+              screenOptions={{ headerShown: false }}
               options={({ route }) => ({
                 headerTitle: getHeaderTitle(route),
               })}
             />
           ) : (
-            <Stack.Screen name="Login">
+            <Stack.Screen name='Login'>
               {(props) => <AuthStack {...props} log={this.log} />}
             </Stack.Screen>
           )}
@@ -51,23 +53,23 @@ export default class AppNavigator extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
 function getHeaderTitle(route) {
   const routeName = route.state
     ? route.state.routes[route.state.index].name
-    : route.params?.screen || "Home";
+    : route.params?.screen || 'Home';
 
   switch (routeName) {
-    case "Home":
-      return "Home";
-    case "Leaderboard":
-      return "Leaderboard";
-    case "Profile":
-      return "Profile";
+    case 'Home':
+      return 'Home';
+    case 'Leaderboard':
+      return 'Leaderboard';
+    case 'Profile':
+      return 'Profile';
   }
 }
