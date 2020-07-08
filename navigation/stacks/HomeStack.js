@@ -6,7 +6,10 @@ const HomeSt = createStackNavigator();
 
 export default function HomeStack() {
   return (
-    <HomeSt.Navigator initialRouteName="Home">
+    <HomeSt.Navigator
+      initialRouteName="Home"
+      screenOptions={{ headerShown: false }}
+    >
       <HomeSt.Screen name="Home" component={Home} />
       <HomeSt.Screen name="SingleRecipe" component={SingleRecipe} />
       {/* ADD STEPs SCREEN HERE */}

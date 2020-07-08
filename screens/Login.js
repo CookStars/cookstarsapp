@@ -8,9 +8,9 @@ import {
   Image,
   Alert,
   ActivityIndicator,
-} from 'react-native';
-import { firebase } from '../firebaseconfig';
-import 'firebase/functions';
+} from "react-native";
+import { firebase } from "../firebaseconfig";
+import "firebase/functions";
 
 export default class Login extends Component {
   state = {
@@ -32,14 +32,14 @@ export default class Login extends Component {
       .then((response) => {
         const uid = response.user.uid;
         this.props.log();
-        this.props.navigation.navigate('TabNav');
+        this.props.navigation.navigate("TabNav");
       })
       .catch((error) => this.setState({ errorMessage: error.message }));
-//     var hello = firebase.functions().httpsCallable('katya');
-//     await hello({ message: 'hello' }).then((result) => {
-//       var hi = result.data.hello;
-//       this.onClickListener(hi);
-//     });
+    //     var hello = firebase.functions().httpsCallable('katya');
+    //     await hello({ message: 'hello' }).then((result) => {
+    //       var hi = result.data.hello;
+    //       this.onClickListener(hi);
+    //     });
   };
 
   render() {
@@ -102,7 +102,7 @@ export default class Login extends Component {
         {/* Register Button */}
         <TouchableHighlight
           style={styles.buttonContainer}
-          onPress={() => this.onClickListener("register")}
+          onPress={() => this.props.navigation.navigate("Registration")}
         >
           <Text>Register</Text>
         </TouchableHighlight>

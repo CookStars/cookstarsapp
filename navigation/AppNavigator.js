@@ -33,6 +33,7 @@ export default class AppNavigator extends React.Component {
             <Stack.Screen
               name="TabNav"
               component={TabNav}
+              screenOptions={{ headerShown: false }}
               options={({ route }) => ({
                 headerTitle: getHeaderTitle(route),
               })}

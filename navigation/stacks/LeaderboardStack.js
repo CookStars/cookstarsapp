@@ -6,7 +6,10 @@ const Leaderbd = createStackNavigator();
 
 export default function LeaderboardStack() {
   return (
-    <Leaderbd.Navigator initialRouteName="Login">
+    <Leaderbd.Navigator
+      initialRouteName="Login"
+      screenOptions={{ headerShown: false }}
+    >
       <Leaderbd.Screen name="Leaderboard" component={Leaderboard} />
     </Leaderbd.Navigator>
   );
