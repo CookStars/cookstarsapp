@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import HTML from "react-native-render-html";
+
 import {
   StyleSheet,
   Text,
@@ -46,21 +48,10 @@ export default class SingleRecipe extends Component {
     // const { index, day} = this.props.route.params
     const { index } = this.props.route.params;
     const { summary, title, image, ingredients } = recipes[index];
-    console.log(ingredients)
-    const noTagsSummary = summary.split("<b>").map((sentence) => {
-      if (sentence.includes("</b>")) {
-        let sentences = sentence.split("</b>");
-
-        return (
-          <Text key={Math.random()}>
-            <Text style={{ fontWeight: "bold" }}>{sentences[0]}</Text>
-            <Text>{sentences[1]}</Text>
-          </Text>
-        );
-      } else return <Text key={Math.random()}>{sentence}</Text>;
-    });
-
-
+    const listIngredients = ingredients.map(ingredient => ingredient.original).join(', ')
+    const newTagsSummary = summary.split(/\<a\b[^>]*>/).join('<b><i>').split(/\<\/a>/).join('</i></b>')
+  
+   
 
     return (
       <SafeAreaView>
@@ -80,11 +71,16 @@ export default class SingleRecipe extends Component {
                 />
               </View>
               <View>
-                <Text style={styles.text}>{noTagsSummary}</Text>
+                <View style={styles.text}>
+                  <HTML html={newTagsSummary} baseFontStyle={styles.text} />
+                </View>
+                <View >
                 <Text style={styles.text}>
                   <Text style={{ fontWeight: "bold" }}>Ingredients: </Text>
-                  {/* {ingredients} */}
+                  {listIngredients}
                 </Text>
+                </View>
+              
               </View>
             </View>
           </ScrollView>
@@ -116,9 +112,8 @@ const styles = StyleSheet.create({
     borderRadius: 37,
   },
   text: {
-    padding: 18,
+    padding: 30,
     fontSize: 18,
-    // fontFamily: "Georgia",
     backgroundColor: "#F4F1DE",
     textAlign: "justify",
     bottom: 50,
