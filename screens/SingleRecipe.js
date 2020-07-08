@@ -11,8 +11,7 @@ import {
   Alert,
   SafeAreaView,
 } from "react-native";
-import { recipes } from "../Seed";
-import Constants from "expo-constants";
+
 export default class SingleRecipe extends Component {
   constructor(props) {
     super(props);
@@ -46,11 +45,10 @@ export default class SingleRecipe extends Component {
 
   render() {
     // const { index, day} = this.props.route.params
-    const { index } = this.props.route.params;
-    const { summary, title, image, ingredients } = recipes[index];
+    const { index, recipes } = this.props.route.params;
+    const { summary, title, image, ingredients } = recipes[index]
     const listIngredients = ingredients.map(ingredient => ingredient.original).join(', ')
     const newTagsSummary = summary.split(/\<a\b[^>]*>/).join('<b><i>').split(/\<\/a>/).join('</i></b>')
-  
    
 
     return (

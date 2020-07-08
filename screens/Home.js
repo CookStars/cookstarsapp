@@ -12,7 +12,7 @@ import {
 import favicon from "../assets/favicon.png";
 import {CardView, Cards} from "../components"
 import { recipes, recipesVeganAPI, users } from "../Seed";
-let currUser = users[0];
+let currUser = users[1];
 let useRecipe;
 
 const checkUserPref = (user) => {
@@ -20,6 +20,8 @@ const checkUserPref = (user) => {
   else useRecipe = recipesVeganAPI;
 };
 checkUserPref(currUser);
+
+
 
 export default function HomeScreen({ navigation }) {
   const weekdays = [
@@ -38,7 +40,7 @@ export default function HomeScreen({ navigation }) {
   };
   return (
     <View style={styles.container}>
-      <CardView style={styles.card} navigation={navigation}/>
+      <CardView style={styles.card} navigation={navigation} recipes={useRecipe}/>
       <Text style={styles.Text}>Recipes of the Week</Text>
       <ScrollView
         vertical={true}

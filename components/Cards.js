@@ -11,10 +11,16 @@ import {
 // import { recipes,recipesVeganAPI } from "../Seed";
 export default function Cards(props) {
   const { day, index, navigation, recipes} = props;
-  const img = recipes[index].image;
-  return (
+
+
+  if(!recipes[index].image){
+    recipes[index].image = 'https://webknox.com/recipeImages/641671-556x370.jpg'
+  }  
+  let img = recipes[index].image
+
+return (
     <View style={styles.cardContainer}>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("SingleRecipe",{index:index,day:day})}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("SingleRecipe",{index:index,day:day, recipes:recipes})}>
         <View style={styles.imgContainer}>
           {/* {showRecipeImg()} */}
           <Image
