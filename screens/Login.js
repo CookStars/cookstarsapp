@@ -31,16 +31,17 @@ export default class Login extends Component {
     //   .signInWithEmailAndPassword(email, password)
     //   .then((response) => {
     //     const uid = response.user.uid;
+    //     this.props.log();
     //     this.props.navigation.navigate('TabNav');
     //   })
     //   .catch((error) => this.setState({ errorMessage: error.message }));
-    var hello = firebase.functions().httpsCallable('katya');
-    await hello({ message: 'hello' }).then((result) => {
-      var hi = result.data.hello;
-      this.onClickListener(hi);
-    });
+    //     var hello = firebase.functions().httpsCallable('katya');
+    //     await hello({ message: 'hello' }).then((result) => {
+    //       var hi = result.data.hello;
+    //       this.onClickListener(hi);
+    //     });
   };
-  //
+
   render() {
     return (
       <View style={styles.container}>
