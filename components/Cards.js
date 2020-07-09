@@ -8,7 +8,7 @@ import {
   Modal,
   Dimensions,
 } from "react-native";
-// import { recipes } from "../Seed";
+
 
 export default function Cards(props) {
   const { day, index, navigation, recipes } = props;
@@ -26,6 +26,7 @@ export default function Cards(props) {
           })
         }
       >
+
         <View style={styles.imgContainer}>
           {/* {showRecipeImg()} */}
           <Image

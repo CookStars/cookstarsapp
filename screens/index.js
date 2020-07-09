@@ -5,6 +5,9 @@ import Login from './Login';
 import Leaderboard from './Leaderboard';
 import UserProfile from './UserProfile';
 import RegistrationScreen from './RegistrationScreen';
+import Steps from './Steps'
+import SuccessPage from './Success'
+
 
 export {
   SecondScreen,
@@ -14,4 +17,6 @@ export {
   UserProfile,
   SingleRecipe,
   RegistrationScreen,
+  Steps,
+  SuccessPage
 };
