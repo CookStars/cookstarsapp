@@ -6,6 +6,7 @@ import Leaderboard from './Leaderboard';
 import UserProfile from './UserProfile';
 import RegistrationScreen from './RegistrationScreen';
 import Steps from './Steps'
+import SuccessPage from './Success'
 
 
 export {
@@ -16,5 +17,6 @@ export {
   UserProfile,
   SingleRecipe,
   RegistrationScreen,
-  Steps
+  Steps,
+  SuccessPage
 };

@@ -8,7 +8,6 @@ import {
   Image,
   Alert,
   SafeAreaView,
-  _ScrollView,
 } from "react-native";
 
 const ingredientsLink = "https://spoonacular.com/cdn/ingredients_100x100/";
@@ -16,7 +15,7 @@ const equipmentLink = "https://spoonacular.com/cdn/equipment_100x100/";
 
 export default function Steps(props) {
   const [currStep, setCurrStep] = useState(0);
-
+  const { navigation } = props
   const { index, recipes } = props.route.params;
   const currRecipeSteps = recipes[index].analyzedInstructions[0].steps;
   const { equipment, ingredients, number, step } = currRecipeSteps[currStep];
@@ -58,7 +57,7 @@ export default function Steps(props) {
               setCurrStep(currStep - 1);
             }}
           />
-          <Button title="FINISH" onPress={() => Alert.alert("finished!!!!")} />
+          <Button title="FINISH" onPress={() => navigation.navigate('Success')} />
         </View>
       );
     }
