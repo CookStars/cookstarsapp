@@ -9,14 +9,14 @@ import {
   Alert,
   SafeAreaView,
 } from "react-native";
-import { recipes } from "../Seed";
+// import { recipes } from "../Seed";
 import Constants from "expo-constants";
 import { db } from "../firebaseconfig.js";
 
 export default class SingleRecipe extends Component {
   constructor(props) {
     super(props);
-    this.getRecipes = this.getRecipes.bind(this);
+    // this.getRecipes = this.getRecipes.bind(this);
   }
 
   checkDay() {
@@ -37,7 +37,6 @@ export default class SingleRecipe extends Component {
           <Button
             title="Start"
             onPress={() => {
-              this.getRecipes();
               Alert.alert("Start button pressed.");
             }}
           />
@@ -48,18 +47,25 @@ export default class SingleRecipe extends Component {
     }
   }
 
-  getRecipes() {
-    const recipes = db.collection("recipes");
-    const result = recipes.get().then((querySnapshot) => {
-      const data = querySnapshot.docs.map((doc) => doc.data());
-      console.log(data);
-    });
-  }
+  // getRecipes() {
+  //   const allRecipes = [];
+  //   const recipes = db.collection("recipes").doc("vegan");
+  //   const result = recipes
+  //     .get()
+  //     .then((doc) => {
+
+  //       if (doc.exists) {
+  //         console.log("HERE IS MY DATA", doc.data());
+  //       } else {
+  //         console.log('No data found');
+  //       }
+
+  // }
 
   render() {
     // const { index, day} = this.props.route.params
-    const { index } = this.props.route.params;
-    const { summary, title, imageURL, ingredients } = recipes[index];
+    const { index, day, recipe } = this.props.route.params;
+    const { summary, title, image, ingredients } = recipe;
     const noTagsSummary = summary.split("<b>").map((sentence) => {
       if (sentence.includes("</b>")) {
         let sentences = sentence.split("</b>");
@@ -86,7 +92,7 @@ export default class SingleRecipe extends Component {
                   source={{
                     width: 350,
                     height: 300,
-                    uri: imageURL,
+                    uri: image,
                   }}
                 />
               </View>
@@ -94,7 +100,7 @@ export default class SingleRecipe extends Component {
                 <Text style={styles.text}>{noTagsSummary}</Text>
                 <Text style={styles.text}>
                   <Text style={{ fontWeight: "bold" }}>Ingredients: </Text>
-                  {ingredients}
+                  {ingredients.map((ingredient) => `${ingredient.name}, `)}
                 </Text>
               </View>
             </View>
