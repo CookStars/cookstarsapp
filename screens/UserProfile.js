@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,13 +10,24 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { firebase } from '../firebaseconfig';
+import { db } from '../firebaseconfig';
+import '@firebase/firestore';
 
 export default class UserProfile extends React.Component {
   state = { ...this.props.userInfo };
 
   handleClick() {
     this.props.logOut();
+  }
+
+  componentDidMount() {
+    // Update user profile page with new data
+    // Listener function for any changes on the database
+    db.collection('users')
+      .doc(this.state.userId)
+      .onSnapshot((doc) => {
+        this.setState(doc.data());
+      });
   }
 
   render() {

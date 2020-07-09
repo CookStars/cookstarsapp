@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TabNav, AuthStack } from './stacks/index';
-import { firebase } from '../firebaseconfig';
+import { firebase, db } from '../firebaseconfig';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const Stack = createStackNavigator();
@@ -33,13 +33,38 @@ export default class AppNavigator extends React.Component {
       if (user) {
         const userInfo = {
           userId: user.uid,
-          displayName: user.displayName,
           email: user.email,
-          emailVerified: user.emailVerified,
-          photoURL: user.photoURL,
-          providerData: user.providerData,
           isLoggedIn: true,
         };
+
+        const docRef = db.collection(`users`).doc(user.uid);
+        docRef
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              const {
+                favoriteRecipes,
+                foodPreference,
+                points,
+                recipeHistory,
+              } = doc.data();
+
+              this.setState({
+                favoriteRecipes,
+                foodPreference,
+                points,
+                recipeHistory,
+              });
+
+              // console.log('Document data:', doc.data());
+            } else {
+              // doc.data() will be undefined in this case
+              console.log('No such document!');
+            }
+          })
+          .catch(function (error) {
+            console.log('Error getting document:', error);
+          });
 
         // Store User info using Async Storage inside userInfo
         try {
