@@ -32,7 +32,6 @@ export default class Login extends Component {
       .then(() => {
         return firebase.auth().signInWithEmailAndPassword(email, password);
       })
-      .then(() => this.props.log())
       .catch((error) => {
         // Handle Errors here.
         this.setState({ errorMessage: error.message });
