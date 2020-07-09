@@ -69,7 +69,11 @@ export default class HomeScreen extends Component {
     }
     return (
       <View style={styles.container}>
-        <CardView style={styles.card} navigation={this.props.navigation} />
+        <CardView
+          style={styles.card}
+          navigation={this.props.navigation}
+          recipes={this.state.vegan}
+        />
         <Text style={styles.Text}>Recipes of the Week</Text>
         <ScrollView
           vertical={true}

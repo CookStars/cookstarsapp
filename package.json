@@ -23,9 +23,11 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
     "react-native-keyboard-aware-scrollview": "^2.1.0",
     "react-native-reanimated": "~1.9.0",
+    "react-native-render-html": "^4.2.1",
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "react-native-webview": "^10.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

@@ -9,14 +9,11 @@ import {
   Alert,
   SafeAreaView,
 } from "react-native";
-// import { recipes } from "../Seed";
-import Constants from "expo-constants";
-import { db } from "../firebaseconfig.js";
+import HTML from "react-native-render-html";
 
 export default class SingleRecipe extends Component {
   constructor(props) {
     super(props);
-    // this.getRecipes = this.getRecipes.bind(this);
   }
 
   checkDay() {
@@ -47,37 +44,17 @@ export default class SingleRecipe extends Component {
     }
   }
 
-  // getRecipes() {
-  //   const allRecipes = [];
-  //   const recipes = db.collection("recipes").doc("vegan");
-  //   const result = recipes
-  //     .get()
-  //     .then((doc) => {
-
-  //       if (doc.exists) {
-  //         console.log("HERE IS MY DATA", doc.data());
-  //       } else {
-  //         console.log('No data found');
-  //       }
-
-  // }
-
   render() {
-    // const { index, day} = this.props.route.params
     const { index, day, recipe } = this.props.route.params;
     const { summary, title, image, ingredients } = recipe;
-    const noTagsSummary = summary.split("<b>").map((sentence) => {
-      if (sentence.includes("</b>")) {
-        let sentences = sentence.split("</b>");
-
-        return (
-          <Text key={Math.random()}>
-            <Text style={{ fontWeight: "bold" }}>{sentences[0]}</Text>
-            <Text>{sentences[1]}</Text>
-          </Text>
-        );
-      } else return <Text key={Math.random()}>{sentence}</Text>;
-    });
+    const listIngredients = ingredients
+      .map((ingredient) => ingredient.original)
+      .join(", ");
+    const newTagsSummary = summary
+      .split(/\<a\b[^>]*>/)
+      .join("<b><i>")
+      .split(/\<\/a>/)
+      .join("</i></b>");
 
     return (
       <SafeAreaView>
@@ -96,11 +73,15 @@ export default class SingleRecipe extends Component {
                   }}
                 />
               </View>
+            </View>
+            <View>
+              <View style={styles.text}>
+                <HTML html={newTagsSummary} baseFontStyle={styles.text} />
+              </View>
               <View>
-                <Text style={styles.text}>{noTagsSummary}</Text>
                 <Text style={styles.text}>
                   <Text style={{ fontWeight: "bold" }}>Ingredients: </Text>
-                  {ingredients.map((ingredient) => `${ingredient.name}, `)}
+                  {listIngredients}
                 </Text>
               </View>
             </View>
@@ -135,7 +116,6 @@ const styles = StyleSheet.create({
   text: {
     padding: 18,
     fontSize: 18,
-    // fontFamily: "Georgia",
     backgroundColor: "#F4F1DE",
     textAlign: "justify",
     bottom: 50,
