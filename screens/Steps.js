@@ -57,7 +57,7 @@ export default function Steps(props) {
               setCurrStep(currStep - 1);
             }}
           />
-          <Button title="FINISH" onPress={() => navigation.navigate('Success')} />
+          <Button title="FINISH" onPress={() => navigation.navigate('Success', {index: index, recipes: recipes})} />
         </View>
       );
     }
