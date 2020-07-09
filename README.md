@@ -29,4 +29,4 @@ These instructions will get you a copy of the project up and running on your loc
 - **Erica Liu** - _Initial work_ - [ELiu925](https://github.com/eliu925)
 - **Asim Samuel** - _Initial work_ - [lordofdorne](https://github.com/lordofdorne)
 - **Ekaterina Serga** - _Initial work_ - [EkaterinaSerga](https://github.com/ekaterinaSerga)
-- **Cesar Done** - _Initial work_ - [CesarDone](https://github.com/cesardorne)
+- **Cesar Done** - _Initial work_ - [CesarDone](https://github.com/cesardone)
