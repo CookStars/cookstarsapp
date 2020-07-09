@@ -40,7 +40,7 @@ export default function HomeScreen({ navigation }) {
   };
   return (
     <View style={styles.container}>
-      <CardView style={styles.card} navigation={navigation} recipes={useRecipe}/>
+      <CardView navigation={navigation} recipes={useRecipe}/>
       <Text style={styles.Text}>Recipes of the Week</Text>
       <ScrollView
         vertical={true}

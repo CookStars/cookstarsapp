@@ -15,7 +15,6 @@ const ingredientsLink = "https://spoonacular.com/cdn/ingredients_100x100/";
 const equipmentLink = "https://spoonacular.com/cdn/equipment_100x100/";
 
 export default function Steps(props) {
-
   const [currStep, setCurrStep] = useState(0);
 
   const { index, recipes } = props.route.params;
@@ -65,8 +64,7 @@ export default function Steps(props) {
     }
   };
 
-
-  const checkEquipment = (equipment) => {
+  const checkEquipment = () => {
     const listEquipment = equipment.map((tool, index) => {
       const image = equipmentLink + tool.image;
       return (
@@ -88,16 +86,15 @@ export default function Steps(props) {
       );
     });
 
-    if (equipment) {
+    if (equipment.length) {
       return (
-        <ScrollView>
+        <View>
           <Text>Equipment</Text>
-          <View>{listEquipment}</View>
-        </ScrollView>
+          <ScrollView>{listEquipment}</ScrollView>
+        </View>
       );
     }
   };
-
 
   const checkIngredients = () => {
     const listIngredients = ingredients.map((ingredient, index) => {
@@ -117,7 +114,7 @@ export default function Steps(props) {
       );
     });
 
-    if (ingredients) {
+    if (ingredients.length) {
       return (
         <View>
           <View>
@@ -128,29 +125,31 @@ export default function Steps(props) {
             horizontal={true}
             // contentContainerStyle={styles.scrollArea_contentContainerStyle}
           >
-            <View>{listIngredients}</View>
+            {listIngredients}
           </ScrollView>
         </View>
       );
     }
   };
 
-
   return (
-    <SafeAreaView style={styles.parentContainer}>
-      <View >
-        <View style={styles.listContainer}>{checkEquipment(equipment)}</View>
-        <View style={styles.listContainer}>{checkIngredients(ingredients)}</View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        <Text style={styles.title}>Step {number}</Text>
       </View>
       <View style={styles.listContainer}>
-        <Text>Step {number}</Text>
+        {checkEquipment()}
+        {checkIngredients()}
+      </View>
+      <View style={styles.stepContainer}>
         <Text>{step}</Text>
       </View>
-      <View style={styles.listContainer}>{checkStep(currStep)}</View>
+      <View style={{ flex: 1 }}>
+        <View style={styles.listContainer}>{checkStep(currStep)}</View>
+      </View>
     </SafeAreaView>
   );
 }
-
 
 const styles = StyleSheet.create({
   parentContainer: {
@@ -158,13 +157,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#F4F1DE",
   },
   listContainer: {
+    flex: 3,
+    flexDirection: "row",
+  },
+  image: {
+    top: 10,
+    alignItems: "center",
+    resizeMode: "contain",
+    overflow: "hidden",
+    borderRadius: 37,
+  },
+  stepContainer: {
     flex: 2,
   },
   scrollArea_contentContainerStyle: {
-    flexWrap: "wrap",
+    flex: 1,
     alignContent: "space-around",
     flexDirection: "row",
-    justifyContent: "space-around",
   },
   title: {
     fontSize: 32,
@@ -175,11 +184,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f4f1de",
   },
   image: {
-    top: 10,
-    alignItems: "center",
-    resizeMode: "contain",
-    overflow: "hidden",
-    borderRadius: 37,
+    flexDirection: "row",
   },
   step: {
     padding: 30,
