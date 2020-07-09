@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import favicon from "../assets/favicon.png";
-import {CardView, Cards} from "../components"
+import { CardView, Cards } from "../components";
 import { recipes, recipesVeganAPI, users } from "../Seed";
 let currUser = users[1];
 let useRecipe;
@@ -20,8 +20,6 @@ const checkUserPref = (user) => {
   else useRecipe = recipesVeganAPI;
 };
 checkUserPref(currUser);
-
-
 
 export default function HomeScreen({ navigation }) {
   const weekdays = [
@@ -35,12 +33,18 @@ export default function HomeScreen({ navigation }) {
   ];
   const cards = () => {
     return weekdays.map((weekday, index) => (
-      <Cards key={index} day={weekday} index={index} navigation={navigation} recipes={useRecipe}/>
+      <Cards
+        key={index}
+        day={weekday}
+        index={index}
+        navigation={navigation}
+        recipes={useRecipe}
+      />
     ));
   };
   return (
     <View style={styles.container}>
-      <CardView navigation={navigation} recipes={useRecipe}/>
+      <CardView navigation={navigation} recipes={useRecipe} />
       <Text style={styles.Text}>Recipes of the Week</Text>
       <ScrollView
         vertical={true}

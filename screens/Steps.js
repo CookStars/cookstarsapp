@@ -15,13 +15,12 @@ const equipmentLink = "https://spoonacular.com/cdn/equipment_100x100/";
 
 export default function Steps(props) {
   const [currStep, setCurrStep] = useState(0);
-  const { navigation } = props
+  const { navigation } = props;
   const { index, recipes } = props.route.params;
   const currRecipeSteps = recipes[index].analyzedInstructions[0].steps;
   const { equipment, ingredients, number, step } = currRecipeSteps[currStep];
 
   const checkStep = (currStep) => {
-    console.log(currRecipeSteps.length - 1);
     if (currStep === 0) {
       return (
         <Button
@@ -50,14 +49,19 @@ export default function Steps(props) {
       );
     } else {
       return (
-        <View>
+        <View style={styles.buttonContainer}>
           <Button
             title="PREVIOUS"
             onPress={() => {
               setCurrStep(currStep - 1);
             }}
           />
-          <Button title="FINISH" onPress={() => navigation.navigate('Success', {index: index, recipes: recipes})} />
+          <Button
+            title="FINISH"
+            onPress={() =>
+              navigation.navigate("Success", { index: index, recipes: recipes })
+            }
+          />
         </View>
       );
     }
@@ -156,7 +160,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 3,
-    flexDirection:"column",
+    flexDirection: "column",
   },
   image: {
     top: 10,
@@ -189,5 +193,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     backgroundColor: "#F4F1DE",
     textAlign: "justify",
+  },
+  buttonContainer: {
+    backgroundColor: '#008F68',
+    borderRadius: 5,
+    padding: 8,
+    margin: 8,
   },
 });
