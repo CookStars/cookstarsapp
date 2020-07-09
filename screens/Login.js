@@ -21,26 +21,22 @@ export default class Login extends Component {
 
   onClickListener = (viewId) => {
     Alert.alert('Alert', 'Button pressed ' + viewId);
-    // this.props.navigation.navigate("UserPage");
   };
 
   handleLogin = async () => {
     const { email, password } = this.state;
-    await firebase
+    // Set persistence locally. This will make sure user is logged in through firebase until they log out
+    firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        const uid = response.user.uid;
-        this.props.log();
-        // this.props.navigation.navigate('TabNav');
+      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(() => {
+        return firebase.auth().signInWithEmailAndPassword(email, password);
+      })
+      .then(() => this.props.log())
+      .catch((error) => {
+        // Handle Errors here.
+        this.setState({ errorMessage: error.message });
       });
-    //   .catch((error) => this.setState({ errorMessage: error.message }));
-    //     var hello = firebase.functions().httpsCallable('katya');
-    //     await hello({ message: 'hello' }).then((result) => {
-    //       var hi = result.data.hello;
-    //       this.onClickListener(hi);
-    //     });
-    // this.props.navigation.goBack()
   };
 
   render() {
