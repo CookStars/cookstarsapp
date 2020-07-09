@@ -13,7 +13,9 @@ var firebaseConfig = {
   appId: '1:409318579317:web:e23d98661c6ed70a49ec3c',
   measurementId: 'G-1GYL1VR4VH',
 };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-export { firebase };
+export { firebase, db };
