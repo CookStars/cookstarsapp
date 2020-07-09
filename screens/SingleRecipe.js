@@ -9,8 +9,8 @@ import {
   Alert,
   SafeAreaView,
 } from "react-native";
-import { recipes } from "../Seed";
-import Constants from "expo-constants";
+import HTML from "react-native-render-html";
+
 export default class SingleRecipe extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +33,9 @@ export default class SingleRecipe extends Component {
         <View style={styles.startButton}>
           <Button
             title="Start"
-            onPress={() => Alert.alert("Start button pressed.")}
+            onPress={() => {
+              Alert.alert("Start button pressed.");
+            }}
           />
         </View>
       );
@@ -43,21 +45,16 @@ export default class SingleRecipe extends Component {
   }
 
   render() {
-    // const { index, day} = this.props.route.params
-    const { index } = this.props.route.params;
-    const { summary, title, imageURL, ingredients } = recipes[index];
-    const noTagsSummary = summary.split("<b>").map((sentence) => {
-      if (sentence.includes("</b>")) {
-        let sentences = sentence.split("</b>");
-
-        return (
-          <Text key={Math.random()}>
-            <Text style={{ fontWeight: "bold" }}>{sentences[0]}</Text>
-            <Text>{sentences[1]}</Text>
-          </Text>
-        );
-      } else return <Text key={Math.random()}>{sentence}</Text>;
-    });
+    const { index, day, recipe } = this.props.route.params;
+    const { summary, title, image, ingredients } = recipe;
+    const listIngredients = ingredients
+      .map((ingredient) => ingredient.original)
+      .join(", ");
+    const newTagsSummary = summary
+      .split(/\<a\b[^>]*>/)
+      .join("<b><i>")
+      .split(/\<\/a>/)
+      .join("</i></b>");
 
     return (
       <SafeAreaView>
@@ -72,15 +69,19 @@ export default class SingleRecipe extends Component {
                   source={{
                     width: 350,
                     height: 300,
-                    uri: imageURL,
+                    uri: image,
                   }}
                 />
               </View>
+            </View>
+            <View>
+              <View style={styles.text}>
+                <HTML html={newTagsSummary} baseFontStyle={styles.text} />
+              </View>
               <View>
-                <Text style={styles.text}>{noTagsSummary}</Text>
                 <Text style={styles.text}>
                   <Text style={{ fontWeight: "bold" }}>Ingredients: </Text>
-                  {ingredients}
+                  {listIngredients}
                 </Text>
               </View>
             </View>
@@ -115,7 +116,6 @@ const styles = StyleSheet.create({
   text: {
     padding: 18,
     fontSize: 18,
-    // fontFamily: "Georgia",
     backgroundColor: "#F4F1DE",
     textAlign: "justify",
     bottom: 50,
