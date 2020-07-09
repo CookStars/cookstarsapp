@@ -11,9 +11,12 @@ import {
 } from "react-native";
 import { recipes } from "../Seed";
 import Constants from "expo-constants";
+import { db } from "../firebaseconfig.js";
+
 export default class SingleRecipe extends Component {
   constructor(props) {
     super(props);
+    this.getRecipes = this.getRecipes.bind(this);
   }
 
   checkDay() {
@@ -33,13 +36,24 @@ export default class SingleRecipe extends Component {
         <View style={styles.startButton}>
           <Button
             title="Start"
-            onPress={() => Alert.alert("Start button pressed.")}
+            onPress={() => {
+              this.getRecipes();
+              Alert.alert("Start button pressed.");
+            }}
           />
         </View>
       );
     } else {
       return <View />;
     }
+  }
+
+  getRecipes() {
+    const recipes = db.collection("recipes");
+    const result = recipes.get().then((querySnapshot) => {
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      console.log(data);
+    });
   }
 
   render() {
