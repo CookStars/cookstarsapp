@@ -105,15 +105,16 @@ export default class UserProfile extends React.Component {
               <Text style={styles.text}></Text>
             </View>
           </View>
+          <View style={styles.buttonParent}>
+            <TouchableHighlight
+              style={styles.buttonContainer}
+              onPress={() => this.handleClick()}
+            >
+              <Text>Log Out</Text>
+            </TouchableHighlight>
+          </View>
 
-          <TouchableHighlight
-            style={styles.buttonContainer}
-            onPress={() => this.handleClick()}
-          >
-            <Text>Log Out</Text>
-          </TouchableHighlight>
-
-          <Text style={([styles.subtext], styles.recent)}>Recently Cooked</Text>
+          {/* <Text style={([styles.subtext], styles.recent)}>Recently Cooked</Text>
           <View style={{ alignItems: 'center' }}>
             <View style={styles.recentItem}>
               <View style={styles.recentItemIndicator}></View>
@@ -124,7 +125,7 @@ export default class UserProfile extends React.Component {
                 </Text>
               </View>
             </View>
-          </View>
+          </View> */}
         </ScrollView>
       </SafeAreaView>
     );
@@ -227,4 +228,22 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginTop: 20,
   },
+  buttonContainer: {
+    backgroundColor: '#CFFFB0',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 12,
+    fontSize: 24,
+    fontWeight: "bold",
+    overflow: "hidden",
+    padding: 12,
+    textAlign: 'center',
+
+
+
+  },
+  buttonParent: {
+    alignSelf: "center",
+    marginTop: 30
+  }
 });
