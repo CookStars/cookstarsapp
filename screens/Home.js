@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,49 +11,79 @@ import {
 } from "react-native";
 import favicon from "../assets/favicon.png";
 import { CardView, Cards } from "../components";
-import { recipes, recipesVeganAPI, users } from "../Seed";
-let currUser = users[1];
-let useRecipe;
+import { recipes } from "../Seed";
+import { db } from "../firebaseconfig.js";
 
-const checkUserPref = (user) => {
-  if (!currUser.vegan) useRecipe = recipes;
-  else useRecipe = recipesVeganAPI;
-};
-checkUserPref(currUser);
+const weekdays = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
-export default function HomeScreen({ navigation }) {
-  const weekdays = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  const cards = () => {
-    return weekdays.map((weekday, index) => (
-      <Cards
-        key={index}
-        day={weekday}
-        index={index}
-        navigation={navigation}
-        recipes={useRecipe}
-      />
-    ));
-  };
-  return (
-    <View style={styles.container}>
-      <CardView navigation={navigation} recipes={useRecipe} />
-      <Text style={styles.Text}>Recipes of the Week</Text>
-      <ScrollView
-        vertical={true}
-        contentContainerStyle={styles.scrollArea_contentContainerStyle}
-      >
-        {cards()}
-      </ScrollView>
-    </View>
-  );
+export default class HomeScreen extends Component {
+  constructor() {
+    super();
+    this.state = {
+      vegan: [],
+      meatlover: [],
+    };
+    this.getRecipes = this.getRecipes.bind(this);
+  }
+
+  async getRecipes(pref) {
+    let allRecipes;
+    const recipes = await db.collection("recipes").doc(pref).get();
+    if (recipes.exists) {
+      allRecipes = recipes.data().recipe;
+      console.log("HERE IS MY DATA", allRecipes);
+    } else {
+      console.log("No data found");
+    }
+
+    this.setState({ vegan: allRecipes });
+  }
+
+  componentDidMount() {
+    this.getRecipes("vegan");
+  }
+
+  render() {
+    const cards = () => {
+      return weekdays.map((weekday, index) => (
+        <Cards
+          key={index}
+          day={weekday}
+          index={index}
+          navigation={this.props.navigation}
+          recipes={this.state.vegan}
+        />
+      ));
+    };
+
+    if (!this.state.vegan.length) {
+      return null;
+    }
+    return (
+      <View style={styles.container}>
+        <CardView
+          style={styles.card}
+          navigation={this.props.navigation}
+          recipes={this.state.vegan}
+        />
+        <Text style={styles.Text}>Recipes of the Week</Text>
+        <ScrollView
+          vertical={true}
+          contentContainerStyle={styles.scrollArea_contentContainerStyle}
+        >
+          {cards()}
+        </ScrollView>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

@@ -1,11 +1,14 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HomeStack, UserProfileStack, LeaderboardStack } from "./index";
+import HomeStack from "./HomeStack";
+import UserProfileStack from "./UserProfileStack";
+import LeaderboardStack from "./LeaderboardStack";
 import { AntDesign } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNav() {
+export default function TabNav(props) {
+  const { userInfo, logOut } = props;
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -34,7 +37,12 @@ export default function TabNav() {
     >
       <Tab.Screen name="Leaderboard" component={LeaderboardStack} />
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Profile" component={UserProfileStack} />
+
+      <Tab.Screen name="Profile">
+        {(props) => (
+          <UserProfileStack {...props} userInfo={userInfo} logOut={logOut} />
+        )}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,38 +8,34 @@ import {
   Image,
   Alert,
   ActivityIndicator,
-} from "react-native";
-import { firebase } from "../firebaseconfig";
-import "firebase/functions";
+} from 'react-native';
+import { firebase } from '../firebaseconfig';
+import 'firebase/functions';
 
 export default class Login extends Component {
   state = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
     errorMessage: null,
   };
 
   onClickListener = (viewId) => {
-    Alert.alert("Alert", "Button pressed " + viewId);
-    // this.props.navigation.navigate("UserPage");
+    Alert.alert('Alert', 'Button pressed ' + viewId);
   };
 
   handleLogin = async () => {
     const { email, password } = this.state;
-    await firebase
+    // Set persistence locally. This will make sure user is logged in through firebase until they log out
+    firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        const uid = response.user.uid;
-        this.props.log();
-        this.props.navigation.navigate("TabNav");
+      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(() => {
+        return firebase.auth().signInWithEmailAndPassword(email, password);
       })
-      .catch((error) => this.setState({ errorMessage: error.message }));
-    //     var hello = firebase.functions().httpsCallable('katya');
-    //     await hello({ message: 'hello' }).then((result) => {
-    //       var hi = result.data.hello;
-    //       this.onClickListener(hi);
-    //     });
+      .catch((error) => {
+        // Handle Errors here.
+        this.setState({ errorMessage: error.message });
+      });
   };
 
   render() {
@@ -63,9 +59,9 @@ export default class Login extends Component {
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.inputs}
-            placeholder="Email"
-            keyboardType="email-address"
-            underlineColorAndroid="transparent"
+            placeholder='Email'
+            keyboardType='email-address'
+            underlineColorAndroid='transparent'
             onChangeText={(email) => this.setState({ email })}
             value={this.state.email}
           />
@@ -75,9 +71,9 @@ export default class Login extends Component {
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.inputs}
-            placeholder="Password"
+            placeholder='Password'
             secureTextEntry
-            underlineColorAndroid="transparent"
+            underlineColorAndroid='transparent'
             onChangeText={(password) => this.setState({ password })}
             value={this.state.password}
           />
@@ -94,7 +90,7 @@ export default class Login extends Component {
         {/* Forgot password Button */}
         <TouchableHighlight
           style={styles.buttonContainer}
-          onPress={() => this.onClickListener("restore_password")}
+          onPress={() => this.onClickListener('restore_password')}
         >
           <Text>Forgot your password?</Text>
         </TouchableHighlight>
@@ -102,11 +98,11 @@ export default class Login extends Component {
         {/* Register Button */}
         <TouchableHighlight
           style={styles.buttonContainer}
-          onPress={() => this.props.navigation.navigate("Registration")}
+          onPress={() => this.props.navigation.navigate('Registration')}
         >
           <Text>Register</Text>
         </TouchableHighlight>
-        <ActivityIndicator size="large"></ActivityIndicator>
+        <ActivityIndicator size='large'></ActivityIndicator>
       </View>
     );
   }
@@ -115,57 +111,57 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F4F1DE",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F4F1DE',
   },
   inputContainer: {
-    borderBottomColor: "#F2CC8F",
-    backgroundColor: "#FFFFFF",
+    borderBottomColor: '#F2CC8F',
+    backgroundColor: '#FFFFFF',
     borderRadius: 30,
     borderBottomWidth: 1,
     width: 250,
     height: 45,
     marginBottom: 20,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   inputs: {
     height: 45,
     marginLeft: 16,
-    borderBottomColor: "#F2CC8F",
+    borderBottomColor: '#F2CC8F',
     flex: 1,
   },
   inputIcon: {
     width: 30,
     height: 30,
     marginLeft: 15,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   buttonContainer: {
     height: 45,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 20,
     width: 250,
     borderRadius: 30,
   },
   loginButton: {
-    backgroundColor: "#F18F01",
+    backgroundColor: '#F18F01',
   },
   loginText: {
-    color: "white",
+    color: 'white',
   },
   welcomeContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 10,
     marginBottom: 20,
   },
   welcomeImage: {
     width: 300,
     height: 250,
-    resizeMode: "contain",
+    resizeMode: 'contain',
     marginTop: 3,
     marginLeft: -10,
   },
