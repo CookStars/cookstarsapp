@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Home, SingleRecipe } from "../../screens";
+import { Home, SingleRecipe, Steps} from "../../screens";
 
 const HomeSt = createStackNavigator();
 
@@ -12,7 +12,7 @@ export default function HomeStack() {
     >
       <HomeSt.Screen name="Home" component={Home} />
       <HomeSt.Screen name="SingleRecipe" component={SingleRecipe} />
-      {/* ADD STEPs SCREEN HERE */}
+      <HomeSt.Screen name="Steps" component={Steps} />
     </HomeSt.Navigator>
   );
 }

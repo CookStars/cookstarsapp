@@ -28,13 +28,14 @@ export default class SingleRecipe extends Component {
       "Saturday",
     ];
     const today = weekdays[new Date().getDay()];
-    const { index } = this.props.route.params;
+    const { navigation } = this.props
+    const { index, recipes} = this.props.route.params;
     if (weekdays[index] === today) {
       return (
         <View style={styles.startButton}>
           <Button
             title="Start"
-            onPress={() => Alert.alert("Start button pressed.")}
+            onPress={() => {navigation.navigate("Steps", {index:index, recipes:recipes} )}}
           />
         </View>
       );
@@ -44,12 +45,12 @@ export default class SingleRecipe extends Component {
   }
 
   render() {
-    // const { index, day} = this.props.route.params
+ 
     const { index, recipes } = this.props.route.params;
     const { summary, title, image, ingredients } = recipes[index]
     const listIngredients = ingredients.map(ingredient => ingredient.original).join(', ')
     const newTagsSummary = summary.split(/\<a\b[^>]*>/).join('<b><i>').split(/\<\/a>/).join('</i></b>')
-   
+
 
     return (
       <SafeAreaView>
