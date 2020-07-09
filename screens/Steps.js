@@ -68,21 +68,16 @@ export default function Steps(props) {
     const listEquipment = equipment.map((tool, index) => {
       const image = equipmentLink + tool.image;
       return (
-        <ScrollView
-          key={index}
-          horizontal={true}
-          contentContainerStyle={styles.scrollArea_contentContainerStyle}
-        >
+        <View key={index}>
           <Image
             source={{
               width: 150,
               height: 150,
               uri: image,
             }}
-            style={styles.image}
           />
           <Text>{tool.name}</Text>
-        </ScrollView>
+        </View>
       );
     });
 
@@ -90,7 +85,13 @@ export default function Steps(props) {
       return (
         <View>
           <Text>Equipment</Text>
-          <ScrollView>{listEquipment}</ScrollView>
+          <ScrollView
+            key={index}
+            horizontal={true}
+            contentContainerStyle={styles.scrollArea_contentContainerStyle}
+          >
+            {listEquipment}
+          </ScrollView>
         </View>
       );
     }
@@ -100,7 +101,7 @@ export default function Steps(props) {
     const listIngredients = ingredients.map((ingredient, index) => {
       const image = ingredientsLink + ingredient.image;
       return (
-        <View>
+        <View key={index}>
           <Image
             source={{
               width: 150,
@@ -116,14 +117,14 @@ export default function Steps(props) {
 
     if (ingredients.length) {
       return (
-        <View>
-          <View>
+        <View style={styles.listContainer}>
+          <View style={{ flex: 1 }}>
             <Text>Ingredients</Text>
           </View>
           <ScrollView
             key={index}
             horizontal={true}
-            // contentContainerStyle={styles.scrollArea_contentContainerStyle}
+            contentContainerStyle={styles.scrollArea_contentContainerStyle}
           >
             {listIngredients}
           </ScrollView>
@@ -137,10 +138,8 @@ export default function Steps(props) {
       <View style={{ flex: 1 }}>
         <Text style={styles.title}>Step {number}</Text>
       </View>
-      <View style={styles.listContainer}>
-        {checkEquipment()}
-        {checkIngredients()}
-      </View>
+      <View style={styles.listContainer}>{checkEquipment()}</View>
+      <View style={styles.listContainer}>{checkIngredients()}</View>
       <View style={styles.stepContainer}>
         <Text>{step}</Text>
       </View>
@@ -158,7 +157,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 3,
-    flexDirection: "row",
+    flexDirection:"column",
   },
   image: {
     top: 10,
@@ -171,8 +170,8 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   scrollArea_contentContainerStyle: {
-    flex: 1,
-    alignContent: "space-around",
+    flex: 2,
+    alignContent: "space-between",
     flexDirection: "row",
   },
   title: {
