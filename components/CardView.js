@@ -8,7 +8,6 @@ import {
   Modal,
   Dimensions,
 } from "react-native";
-// import { recipes } from "../Seed";
 
 export default function CardView(props) {
   const { navigation, recipes } = props;
@@ -19,7 +18,7 @@ export default function CardView(props) {
     <View style={styles.cardContainer}>
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => navigation.navigate("SingleRecipe", { index: today, recipe: recipes[today]})}
+        onPress={() => navigation.navigate("SingleRecipe", { index: today, recipes: recipes})}
       >
         <View style={styles.imgContainer}>
           <Image
