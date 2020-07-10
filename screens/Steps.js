@@ -9,7 +9,8 @@ import {
   Alert,
   SafeAreaView,
 } from "react-native";
- 
+import { db } from "../firebaseconfig";
+
 const ingredientsLink = "https://spoonacular.com/cdn/ingredients_100x100/";
 const equipmentLink = "https://spoonacular.com/cdn/equipment_100x100/";
 
@@ -17,9 +18,18 @@ export default function Steps(props) {
   const [currStep, setCurrStep] = useState(0);
 
   const { navigation } = props;
-  const { index, recipes } = props.route.params;
+  let { index, recipes, userInfo } = props.route.params;
   const currRecipeSteps = recipes[index].analyzedInstructions[0].steps;
   const { equipment, ingredients, number, step } = currRecipeSteps[currStep];
+  const newUserPts = userInfo.points + 10;
+
+  const updatePoints = () => {
+    db.collection("users").doc(userInfo.userId).update({
+      points: newUserPts,
+    });
+    
+    userInfo.points +=10
+  };
 
   const checkStep = (currStep) => {
     if (currStep === 0) {
@@ -59,9 +69,14 @@ export default function Steps(props) {
           />
           <Button
             title="FINISH"
-            onPress={() =>
-              navigation.navigate("Success", { index: index, recipes: recipes })
-            }
+            onPress={() => {
+              updatePoints();
+              navigation.navigate("Success", {
+                index: index,
+                recipes: recipes,
+                userInfo: userInfo,
+              });
+            }}
           />
         </View>
       );
@@ -196,7 +211,7 @@ const styles = StyleSheet.create({
     textAlign: "justify",
   },
   buttonContainer: {
-    backgroundColor: '#008F68',
+    backgroundColor: "#008F68",
     borderRadius: 5,
     padding: 8,
     margin: 8,

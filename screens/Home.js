@@ -25,8 +25,8 @@ const weekdays = [
 ];
 
 export default class HomeScreen extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       vegan: [],
       meatlover: [],
@@ -39,7 +39,7 @@ export default class HomeScreen extends Component {
     const recipes = await db.collection("recipes").doc(pref).get();
     if (recipes.exists) {
       allRecipes = recipes.data().recipe;
-      console.log("HERE IS MY DATA", allRecipes);
+      // console.log("HERE IS MY DATA", allRecipes);
     } else {
       console.log("No data found");
     }
@@ -60,6 +60,7 @@ export default class HomeScreen extends Component {
           index={index}
           navigation={this.props.navigation}
           recipes={this.state.vegan}
+          userInfo = {this.props.userInfo}
         />
       ));
     };
@@ -73,6 +74,7 @@ export default class HomeScreen extends Component {
           style={styles.card}
           navigation={this.props.navigation}
           recipes={this.state.vegan}
+          userInfo={this.props.userInfo}
         />
         <Text style={styles.Text}>Recipes of the Week</Text>
         <ScrollView

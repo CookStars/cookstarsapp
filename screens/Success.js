@@ -16,8 +16,8 @@ import {
 //may want to write congrats! you earned __ badge. or __ points to next badge!
 
 export default function SuccessPage(props) {
-  const { navigation } = props;
-  const { index, recipes } = props.route.params;
+  const { navigation} = props;
+  const { index, recipes, userInfo} = props.route.params;
   const img = recipes[index + 1].image;
   return (
     <View style={styles.container}>
@@ -44,7 +44,7 @@ export default function SuccessPage(props) {
             source={require("../assets/congratsBadge.png")}
             style={styles.badge}
           />
-          <Text>Point Status ---- + 10 points</Text>
+          <Text>Point Status {userInfo.points}</Text>
         </View>
       </View>
 

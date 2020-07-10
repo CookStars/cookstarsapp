@@ -11,7 +11,7 @@ import {
 
 
 export default function Cards(props) {
-  const { day, index, navigation, recipes } = props;
+  const { day, index, navigation, recipes, userInfo} = props;
   if(!recipes[index].image){
     recipes[index].image = 'https://webknox.com/recipeImages/641671-556x370.jpg'
   }  
@@ -26,7 +26,7 @@ export default function Cards(props) {
             index: index,
             day: day,
             recipes: recipes,
-
+            userInfo: userInfo
           })
         }
       >
