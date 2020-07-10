@@ -14,7 +14,9 @@ import { db } from '../firebaseconfig';
 import '@firebase/firestore';
 
 export default class UserProfile extends React.Component {
+
   state = { ...this.props.userInfo };
+
 
   handleClick() {
     this.props.logOut();
@@ -31,6 +33,8 @@ export default class UserProfile extends React.Component {
   }
 
   render() {
+    let user = this.props.userInfo
+    console.log("USERRRRRR", user)
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView showsHorizontalScrollIndicator={false}>
@@ -51,22 +55,9 @@ export default class UserProfile extends React.Component {
                 resizeMode='center'
               ></Image>
             </View>
-            <View style={styles.badge}>
-              <MaterialIcons
-                name='insert-chart'
-                size={18}
-                color='#DFD8C8'
-              ></MaterialIcons>
-            </View>
+
             <View style={styles.active}></View>
-            <View style={styles.add}>
-              <Ionicons
-                name='ios-folder'
-                size={48}
-                color='#DFD8C8'
-                style={{ marginTop: 6, marginLeft: 2 }}
-              ></Ionicons>
-            </View>
+
           </View>
           <View style={styles.infoContainer}>
             <Text style={[styles.text, { fontWeight: '200', fontSize: 36 }]}>
@@ -75,6 +66,7 @@ export default class UserProfile extends React.Component {
             <Text style={[styles.text, { color: '#AEB5BC', fontSize: 14 }]}>
               Master Chef
             </Text>
+            <Text style={styles.points}>Total Points:{user.points} </Text>
           </View>
 
           <View style={styles.statsContainer}>
@@ -169,15 +161,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     overflow: 'hidden',
   },
-  badge: {
-    backgroundColor: '#41444B',
-    position: 'absolute',
-    top: 20,
-    width: 40,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+
   active: {
     backgroundColor: '#34FFB9',
     position: 'absolute',
@@ -256,5 +240,16 @@ const styles = StyleSheet.create({
   buttonParent: {
     alignSelf: "center",
     marginTop: 30
+  },
+  points: {
+    borderColor: 'white',
+    backgroundColor: '#F6E27F',
+    marginTop: 15,
+    borderStartWidth: 1,
+    borderRadius: 12,
+    fontWeight: "bold",
+    overflow: "visible",
+    padding: 4,
+    textAlign: 'center'
   }
 });
