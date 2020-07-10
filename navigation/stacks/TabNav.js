@@ -35,9 +35,10 @@ export default function TabNav(props) {
         style: { backgroundColor: "#F4F1DE" },
       }}
     >
-      <Tab.Screen name="Leaderboard" component={LeaderboardStack} />
+      <Tab.Screen name="Leaderboard">
+        {() => <LeaderboardStack {...props} userInfo={userInfo} />}
+      </Tab.Screen>
       <Tab.Screen name="Home" component={HomeStack} />
-
       <Tab.Screen name="Profile">
         {(props) => (
           <UserProfileStack {...props} userInfo={userInfo} logOut={logOut} />

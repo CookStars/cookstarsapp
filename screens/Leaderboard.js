@@ -3,17 +3,17 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { db } from "../firebaseconfig.js";
 
 export default class Leaderboard extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       users: [],
       status: false,
+      userInfo: this.props.userInfo,
     };
     this.getUsers = this.getUsers.bind(this);
   }
 
   async getUsers() {
-    console.log("I got into getUsers function");
     let allUsers = [];
     const users = await db.collection("users").get();
     if (users.empty) {
@@ -25,37 +25,41 @@ export default class Leaderboard extends Component {
       allUsers.push(doc.data());
     });
 
-    console.log("HERE ARE ALL THE USERS", allUsers);
-
     this.setState({ users: allUsers, status: true });
   }
 
   componentDidMount() {
-    console.log("componentDidMount ran");
     this.getUsers();
   }
 
   render() {
-    // const users = this.state.users;
-    // console.log(users);
+    const users = this.state.users;
+    const currentUser = this.state.userInfo;
+
     if (!this.state.status) {
-      console.log("no state fount, run componentDidMount");
       return null;
     }
 
-    console.log("I got users oon state", this.state.users);
     return (
       <View style={styles.container}>
+        <Text>Leaderboard</Text>
+        <Text styles={styles.personalPoints}>
+          Your total points: {currentUser.points}
+        </Text>
         <ScrollView>
-          {this.state.users.map((user, index) => {
-            return (
-              <View key={index}>
-                <Text style={styles.user}>
-                  {user.firstName || "Unknown"} Total Points: {user.points}
-                </Text>
-              </View>
-            );
-          })}
+          {users
+            .sort((a, b) => a.points - b.points)
+            .map((user, index) => {
+              return (
+                <View key={index} style={styles.userRow}>
+                  <Text>{index}</Text>
+                  <Text style={styles.user}>
+                    {user.firstName || "Mysterious Cook"}
+                  </Text>
+                  <Text>Total Points: {user.points}</Text>
+                </View>
+              );
+            })}
         </ScrollView>
       </View>
     );
@@ -66,14 +70,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    marginTop: 50,
     // alignItems: "center",
     // justifyContent: "center",
   },
   user: {
-    marginTop: 24,
-    padding: 30,
-    backgroundColor: "#f18f01",
+    // marginTop: 24,
+    padding: 10,
     fontSize: 24,
+  },
+  personalPoints: {
+    backgroundColor: "#fff",
+  },
+  userRow: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f18f01",
   },
 });
 
