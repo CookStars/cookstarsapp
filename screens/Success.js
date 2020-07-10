@@ -16,8 +16,8 @@ import {
 //may want to write congrats! you earned __ badge. or __ points to next badge!
 
 export default function SuccessPage(props) {
-  const { navigation} = props;
-  const { index, recipes, userInfo} = props.route.params;
+  const { navigation } = props;
+  const { index, recipes, userInfo } = props.route.params;
   const img = recipes[index + 1].image;
   return (
     <View style={styles.container}>
@@ -80,8 +80,7 @@ const styles = StyleSheet.create({
     alignContent: "space-around",
     width: "100%",
   },
-  image: {
-  },
+  image: {},
   banner: {
     width: Dimensions.get("screen").width,
     height: 100,

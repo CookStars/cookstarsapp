@@ -18,7 +18,7 @@ export default function Steps(props) {
   const [currStep, setCurrStep] = useState(0);
 
   const { navigation } = props;
-  let { index, recipes, userInfo } = props.route.params;
+  let { index, recipes, userInfo, recipeCompleted } = props.route.params;
   const currRecipeId = recipes[index].id;
   const currRecipeSteps = recipes[index].analyzedInstructions[0].steps;
   const { equipment, ingredients, number, step } = currRecipeSteps[currStep];
@@ -38,7 +38,7 @@ export default function Steps(props) {
           recipeHistory: {...recipeHistory, [currRecipeId]: recipes[index] },
         });
     } 
-
+    recipeCompleted()
     userInfo.points += 10;
   };
 

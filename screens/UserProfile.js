@@ -34,7 +34,6 @@ export default class UserProfile extends React.Component {
 
   render() {
     let user = this.props.userInfo
-    console.log("USERRRRRR", user)
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView showsHorizontalScrollIndicator={false}>

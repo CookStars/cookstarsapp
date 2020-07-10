@@ -30,9 +30,15 @@ export default class HomeScreen extends Component {
     this.state = {
       vegan: [],
       meatlover: [],
+      recipeFinished: false
     };
+    this.recipeCompleted = this.recipeCompleted.bind(this)
     this.getRecipes = this.getRecipes.bind(this);
   }
+
+  recipeCompleted = () => {
+    this.setState({recipeFinished: true});
+  };
 
   async getRecipes(pref) {
     let allRecipes;
@@ -61,6 +67,8 @@ export default class HomeScreen extends Component {
           navigation={this.props.navigation}
           recipes={this.state.vegan}
           userInfo = {this.props.userInfo}
+          recipeFinished={this.state.recipeFinished}
+          recipeCompleted={this.recipeCompleted}
         />
       ));
     };
@@ -75,6 +83,8 @@ export default class HomeScreen extends Component {
           navigation={this.props.navigation}
           recipes={this.state.vegan}
           userInfo={this.props.userInfo}
+          recipeFinished={this.state.recipeFinished}
+          recipeCompleted={this.recipeCompleted}
         />
         <Text style={styles.Text}>Recipes of the Week</Text>
         <ScrollView

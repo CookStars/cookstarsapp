@@ -29,9 +29,9 @@ export default class SingleRecipe extends Component {
     ];
     const today = weekdays[new Date().getDay()];
     const { navigation } = this.props;
-    const { index, recipes, userInfo } = this.props.route.params;
+    const { index, recipes, userInfo, recipeCompleted, recipeFinished } = this.props.route.params;
 
-    if (weekdays[index] === today) {
+    if (weekdays[index] === today && !recipeFinished) {
       return (
         <View style={styles.startButton}>
           <Button
@@ -41,6 +41,7 @@ export default class SingleRecipe extends Component {
                 index: index,
                 recipes: recipes,
                 userInfo: userInfo,
+                recipeCompleted: recipeCompleted
               });
             }}
           />
