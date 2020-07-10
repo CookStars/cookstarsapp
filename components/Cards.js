@@ -12,8 +12,11 @@ import {
 
 export default function Cards(props) {
   const { day, index, navigation, recipes } = props;
-  // console.log({ recipes, rIndex: recipes[index], index });
-  const img = recipes[index].image;
+  if(!recipes[index].image){
+    recipes[index].image = 'https://webknox.com/recipeImages/641671-556x370.jpg'
+  }  
+  let img = recipes[index].image
+  const today = new Date().getDay();
   return (
     <View style={styles.cardContainer}>
       <TouchableOpacity
@@ -22,11 +25,11 @@ export default function Cards(props) {
           navigation.navigate("SingleRecipe", {
             index: index,
             day: day,
-            recipe: recipes[index],
+            recipes: recipes,
+
           })
         }
       >
-
         <View style={styles.imgContainer}>
           {/* {showRecipeImg()} */}
           <Image

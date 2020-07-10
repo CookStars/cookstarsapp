@@ -9,19 +9,16 @@ import {
   Dimensions,
 } from "react-native";
 
-
 export default function CardView(props) {
   const { navigation, recipes } = props;
   const today = new Date().getDay();
   const img = recipes[today].image;
 
-
   return (
     <View style={styles.cardContainer}>
       <TouchableOpacity
         activeOpacity={0.7}
-
-        onPress={() => navigation.navigate("SingleRecipe", { index: today })}
+        onPress={() => navigation.navigate("SingleRecipe", { index: today, recipes: recipes})}
       >
         <View style={styles.imgContainer}>
           <Image
