@@ -6,7 +6,6 @@ const HomeSt = createStackNavigator();
 
 export default function HomeStack(props) {
   const { userInfo } = props;
-  console.log(userInfo);
   return (
     <HomeSt.Navigator
       initialRouteName="Home"
