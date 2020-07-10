@@ -10,7 +10,7 @@ import {
 } from "react-native";
 
 export default function CardView(props) {
-  const { navigation, recipes } = props;
+  const { navigation, recipes, userInfo } = props;
   const today = new Date().getDay();
   const img = recipes[today].image;
 
@@ -18,7 +18,7 @@ export default function CardView(props) {
     <View style={styles.cardContainer}>
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => navigation.navigate("SingleRecipe", { index: today, recipes: recipes})}
+        onPress={() => navigation.navigate("SingleRecipe", { index: today, recipes: recipes, userInfo: userInfo})}
       >
         <View style={styles.imgContainer}>
           <Image

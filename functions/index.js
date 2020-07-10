@@ -20,7 +20,7 @@ exports.scheduleFunctions = functions.pubsub
     const res = await axios.get(`https://api.spoonacular.com/recipes/random?apiKey=${key}&tags=vegan,dinner&number=10`)
     // const data = await res.json()
     newData = refactorData(res.data)
-    console.log(newData)
+    // console.log(newData)
     newData = JSON.parse(JSON.stringify(newData))
  db.collection('recipes').doc('vegan').set({ recipe: newData } )
   
@@ -46,8 +46,8 @@ exports.newUserSignUp = functions.auth.user().onCreate(user => {
     lastName: "",
     points: 0,
     foodPreference: "",
-    favoriteRecipes: [{}],
-    recipeHistory: []
+    favoriteRecipes: {},
+    recipeHistory: {}
 
 
   })

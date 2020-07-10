@@ -25,8 +25,8 @@ const weekdays = [
 ];
 
 export default class HomeScreen extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       vegan: [],
       meatlover: [],
@@ -60,6 +60,7 @@ export default class HomeScreen extends Component {
           index={index}
           navigation={this.props.navigation}
           recipes={this.state.vegan}
+          userInfo = {this.props.userInfo}
         />
       ));
     };
@@ -73,6 +74,7 @@ export default class HomeScreen extends Component {
           style={styles.card}
           navigation={this.props.navigation}
           recipes={this.state.vegan}
+          userInfo={this.props.userInfo}
         />
         <Text style={styles.Text}>Recipes of the Week</Text>
         <ScrollView
