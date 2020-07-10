@@ -29,13 +29,14 @@ export default class SingleRecipe extends Component {
     ];
     const today = weekdays[new Date().getDay()];
     const { navigation } = this.props
-    const { index, recipes} = this.props.route.params;
+    const { index, recipe} = this.props.route.params;
+
     if (weekdays[index] === today) {
       return (
         <View style={styles.startButton}>
           <Button
             title="Start"
-            onPress={() => {navigation.navigate("Steps", {index:index, recipes:recipes} )}}
+            onPress={() => {navigation.navigate("Steps", {index:index, recipe:recipe} )}}
           />
         </View>
       );
@@ -45,12 +46,17 @@ export default class SingleRecipe extends Component {
   }
 
   render() {
- 
-    const { index, recipes } = this.props.route.params;
-    const { summary, title, image, ingredients } = recipes[index]
-    const listIngredients = ingredients.map(ingredient => ingredient.original).join(', ')
-    const newTagsSummary = summary.split(/\<a\b[^>]*>/).join('<b><i>').split(/\<\/a>/).join('</i></b>')
-
+    const { index, recipe } = this.props.route.params;
+    console.log('props',this.props)
+    const { summary, title, image, ingredients } = recipe
+    const listIngredients = ingredients
+      .map((ingredient) => ingredient.original)
+      .join(", ");
+    const newTagsSummary = summary
+      .split(/\<a\b[^>]*>/)
+      .join("<b><i>")
+      .split(/\<\/a>/)
+      .join("</i></b>");
 
     return (
       <SafeAreaView>
@@ -69,19 +75,18 @@ export default class SingleRecipe extends Component {
                   }}
                 />
               </View>
+            </View>
+            <View>
+              <View style={styles.text}>
+                <HTML html={newTagsSummary} baseFontStyle={styles.text} />
+              </View>
               <View>
-                <View style={styles.text}>
-                  <HTML html={newTagsSummary} baseFontStyle={styles.text} />
-                </View>
-                <View >
                 <Text style={styles.text}>
                   <Text style={{ fontWeight: "bold" }}>Ingredients: </Text>
                   {listIngredients}
                 </Text>
                 </View>
-              
               </View>
-            </View>
           </ScrollView>
           <View>{this.checkDay()}</View>
         </View>

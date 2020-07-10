@@ -8,19 +8,30 @@ import {
   Modal,
   Dimensions,
 } from "react-native";
-// import { recipes,recipesVeganAPI } from "../Seed";
+
+
+
+
+
 export default function Cards(props) {
-  const { day, index, navigation, recipes} = props;
-
-
+  const { day, index, navigation, recipes } = props;
+  // console.log({ recipes, rIndex: recipes[index], index });
   if(!recipes[index].image){
     recipes[index].image = 'https://webknox.com/recipeImages/641671-556x370.jpg'
   }  
   let img = recipes[index].image
-
-return (
+  return (
     <View style={styles.cardContainer}>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("SingleRecipe",{index:index,day:day, recipes:recipes})}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() =>
+          navigation.navigate("SingleRecipe", {
+            index: index,
+            day: day,
+            recipe: recipes[index],
+          })
+        }
+      >
         <View style={styles.imgContainer}>
           {/* {showRecipeImg()} */}
           <Image

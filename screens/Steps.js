@@ -15,9 +15,10 @@ const equipmentLink = "https://spoonacular.com/cdn/equipment_100x100/";
 
 export default function Steps(props) {
   const [currStep, setCurrStep] = useState(0);
+  
   const { navigation } = props;
-  const { index, recipes } = props.route.params;
-  const currRecipeSteps = recipes[index].analyzedInstructions[0].steps;
+  const { index, recipe } = props.route.params;
+  const currRecipeSteps = recipe.analyzedInstructions[0].steps;
   const { equipment, ingredients, number, step } = currRecipeSteps[currStep];
 
   const checkStep = (currStep) => {
