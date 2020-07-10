@@ -46,8 +46,8 @@ exports.newUserSignUp = functions.auth.user().onCreate(user => {
     lastName: "",
     points: 0,
     foodPreference: "",
-    favoriteRecipes: [{}],
-    recipeHistory: []
+    favoriteRecipes: {},
+    recipeHistory: {}
 
 
   })

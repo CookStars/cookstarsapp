@@ -19,16 +19,27 @@ export default function Steps(props) {
 
   const { navigation } = props;
   let { index, recipes, userInfo } = props.route.params;
+  const currRecipeId = recipes[index].id;
   const currRecipeSteps = recipes[index].analyzedInstructions[0].steps;
   const { equipment, ingredients, number, step } = currRecipeSteps[currStep];
   const newUserPts = userInfo.points + 10;
+  const recipeHistory = userInfo.recipeHistory
 
   const updatePoints = () => {
-    db.collection("users").doc(userInfo.userId).update({
-      points: newUserPts,
-    });
-    
-    userInfo.points +=10
+    if (userInfo.recipeHistory.hasOwnProperty(currRecipeId)) {
+      db.collection("users").doc(userInfo.userId).update({
+        points: newUserPts,
+      });
+    } else {
+      db.collection("users") 
+        .doc(userInfo.userId)
+        .update({
+          points: newUserPts,
+          recipeHistory: {...recipeHistory, [currRecipeId]: recipes[index] },
+        });
+    } 
+
+    userInfo.points += 10;
   };
 
   const checkStep = (currStep) => {
