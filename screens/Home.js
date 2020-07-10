@@ -39,7 +39,7 @@ export default class HomeScreen extends Component {
     const recipes = await db.collection("recipes").doc(pref).get();
     if (recipes.exists) {
       allRecipes = recipes.data().recipe;
-      console.log("HERE IS MY DATA", allRecipes);
+      console.log("Success, recipes found");
     } else {
       console.log("No data found");
     }
