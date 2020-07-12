@@ -11095,7 +11095,9 @@ const extraRecipes = [
 
 const refactorData = (recipesAPI) => {
   const recipesArr = recipesAPI.recipes;
-  let newArr = recipesArr.map((recipe) => {
+  let newArr = []
+for (let i = 0; i < recipesArr.length; i++){
+  let recipe = recipesArr[i]
     const {
       id,
       vegan,
@@ -11110,13 +11112,17 @@ const refactorData = (recipesAPI) => {
       spoonacularSourceUrl,
     } = recipe;
 
-      const ingredients = extendedIngredients.map(ingredient => {
-        const {id, name, original, image } = ingredient
-        return {id, name, original, image}
-      }
-        )
+    if (analyzedInstructions.length > 1){
+      continue;
+    }
 
-    return {
+    const ingredients = extendedIngredients.map(ingredient => {
+      const { id, name, original, image } = ingredient
+      return { id, name, original, image }
+    }
+    )
+    
+   newArr.push({
       id,
       vegan,
       title,
@@ -11128,8 +11134,8 @@ const refactorData = (recipesAPI) => {
       instructions,
       analyzedInstructions,
       spoonacularSourceUrl,
-    };
-  });
+    })
+  }
   return newArr;
 };
 recipes = refactorData(recipes)
