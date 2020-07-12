@@ -13,17 +13,16 @@ import {
 } from "react-native";
 import { db } from "../firebaseconfig";
 
-const ingredientsLink = "https://spoonacular.com/cdn/ingredients_100x100/";
-const equipmentLink = "https://spoonacular.com/cdn/equipment_100x100/";
+const ingredientsLink = "https://spoonacular.com/cdn/ingredients_500x500/";
+const equipmentLink = "https://spoonacular.com/cdn/equipment_500x500/";
 
 export default function Steps(props) {
   const [currStep, setCurrStep] = useState(0);
 
   const { navigation } = props;
   let { index, recipes, userInfo, recipeCompleted } = props.route.params;
-  const currRecipeId = recipes[index + 1].id;
-  //change index back --------------------------------
-  const currRecipeSteps = recipes[index + 1].analyzedInstructions[0].steps;
+  const currRecipeId = recipes[index].id;
+  const currRecipeSteps = recipes[index ].analyzedInstructions[0].steps;
   const { equipment, ingredients, number, step } = currRecipeSteps[currStep];
   const newUserPts = userInfo.points + 10;
   const recipeHistory = userInfo.recipeHistory;
@@ -48,7 +47,7 @@ export default function Steps(props) {
   const checkStep = (currStep) => {
     if (currStep === 0) {
       return (
-        <View>
+        <View style={{ flexDirection:'row-reverse', justifyContent:'space-between'}}>
           <Button
             title="NEXT"
             onPress={() => {
@@ -59,7 +58,7 @@ export default function Steps(props) {
       );
     } else if (0 < currStep && currStep < currRecipeSteps.length - 1) {
       return (
-        <View>
+        <View style={{ flexDirection:'row', justifyContent:'space-between'}}>
           <View>
             <Button
               title="PREVIOUS"
@@ -80,8 +79,8 @@ export default function Steps(props) {
       );
     } else {
       return (
-        <View style={{borderWidth: 3, borderColor:'orange', flexDirection:'row', justifyContent:'space-between'}}>
-          <View style={{borderWidth:3, borderColor: 'purple'}}>
+        <View style={{ flexDirection:'row', justifyContent:'space-between'}}>
+          <View >
             <Button
               title="PREVIOUS"
               onPress={() => {
@@ -89,7 +88,7 @@ export default function Steps(props) {
               }}
             />
           </View>
-          <View style={{borderWidth:3, borderColor: 'yellow'} }>
+          <View >
             <Button
               title="FINISH"
               onPress={() => {
@@ -111,13 +110,14 @@ export default function Steps(props) {
     const listEquipment = equipment.map((tool, index) => {
       const image = equipmentLink + tool.image;
       return (
-        <View key={index}>
+        <View key={index} style={{alignContent:'space-between'}}>
           <Image
             source={{
               width: 150,
               height: 150,
               uri: image,
             }}
+            style={{borderWidth: 3,  }}
           />
           <Text>{tool.name}</Text>
         </View>
@@ -126,7 +126,7 @@ export default function Steps(props) {
 
     if (equipment.length) {
       return (
-        <View style={ {borderWidth: 3, flex: 3, borderColor: 'blue', padding: 5, alignContent: 'space-between'}} >
+        <View style={ { flex: 3, padding: 5, alignContent: 'space-between'}} >
         <View>
           <Text>Equipment</Text>
           <ScrollView
@@ -139,35 +139,37 @@ export default function Steps(props) {
         </View>
         </View>
       );
-    } else return;
+    } else {
+      return(
+      <View style={{borderWidth:3, flex:10, justifyContent: 'center', alignItems:'center'}}>
+        <Text style={{fontSize: 30}}>No Additional Equipment</Text>
+      </View>)
+    };
   };
 
   const checkIngredients = () => {
     const listIngredients = ingredients.map((ingredient, index) => {
       const image = ingredientsLink + ingredient.image;
       return (
-        <View key={index}>
+        <View key={index} style={ { flex: 3, padding: 5, alignContent: 'space-between'}}>
           <Image
             source={{
               width: 150,
               height: 150,
               uri: image,
             }}
-            // style={styles.image}
-          />
-          <Text>{ingredient.name}</Text>
+            style={{resizeMode:'center'}}
+            />
+          <Text style={{ alignSelf:'center'}}>{ingredient.name}</Text>
         </View>
       );
     });
 
     if (ingredients.length) {
       return (
-        <View style={ {borderWidth: 3, flex: 3, borderColor: 'green', padding: 5, alignContent: 'space-between'}} >
-          <View>
-
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text>Ingredients</Text>
+        <View style={ { flex: 3,  padding: 5, alignContent: 'space-between', backgroundColor:'white'}} >
+          <View style={{ flex: 7 }}>
+            <Text style={{alignSelf:'center', fontSize: 30, justifyContent: 'center'}}>Ingredients</Text>
           </View>
           <ScrollView
             key={index}
