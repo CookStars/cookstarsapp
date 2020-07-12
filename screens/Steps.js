@@ -21,8 +21,8 @@ export default function Steps(props) {
 
   const { navigation } = props;
   let { index, recipes, userInfo, recipeCompleted } = props.route.params;
-  const currRecipeId = recipes[index].id;
-  const currRecipeSteps = recipes[index ].analyzedInstructions[0].steps;
+  const currRecipeId = recipes[2].id;
+  const currRecipeSteps = recipes[2].analyzedInstructions[0].steps;
   const { equipment, ingredients, number, step } = currRecipeSteps[currStep];
   const newUserPts = userInfo.points + 10;
   const recipeHistory = userInfo.recipeHistory;
@@ -47,7 +47,7 @@ export default function Steps(props) {
   const checkStep = (currStep) => {
     if (currStep === 0) {
       return (
-        <View style={{ flexDirection:'row-reverse', justifyContent:'space-between'}}>
+        <View style={{ flexDirection:'row-reverse', justifyContent:'space-between', padding:10}}>
           <Button
             title="NEXT"
             onPress={() => {
@@ -58,7 +58,7 @@ export default function Steps(props) {
       );
     } else if (0 < currStep && currStep < currRecipeSteps.length - 1) {
       return (
-        <View style={{ flexDirection:'row', justifyContent:'space-between'}}>
+        <View style={{ flexDirection:'row', justifyContent:'space-between', alignContent:'center', padding:10}}>
           <View>
             <Button
               title="PREVIOUS"
@@ -79,7 +79,7 @@ export default function Steps(props) {
       );
     } else {
       return (
-        <View style={{ flexDirection:'row', justifyContent:'space-between'}}>
+        <View style={{ flexDirection:'row', justifyContent:'space-between', padding: 10}}>
           <View >
             <Button
               title="PREVIOUS"
@@ -117,9 +117,9 @@ export default function Steps(props) {
               height: 150,
               uri: image,
             }}
-            style={{borderWidth: 3,  }}
+            style={{ resizeMode:'center'}}
           />
-          <Text>{tool.name}</Text>
+          <Text style={{ alignSelf:'center'}}>{tool.name}</Text>
         </View>
       );
     });
@@ -128,7 +128,7 @@ export default function Steps(props) {
       return (
         <View style={ { flex: 3, padding: 5, alignContent: 'space-between'}} >
         <View>
-          <Text>Equipment</Text>
+          <Text style={{padding:8,fontSize:18}}>Equipment</Text>
           <ScrollView
             key={index}
             horizontal={true}
@@ -141,8 +141,9 @@ export default function Steps(props) {
       );
     } else {
       return(
-      <View style={{borderWidth:3, flex:10, justifyContent: 'center', alignItems:'center'}}>
-        <Text style={{fontSize: 30}}>No Additional Equipment</Text>
+
+      <View style={{ flex:10, justifyContent: 'center', alignItems:'center'}}>
+        <Text style={{fontSize: 18}}>No Equipment To Show</Text>
       </View>)
     };
   };
@@ -151,7 +152,7 @@ export default function Steps(props) {
     const listIngredients = ingredients.map((ingredient, index) => {
       const image = ingredientsLink + ingredient.image;
       return (
-        <View key={index} style={ { flex: 3, padding: 5, alignContent: 'space-between'}}>
+        <View key={index} style={ { padding: 5, alignContent: 'space-between'}}>
           <Image
             source={{
               width: 150,
@@ -167,9 +168,9 @@ export default function Steps(props) {
 
     if (ingredients.length) {
       return (
-        <View style={ { flex: 3,  padding: 5, alignContent: 'space-between', backgroundColor:'white'}} >
-          <View style={{ flex: 7 }}>
-            <Text style={{alignSelf:'center', fontSize: 30, justifyContent: 'center'}}>Ingredients</Text>
+        <View style={ { flex: 3,  padding: 5, alignContent: 'space-between'}} >
+          <View style={{  }}>
+            <Text style={{padding:8, fontSize: 18, justifyContent: 'center'}}>Ingredients</Text>
           </View>
           <ScrollView
             key={index}
@@ -181,6 +182,12 @@ export default function Steps(props) {
         </View>
       );
     }
+    else{
+      return(
+        <View style={{ flex:10, justifyContent: 'center', alignItems:'center'}}>
+        <Text style={{fontSize: 18}}>No Ingredients To Show</Text>
+      </View>)
+    }
   };
 
 
@@ -191,18 +198,20 @@ export default function Steps(props) {
 
 
   return (
-    <SafeAreaView style={{ flex: 1, borderWidth: 1 }}>
-      <View style={{ flex: 1, borderWidth: 1 }}>
-        <Text style={styles.title}>Step {number}</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor:'white'}}>
+      <View style={{ flex: 1}}>
+        <Text style={{fontSize: 30, alignSelf:'center', color:'blue'}}>Step {number}</Text>
       </View>
-      <View style={{flex:11, borderWidth: 1, borderColor: 'red'}}>
-        <View style={styles.listContainer, {flex: 5}}>{checkEquipment()}</View>
-        <View style={styles.listContainer, {flex: 5}}>{checkIngredients()}</View>
-        <View style={styles.stepContainer, {flex: 4}}>
-          <Text>{step}</Text>
+      <View style={{flex:15}}>
+        <View style={styles.listContainer, {flex: 4}}>{checkEquipment()}</View>
+        <View style={styles.listContainer, {flex: 4}}>{checkIngredients()}</View>
+        <View style={{flex:4}}>
+        <ScrollView >
+          <Text style={{fontSize: 24, color:'gray', padding: 20, justifyContent:'center'}}>{step}</Text>
+        </ScrollView>
         </View>
       </View>
-      <View style={{ flex: 1, borderWidth: 1 }}>
+      <View style={{ flex: 1.5}}>
         <View style={styles.listContainer}>{checkStep(currStep)}</View>
       </View>
     </SafeAreaView>
