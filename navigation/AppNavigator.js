@@ -5,14 +5,17 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { TabNav, AuthStack } from './stacks/index';
 import { firebase, db } from '../firebaseconfig';
 import AsyncStorage from '@react-native-community/async-storage';
+import { connect } from 'react-redux';
+import { fetchVeganRecipes } from '../redux/recipeReducer';
+import { fetchUserInfo } from '../redux/userReducer';
 
 const Stack = createStackNavigator();
 
-export default class AppNavigator extends React.Component {
+export class AppNavigator extends React.Component {
   constructor() {
     super();
     this.state = { isLoggedIn: false };
-    this.log();
+    // this.log();
 
     this.log = this.log.bind(this);
     this.logOut = this.logOut.bind(this);
@@ -93,6 +96,10 @@ export default class AppNavigator extends React.Component {
       });
   }
 
+  async componentDidMount() {
+    await this.props.getUserInfo();
+  }
+
   render() {
     return (
       <NavigationContainer>
@@ -100,7 +107,7 @@ export default class AppNavigator extends React.Component {
           style={styles.container}
           screenOptions={{ headerShown: false }}
         >
-          {this.state.isLoggedIn ? (
+          {this.props.users.isLoggedIn ? (
             <Stack.Screen
               name='TabNav'
               screenOptions={{ headerShown: false }}
@@ -122,6 +129,20 @@ export default class AppNavigator extends React.Component {
     );
   }
 }
+
+// Map State + Dispatch
+const mapState = (state) => ({
+  vegan: state.recipes,
+  users: state.user,
+});
+
+const mapDispatch = (dispatch) => {
+  return {
+    getUserInfo: () => dispatch(fetchUserInfo()),
+  };
+};
+
+export default connect(mapState, mapDispatch)(AppNavigator);
 
 const styles = StyleSheet.create({
   container: {
