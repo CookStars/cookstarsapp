@@ -10,30 +10,45 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
+import { logOut, update } from '../redux/userReducer';
 import { db } from '../firebaseconfig';
 import '@firebase/firestore';
+import { recipes } from '../Seed';
 
-export default class UserProfile extends React.Component {
-
-  state = { ...this.props.userInfo };
-
-
+export class UserProfile extends React.Component {
   handleClick() {
-    this.props.logOut();
+    this.props.logUserOut();
   }
 
   componentDidMount() {
-    // Update user profile page with new data
-    // Listener function for any changes on the database
+    // listener to update any user information across screens
     db.collection('users')
-      .doc(this.state.userId)
+      .doc(this.props.userInfo.userId)
       .onSnapshot((doc) => {
-        this.setState(doc.data());
+        this.props.updateInfo(doc.data());
       });
   }
 
+  history = () => {
+    const recipeHistory = this.props.userInfo.recipeHistory;
+    for (let key in recipeHistory) {
+      return (
+        <View style={styles.mediaImageContainer}>
+          <Image
+            source={{
+              uri: recipeHistory[key].image,
+            }}
+            style={styles.image}
+            resizeMode='cover'
+          />
+        </View>
+      );
+    }
+  };
+
   render() {
-    let user = this.props.userInfo
+    let user = this.props.userInfo;
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView showsHorizontalScrollIndicator={false}>
@@ -56,11 +71,10 @@ export default class UserProfile extends React.Component {
             </View>
 
             <View style={styles.active}></View>
-
           </View>
           <View style={styles.infoContainer}>
             <Text style={[styles.text, { fontWeight: '200', fontSize: 36 }]}>
-              {this.state.email}
+              {user.email}
             </Text>
             <Text style={[styles.text, { color: '#AEB5BC', fontSize: 14 }]}>
               Master Chef
@@ -74,6 +88,7 @@ export default class UserProfile extends React.Component {
               <Text>Favorite Recipes</Text>
             </View>
           </View>
+          {this.history()}
           <View style={{ marginTop: 32 }}>
             <ScrollView
               horizontal={true}
@@ -133,6 +148,20 @@ export default class UserProfile extends React.Component {
     );
   }
 }
+
+// Map State + Dispatch
+const mapState = (state) => ({
+  userInfo: state.user,
+});
+
+const mapDispatch = (dispatch) => {
+  return {
+    updateInfo: (data) => dispatch(update(data)),
+    logUserOut: () => dispatch(logOut()),
+  };
+};
+
+export default connect(mapState, mapDispatch)(UserProfile);
 
 const styles = StyleSheet.create({
   container: {
@@ -228,17 +257,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 12,
     fontSize: 24,
-    fontWeight: "bold",
-    overflow: "hidden",
+    fontWeight: 'bold',
+    overflow: 'hidden',
     padding: 12,
     textAlign: 'center',
-
-
-
   },
   buttonParent: {
-    alignSelf: "center",
-    marginTop: 30
+    alignSelf: 'center',
+    marginTop: 30,
   },
   points: {
     borderColor: 'white',
@@ -246,9 +272,9 @@ const styles = StyleSheet.create({
     marginTop: 15,
     borderStartWidth: 1,
     borderRadius: 12,
-    fontWeight: "bold",
-    overflow: "visible",
+    fontWeight: 'bold',
+    overflow: 'visible',
     padding: 4,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
