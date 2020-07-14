@@ -34,15 +34,15 @@ export default function RegistrationScreen({ navigation }) {
             .auth()
             .createUserWithEmailAndPassword(email, password)
             .then(async (response) => {
-                db.collection('users')
-                    .doc(response.user.uid)
-                    .update({
-                        firstName: firstName ? firstName : 'Mysterious Cook',
-                        lastName: lastName ? lastName : '',
-                        foodPreference: foodPreference
-                            ? foodPreference.toString()
-                            : 'vegan',
-                    })
+                const user = db.collection('users').doc(response.user.uid)
+                console.log('USER FROM REGISTRATION', response.user.uid)
+                await user.update({
+                    firstName: firstName ? firstName : 'Mysterious Cook',
+                    lastName: lastName ? lastName : '',
+                    foodPreference: foodPreference
+                        ? foodPreference.toString()
+                        : 'vegan',
+                })
                 // uid = response.user.uid
             })
             .catch((error) => {
