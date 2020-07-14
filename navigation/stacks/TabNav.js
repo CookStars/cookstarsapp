@@ -9,7 +9,7 @@ const Tab = createBottomTabNavigator()
 
 export default function TabNav(props) {
     const { userInfo, logOut } = props
-    console.log('USER INFO TAB NAV;', userInfo)
+    // console.log('USER INFO TAB NAV;', userInfo)
     return (
         <Tab.Navigator
             initialRouteName="Home"
