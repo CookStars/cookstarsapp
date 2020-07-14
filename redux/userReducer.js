@@ -48,7 +48,7 @@ export const fetchUserInfo = () => async (dispatch) => {
     });
 
     // Set state with user information
-    const jsonValue = await AsyncStorage.getItem('userInfo');
+    // const jsonValue = await AsyncStorage.getItem('userInfo');
     // if (jsonValue) {
     //   dispatch(setUserInfo(JSON.parse(jsonValue)));
     // }

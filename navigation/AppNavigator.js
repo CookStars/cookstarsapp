@@ -132,7 +132,6 @@ export class AppNavigator extends React.Component {
 
 // Map State + Dispatch
 const mapState = (state) => ({
-  vegan: state.recipes,
   users: state.user,
 });
 

@@ -14,7 +14,7 @@ import { CardView, Cards } from '../components';
 import { recipes } from '../Seed';
 import { db } from '../firebaseconfig.js';
 import { connect } from 'react-redux';
-import { fetchVeganRecipes } from '../redux/recipeReducer';
+import { fetchRecipes } from '../redux/recipeReducer';
 
 const weekdays = [
   'Sunday',
@@ -41,44 +41,43 @@ export class HomeScreen extends Component {
   }
 
   componentDidMount() {
-    this.props.getVeganRecipes();
-    console.log(this.props);
+    const pref = this.props.userInfo.foodPreference;
+    this.props.getRecipes(pref);
+    // console.log(this.props);
   }
 
+  cards = () => {
+    return weekdays.map((weekday, index) => (
+      <Cards
+        key={index}
+        day={weekday}
+        index={index}
+        navigation={this.props.navigation}
+        recipes={this.props.recipes}
+        userInfo={this.props.userInfo}
+        // recipeFinished={this.state.recipeFinished}
+        // recipeCompleted={this.recipeCompleted}
+      />
+    ));
+  };
+
   render() {
-    const cards = () => {
-      return weekdays.map((weekday, index) => (
-        <Cards
-          key={index}
-          day={weekday}
-          index={index}
-          navigation={this.props.navigation}
-          recipes={this.props.vegan}
-          userInfo={this.props.userInfo}
-          // recipeFinished={this.state.recipeFinished}
-          // recipeCompleted={this.recipeCompleted}
-        />
-      ));
-    };
-    // if (!this.props.vegan.length) {
-    //   return null;
-    // }
     return (
       <View style={styles.container}>
-        <CardView
-          style={styles.card}
-          navigation={this.props.navigation}
-          recipes={this.props.vegan}
-          userInfo={this.props.userInfo}
-          // recipeFinished={this.state.recipeFinished}
-          // recipeCompleted={this.recipeCompleted}
-        />
-        <Text style={styles.Text}>Recipes of the Week</Text>
         <ScrollView
           vertical={true}
           contentContainerStyle={styles.scrollArea_contentContainerStyle}
         >
-          {cards()}
+          <CardView
+            style={styles.card}
+            navigation={this.props.navigation}
+            recipes={this.props.recipes}
+            userInfo={this.props.userInfo}
+            // recipeFinished={this.state.recipeFinished}
+            // recipeCompleted={this.recipeCompleted}
+          />
+          <Text style={styles.Text}>Recipes of the Week</Text>
+          {this.cards()}
         </ScrollView>
       </View>
     );
@@ -87,13 +86,13 @@ export class HomeScreen extends Component {
 
 // Map State + Dispatch
 const mapState = (state) => ({
-  vegan: state.recipes,
+  recipes: state.recipes,
   userInfo: state.user,
 });
 
 const mapDispatch = (dispatch) => {
   return {
-    getVeganRecipes: () => dispatch(fetchVeganRecipes()),
+    getRecipes: (pref) => dispatch(fetchRecipes(pref)),
   };
 };
 
