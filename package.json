@@ -6,7 +6,8 @@
         "ios": "expo start --ios",
         "web": "expo start --web",
         "eject": "expo eject",
-        "test": "jest"
+        "test": "jest",
+        "test:update-snapshots": "jest -u"
     },
     "jest": {
         "preset": "jest-expo",
@@ -28,6 +29,8 @@
         "@react-navigation/stack": "^5.6.2",
         "base-64": "^0.1.0",
         "enzyme": "^3.11.0",
+        "enzyme-adapter-react-15": "^1.4.1",
+        "enzyme-adapter-react-16": "^1.15.2",
         "expo": "~38.0.8",
         "expo-status-bar": "^1.0.2",
         "firebase": "7.9.0",

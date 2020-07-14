@@ -69,7 +69,7 @@ export default class Login extends Component {
                         underlineColorAndroid="transparent"
                         onChangeText={(email) => this.setState({ email })}
                         value={this.state.email}
-                        className="email"
+                        id="emailInput"
                     />
                 </View>
 

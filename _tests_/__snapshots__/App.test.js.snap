@@ -371,7 +371,7 @@ exports[`<App /> App test against snapshot 1`] = `
                                         >
                                           <TextInput
                                             allowFontScaling={true}
-                                            className="email"
+                                            id="emailInput"
                                             keyboardType="email-address"
                                             onChangeText={[Function]}
                                             placeholder="Email"
