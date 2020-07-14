@@ -18,34 +18,41 @@ export default function CardView(props) {
     recipeCompleted,
   } = props;
   const today = new Date().getDay();
-  const img = recipes[today].image;
 
   return (
     <View style={styles.cardContainer}>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() =>
-          navigation.navigate('SingleRecipe', {
-            index: today,
-            recipes: recipes,
-            userInfo: userInfo,
-            recipeCompleted: recipeCompleted,
-            recipeFinished: recipeFinished,
-          })
-        }
-      >
-        <View style={styles.imgContainer}>
-          <Image
-            source={{
-              uri: img,
-            }}
-            style={{ width: Dimensions.get('screen').width, height: 300 }}
-          />
-          <View style={styles.labelContainer}>
-            <Text style={styles.recipeOfTheDay}>Recipe of the Day</Text>
+      {recipes[today] ? (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() =>
+            navigation.navigate('SingleRecipe', {
+              index: today,
+              recipes: recipes,
+              userInfo: userInfo,
+              recipeCompleted: recipeCompleted,
+              recipeFinished: recipeFinished,
+            })
+          }
+        >
+          <View style={styles.imgContainer}>
+            <Image
+              source={{
+                uri: recipes[today].image
+                  ? recipes[today].image
+                  : 'https://webknox.com/recipeImages/641671-556x370.jpg',
+              }}
+              style={{ width: Dimensions.get('screen').width, height: 300 }}
+            />
+            <View style={styles.labelContainer}>
+              <Text style={styles.recipeOfTheDay}>Recipe of the Day</Text>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity activeOpacity={0.7}>
+          <View style={styles.imgContainer}></View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }

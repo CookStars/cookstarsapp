@@ -37,33 +37,15 @@ export class HomeScreen extends Component {
     // };
     // this.recipeCompleted = this.recipeCompleted.bind(this);
     // this.getRecipes = this.getRecipes.bind(this);
-    this.props.getVeganRecipes();
+    // this.props.getVeganRecipes();
   }
-
-  // recipeCompleted = () => {
-  //   this.setState({ recipeFinished: true });
-  // };
-
-  // async getRecipes(pref) {
-  //   let allRecipes;
-  //   const recipes = await db.collection('recipes').doc(pref).get();
-  //   if (recipes.exists) {
-  //     allRecipes = recipes.data().recipe;
-  //     console.log('Success, recipes found');
-  //   } else {
-  //     console.log('No data found');
-  //   }
-
-  //   this.setState({ vegan: allRecipes });
-  // }
 
   componentDidMount() {
     this.props.getVeganRecipes();
+    console.log(this.props);
   }
 
   render() {
-    console.log(this.props);
-    // this.props.getVeganRecipes();
     const cards = () => {
       return weekdays.map((weekday, index) => (
         <Cards
@@ -72,7 +54,7 @@ export class HomeScreen extends Component {
           index={index}
           navigation={this.props.navigation}
           recipes={this.props.vegan}
-          // userInfo={this.props.userInfo}
+          userInfo={this.props.userInfo}
           // recipeFinished={this.state.recipeFinished}
           // recipeCompleted={this.recipeCompleted}
         />
@@ -87,7 +69,7 @@ export class HomeScreen extends Component {
           style={styles.card}
           navigation={this.props.navigation}
           recipes={this.props.vegan}
-          // userInfo={this.props.userInfo}
+          userInfo={this.props.userInfo}
           // recipeFinished={this.state.recipeFinished}
           // recipeCompleted={this.recipeCompleted}
         />
@@ -106,6 +88,7 @@ export class HomeScreen extends Component {
 // Map State + Dispatch
 const mapState = (state) => ({
   vegan: state.recipes,
+  userInfo: state.user,
 });
 
 const mapDispatch = (dispatch) => {
