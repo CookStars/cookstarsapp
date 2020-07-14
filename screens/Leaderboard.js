@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView, Alert, Image } from "react-native";
 import { db } from "../firebaseconfig.js";
 import Lead from "react-native-leaderboard";
 import { ButtonGroup } from "react-native-elements";
+import { fetchAllUsers } from '../redux/leaderboardReducer'
 
 export default class Leaderboard extends Component {
   constructor(props) {
@@ -55,7 +56,7 @@ export default class Leaderboard extends Component {
 
   //ALERT FUNCTION - CAN CLICK ON EACH USER IN LEADERBOARD TO SEE THEIR POINTS
   alert = (title, body) => {
-    Alert.alert(title, body, [{ text: "OK", onPress: () => {} }], {
+    Alert.alert(title, body, [{ text: "OK", onPress: () => { } }], {
       cancelable: false,
     });
   };
