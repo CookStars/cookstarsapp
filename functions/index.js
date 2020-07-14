@@ -27,7 +27,7 @@ exports.getVeganRecipes = functions.pubsub
     return null;
   });
 
-xports.getMeatRecipes = functions.pubsub
+exports.getMeatRecipes = functions.pubsub
   .schedule('0 4 * * 0')
   .onRun(async (context) => {
 
@@ -40,75 +40,75 @@ xports.getMeatRecipes = functions.pubsub
     db.collection('recipes').doc('meatlover').set({ recipe: newData })
 
     return null;
+  });
 
 
 
-
-    exports.newUserSignUp = functions.auth.user().onCreate(user => {
-      return admin.firestore().collection('users').doc(user.uid).set({
-        email: user.email,
-        firstName: "",
-        lastName: "",
-        points: 0,
-        foodPreference: "",
-        favoriteRecipes: {},
-        recipeHistory: {}
-
-
-      })
+exports.newUserSignUp = functions.auth.user().onCreate(user => {
+  return admin.firestore().collection('users').doc(user.uid).set({
+    email: user.email,
+    firstName: "",
+    lastName: "",
+    points: 0,
+    foodPreference: "",
+    favoriteRecipes: {},
+    recipeHistory: {}
 
 
-    });
-
-    exports.userDeleted = functions.auth.user().onDelete(user => {
-      const doc = admin.firestore().collection('users').doc(user.uid)
-      return doc.delete()
-
-    });
+  })
 
 
-    const refactorData = (recipesAPI) => {
-      const recipesArr = recipesAPI.recipes;
-      let newArr = []
-      for (let i = 0; i < recipesArr.length; i++) {
-        let recipe = recipesArr[i]
-        const {
-          id,
-          vegan,
-          title,
-          extendedIngredients,
-          readyInMinutes,
-          servings,
-          image,
-          summary,
-          instructions,
-          analyzedInstructions,
-          spoonacularSourceUrl,
-        } = recipe;
+});
 
-        if (analyzedInstructions.length > 1) {
-          continue;
-        }
+exports.userDeleted = functions.auth.user().onDelete(user => {
+  const doc = admin.firestore().collection('users').doc(user.uid)
+  return doc.delete()
 
-        const ingredients = extendedIngredients.map(ingredient => {
-          const { id, name, original, image } = ingredient
-          return { id, name, original, image }
-        }
-        )
+});
 
-        newArr.push({
-          id,
-          vegan,
-          title,
-          ingredients,
-          readyInMinutes,
-          servings,
-          image,
-          summary,
-          instructions,
-          analyzedInstructions,
-          spoonacularSourceUrl,
-        })
-      }
-      return newArr;
-    };
+
+const refactorData = (recipesAPI) => {
+  const recipesArr = recipesAPI.recipes;
+  let newArr = []
+  for (let i = 0; i < recipesArr.length; i++) {
+    let recipe = recipesArr[i]
+    const {
+      id,
+      vegan,
+      title,
+      extendedIngredients,
+      readyInMinutes,
+      servings,
+      image,
+      summary,
+      instructions,
+      analyzedInstructions,
+      spoonacularSourceUrl,
+    } = recipe;
+
+    if (analyzedInstructions.length > 1) {
+      continue;
+    }
+
+    const ingredients = extendedIngredients.map(ingredient => {
+      const { id, name, original, image } = ingredient
+      return { id, name, original, image }
+    }
+    )
+
+    newArr.push({
+      id,
+      vegan,
+      title,
+      ingredients,
+      readyInMinutes,
+      servings,
+      image,
+      summary,
+      instructions,
+      analyzedInstructions,
+      spoonacularSourceUrl,
+    })
+  }
+  return newArr;
+};

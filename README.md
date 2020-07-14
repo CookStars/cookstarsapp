@@ -23,7 +23,7 @@ These instructions will get you a copy of the project up and running on your loc
 -   ESlint - The tool used to maintain code quality.
 -   Prettier - The tool used to format code.
 -   FireStore - A flexible, scalable database for mobile, web, and server development from Firebase
--   Jest - Javascript framework designed for testing
+-   Jest - A Javascript framework designed for testing
 
 ## Authors
 
