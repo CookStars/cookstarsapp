@@ -64,7 +64,9 @@ exports.userDeleted = functions.auth.user().onDelete(user => {
 
 const refactorData = (recipesAPI) => {
   const recipesArr = recipesAPI.recipes;
-  let newArr = recipesArr.map((recipe) => {
+  let newArr = []
+for (let i = 0; i < recipesArr.length; i++){
+  let recipe = recipesArr[i]
     const {
       id,
       vegan,
@@ -78,12 +80,18 @@ const refactorData = (recipesAPI) => {
       analyzedInstructions,
       spoonacularSourceUrl,
     } = recipe;
+
+    if (analyzedInstructions.length > 1){
+      continue;
+    }
+
     const ingredients = extendedIngredients.map(ingredient => {
       const { id, name, original, image } = ingredient
       return { id, name, original, image }
     }
     )
-    return {
+    
+   newArr.push({
       id,
       vegan,
       title,
@@ -95,9 +103,7 @@ const refactorData = (recipesAPI) => {
       instructions,
       analyzedInstructions,
       spoonacularSourceUrl,
-    };
-  });
+    })
+  }
   return newArr;
 };
-
-

@@ -8,22 +8,24 @@ import {
   Image,
   Alert,
   SafeAreaView,
+  Left,
+  Right,
 } from "react-native";
 import { db } from "../firebaseconfig";
 
-const ingredientsLink = "https://spoonacular.com/cdn/ingredients_100x100/";
-const equipmentLink = "https://spoonacular.com/cdn/equipment_100x100/";
+const ingredientsLink = "https://spoonacular.com/cdn/ingredients_500x500/";
+const equipmentLink = "https://spoonacular.com/cdn/equipment_500x500/";
 
 export default function Steps(props) {
   const [currStep, setCurrStep] = useState(0);
 
   const { navigation } = props;
   let { index, recipes, userInfo, recipeCompleted } = props.route.params;
-  const currRecipeId = recipes[index].id;
-  const currRecipeSteps = recipes[index].analyzedInstructions[0].steps;
+  const currRecipeId = recipes[2].id;
+  const currRecipeSteps = recipes[2].analyzedInstructions[0].steps;
   const { equipment, ingredients, number, step } = currRecipeSteps[currStep];
   const newUserPts = userInfo.points + 10;
-  const recipeHistory = userInfo.recipeHistory
+  const recipeHistory = userInfo.recipeHistory;
 
   const updatePoints = () => {
     if (userInfo.recipeHistory.hasOwnProperty(currRecipeId)) {
@@ -31,36 +33,21 @@ export default function Steps(props) {
         points: newUserPts,
       });
     } else {
-      db.collection("users") 
+      db.collection("users")
         .doc(userInfo.userId)
         .update({
           points: newUserPts,
-          recipeHistory: {...recipeHistory, [currRecipeId]: recipes[index] },
+          recipeHistory: { ...recipeHistory, [currRecipeId]: recipes[index] },
         });
-    } 
-    recipeCompleted()
+    }
+    recipeCompleted();
     userInfo.points += 10;
   };
 
   const checkStep = (currStep) => {
     if (currStep === 0) {
       return (
-        <Button
-          title="NEXT"
-          onPress={() => {
-            setCurrStep(currStep + 1);
-          }}
-        />
-      );
-    } else if (0 < currStep && currStep < currRecipeSteps.length - 1) {
-      return (
-        <View>
-          <Button
-            title="PREVIOUS"
-            onPress={() => {
-              setCurrStep(currStep - 1);
-            }}
-          />
+        <View style={{ flexDirection:'row-reverse', justifyContent:'space-between', padding:10}}>
           <Button
             title="NEXT"
             onPress={() => {
@@ -69,26 +56,51 @@ export default function Steps(props) {
           />
         </View>
       );
+    } else if (0 < currStep && currStep < currRecipeSteps.length - 1) {
+      return (
+        <View style={{ flexDirection:'row', justifyContent:'space-between', alignContent:'center', padding:10}}>
+          <View>
+            <Button
+              title="PREVIOUS"
+              onPress={() => {
+                setCurrStep(currStep - 1);
+              }}
+            />
+          </View>
+          <View>
+            <Button
+              title="NEXT"
+              onPress={() => {
+                setCurrStep(currStep + 1);
+              }}
+            />
+          </View>
+        </View>
+      );
     } else {
       return (
-        <View style={styles.buttonContainer}>
-          <Button
-            title="PREVIOUS"
-            onPress={() => {
-              setCurrStep(currStep - 1);
-            }}
-          />
-          <Button
-            title="FINISH"
-            onPress={() => {
-              updatePoints();
-              navigation.navigate("Success", {
-                index: index,
-                recipes: recipes,
-                userInfo: userInfo,
-              });
-            }}
-          />
+        <View style={{ flexDirection:'row', justifyContent:'space-between', padding: 10}}>
+          <View >
+            <Button
+              title="PREVIOUS"
+              onPress={() => {
+                setCurrStep(currStep - 1);
+              }}
+            />
+          </View>
+          <View >
+            <Button
+              title="FINISH"
+              onPress={() => {
+                updatePoints();
+                navigation.navigate("Success", {
+                  index: index,
+                  recipes: recipes,
+                  userInfo: userInfo,
+                });
+              }}
+            />
+          </View>
         </View>
       );
     }
@@ -98,23 +110,25 @@ export default function Steps(props) {
     const listEquipment = equipment.map((tool, index) => {
       const image = equipmentLink + tool.image;
       return (
-        <View key={index}>
+        <View key={index} style={{alignContent:'space-between'}}>
           <Image
             source={{
               width: 150,
               height: 150,
               uri: image,
             }}
+            style={{ resizeMode:'center'}}
           />
-          <Text>{tool.name}</Text>
+          <Text style={{ alignSelf:'center'}}>{tool.name}</Text>
         </View>
       );
     });
 
     if (equipment.length) {
       return (
+        <View style={ { flex: 3, padding: 5, alignContent: 'space-between'}} >
         <View>
-          <Text>Equipment</Text>
+          <Text style={{padding:8,fontSize:18}}>Equipment</Text>
           <ScrollView
             key={index}
             horizontal={true}
@@ -123,33 +137,40 @@ export default function Steps(props) {
             {listEquipment}
           </ScrollView>
         </View>
+        </View>
       );
-    }
+    } else {
+      return(
+
+      <View style={{ flex:10, justifyContent: 'center', alignItems:'center'}}>
+        <Text style={{fontSize: 18}}>No Equipment To Show</Text>
+      </View>)
+    };
   };
 
   const checkIngredients = () => {
     const listIngredients = ingredients.map((ingredient, index) => {
       const image = ingredientsLink + ingredient.image;
       return (
-        <View key={index}>
+        <View key={index} style={ { padding: 5, alignContent: 'space-between'}}>
           <Image
             source={{
               width: 150,
               height: 150,
               uri: image,
             }}
-            // style={styles.image}
-          />
-          <Text>{ingredient.name}</Text>
+            style={{resizeMode:'center'}}
+            />
+          <Text style={{ alignSelf:'center'}}>{ingredient.name}</Text>
         </View>
       );
     });
 
     if (ingredients.length) {
       return (
-        <View style={styles.listContainer}>
-          <View style={{ flex: 1 }}>
-            <Text>Ingredients</Text>
+        <View style={ { flex: 3,  padding: 5, alignContent: 'space-between'}} >
+          <View style={{  }}>
+            <Text style={{padding:8, fontSize: 18, justifyContent: 'center'}}>Ingredients</Text>
           </View>
           <ScrollView
             key={index}
@@ -161,19 +182,36 @@ export default function Steps(props) {
         </View>
       );
     }
+    else{
+      return(
+        <View style={{ flex:10, justifyContent: 'center', alignItems:'center'}}>
+        <Text style={{fontSize: 18}}>No Ingredients To Show</Text>
+      </View>)
+    }
   };
 
+
+
+
+
+
+
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
-        <Text style={styles.title}>Step {number}</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor:'white'}}>
+      <View style={{ flex: 1}}>
+        <Text style={{fontSize: 30, alignSelf:'center', color:'blue'}}>Step {number}</Text>
       </View>
-      <View style={styles.listContainer}>{checkEquipment()}</View>
-      <View style={styles.listContainer}>{checkIngredients()}</View>
-      <View style={styles.stepContainer}>
-        <Text>{step}</Text>
+      <View style={{flex:15}}>
+        <View style={styles.listContainer, {flex: 4}}>{checkEquipment()}</View>
+        <View style={styles.listContainer, {flex: 4}}>{checkIngredients()}</View>
+        <View style={{flex:4}}>
+        <ScrollView >
+          <Text style={{fontSize: 24, color:'gray', padding: 20, justifyContent:'center'}}>{step}</Text>
+        </ScrollView>
+        </View>
       </View>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1.5}}>
         <View style={styles.listContainer}>{checkStep(currStep)}</View>
       </View>
     </SafeAreaView>
@@ -185,46 +223,47 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F4F1DE",
   },
-  listContainer: {
-    flex: 3,
-    flexDirection: "column",
-  },
-  image: {
-    top: 10,
-    alignItems: "center",
-    resizeMode: "contain",
-    overflow: "hidden",
-    borderRadius: 37,
-  },
-  stepContainer: {
-    flex: 2,
-  },
-  scrollArea_contentContainerStyle: {
-    flex: 2,
-    alignContent: "space-between",
-    flexDirection: "row",
-  },
-  title: {
-    fontSize: 32,
-    textAlign: "center",
-    marginTop: 10,
-    fontWeight: "bold",
-    color: "#F18F01",
-    backgroundColor: "#f4f1de",
-  },
-  image: {
-    flexDirection: "row",
-  },
-  step: {
-    padding: 30,
-    fontSize: 18,
-    backgroundColor: "#F4F1DE",
-    textAlign: "justify",
-  },
-  buttonContainer: {
-    backgroundColor: "#008F68",
-    borderRadius: 5,
-    padding: 8,
-    margin: 8,
-  },
+  // listContainer: {
+  //   flex: 3,
+  //   flexDirection: "column",
+  // },
+  // image: {
+  //   top: 10,
+  //   alignItems: "center",
+  //   resizeMode: "contain",
+  //   overflow: "hidden",
+  //   borderRadius: 37,
+  // },
+  // stepContainer: {
+  //   flex: 2,
+  // },
+  // scrollArea_contentContainerStyle: {
+  //   flex: 2,
+  //   alignContent: "space-between",
+  //   flexDirection: "row",
+  // },
+  // title: {
+  //   fontSize: 32,
+  //   textAlign: "center",
+  //   marginTop: 10,
+  //   fontWeight: "bold",
+  //   color: "#F18F01",
+  //   backgroundColor: "#f4f1de",
+  // },
+  // image: {
+  //   flexDirection: "row",
+  // },
+  // step: {
+  //   padding: 30,
+  //   fontSize: 18,
+  //   backgroundColor: "#F4F1DE",
+  //   textAlign: "justify",
+  // },
+  // buttonContainer: {
+  //   backgroundColor: "#008F68",
+  //   borderRadius: 5,
+  //   padding: 8,
+  //   margin: 8,
+  // },
 });
+
