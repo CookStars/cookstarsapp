@@ -43,7 +43,6 @@ export default function RegistrationScreen({ navigation }) {
                             ? foodPreference.toString()
                             : 'vegan',
                     })
-                console.log('check the database now')
                 // uid = response.user.uid
             })
             .catch((error) => {
@@ -155,7 +154,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 50,
+        marginTop: 100,
     },
     title: {},
     logo: {
@@ -166,7 +165,7 @@ const styles = StyleSheet.create({
         margin: 30,
     },
     input: {
-        height: 48,
+        height: 55,
         borderRadius: 5,
         overflow: 'hidden',
         backgroundColor: 'white',
@@ -177,7 +176,7 @@ const styles = StyleSheet.create({
         paddingLeft: 16,
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#F18F01',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
