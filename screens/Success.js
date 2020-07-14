@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,23 +11,36 @@ import {
   TouchableOpacity,
   Dimensions,
   ImageBackground,
-} from "react-native";
+} from 'react-native';
+import { connect } from 'react-redux';
+import { fetchRecipes } from '../redux/recipeReducer';
 
+const weekdays = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
 //may want to write congrats! you earned __ badge. or __ points to next badge!
 
-export default function SuccessPage(props) {
-  const { navigation } = props;
-  const { index, recipes, userInfo } = props.route.params;
-  const img = recipes[index + 1].image;
+export function SuccessPage(props) {
+  const { navigation, recipes, userInfo } = props;
+
+  const today = new Date().getDay();
+  const img = recipes[today + 1].image;
+
   return (
     <View style={styles.container}>
       <View style={styles.image}>
         <ImageBackground
-          source={require("../assets/cuteavocado.png")}
+          source={require('../assets/cuteavocado.png')}
           style={styles.avocadoImg}
         >
           <Image
-            source={require("../assets/banner.png")}
+            source={require('../assets/banner.png')}
             style={styles.banner}
           />
         </ImageBackground>
@@ -41,7 +54,7 @@ export default function SuccessPage(props) {
       <View style={styles.pointsContainer}>
         <View>
           <Image
-            source={require("../assets/congratsBadge.png")}
+            source={require('../assets/congratsBadge.png')}
             style={styles.badge}
           />
           <Text>Point Status {userInfo.points}</Text>
@@ -52,15 +65,15 @@ export default function SuccessPage(props) {
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() =>
-            navigation.navigate("SingleRecipe", {
-              index: index + 1,
-              recipes: recipes,
+            navigation.navigate('SingleRecipe', {
+              recipe: recipes[today + 1],
+              day: weekdays[today + 1],
             })
           }
         >
           <Image
             source={{ uri: img }}
-            style={{ width: Dimensions.get("screen").width, height: 300 }}
+            style={{ width: Dimensions.get('screen').width, height: 300 }}
           />
           <View style={styles.labelContainer}>
             <Text style={styles.tmrwRecipelabel}>Tomorrow's Recipe</Text>
@@ -71,35 +84,49 @@ export default function SuccessPage(props) {
   );
 }
 
+// Map State + Dispatch
+const mapState = (state) => ({
+  recipes: state.recipes,
+  userInfo: state.user,
+});
+
+const mapDispatch = (dispatch) => {
+  return {
+    getRecipes: (pref) => dispatch(fetchRecipes(pref)),
+  };
+};
+
+export default connect(mapState, mapDispatch)(SuccessPage);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     // justifyContent: 'space-between',
-    alignItems: "center",
-    flexDirection: "column",
-    alignContent: "space-around",
-    width: "100%",
+    alignItems: 'center',
+    flexDirection: 'column',
+    alignContent: 'space-around',
+    width: '100%',
   },
   image: {},
   banner: {
-    width: Dimensions.get("screen").width,
+    width: Dimensions.get('screen').width,
     height: 100,
   },
   avocadoImg: {
-    width: Dimensions.get("screen").width,
+    width: Dimensions.get('screen').width,
   },
   congratsContainer: {
     flex: 3,
   },
   congratsText: {
     fontSize: 30,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   pointsContainer: {
     flex: 4,
   },
   tmrwRecipe: {
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
   },
   badge: {
     width: 200,
@@ -107,18 +134,18 @@ const styles = StyleSheet.create({
   },
 
   labelContainer: {
-    position: "absolute",
-    top: "10%",
-    right: "-3%",
+    position: 'absolute',
+    top: '10%',
+    right: '-3%',
     height: 37,
     width: 220,
     borderRadius: 15,
-    backgroundColor: "#E8EDED",
+    backgroundColor: '#E8EDED',
   },
   tmrwRecipelabel: {
     opacity: 0.9,
-    backgroundColor: "transparent",
-    color: "#E07A5F",
+    backgroundColor: 'transparent',
+    color: '#E07A5F',
     fontSize: 19,
     marginTop: 7,
     marginLeft: 31,

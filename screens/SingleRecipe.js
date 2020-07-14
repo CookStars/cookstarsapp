@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import HTML from "react-native-render-html";
+import React, { Component } from 'react';
+import HTML from 'react-native-render-html';
 
 import {
   StyleSheet,
@@ -10,7 +10,7 @@ import {
   Image,
   Alert,
   SafeAreaView,
-} from "react-native";
+} from 'react-native';
 
 export default class SingleRecipe extends Component {
   constructor(props) {
@@ -19,29 +19,28 @@ export default class SingleRecipe extends Component {
 
   checkDay() {
     const weekdays = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
     ];
     const today = weekdays[new Date().getDay()];
     const { navigation } = this.props;
-    const { index, recipes, userInfo, recipeCompleted, recipeFinished } = this.props.route.params;
+    const { recipe, userInfo, day } = this.props.route.params;
 
-    if (weekdays[index] === today && !recipeFinished) {
+    if (day === today) {
       return (
         <View style={styles.startButton}>
           <Button
-            title="Start"
+            title='Start'
             onPress={() => {
-              navigation.navigate("Steps", {
-                index: index,
-                recipes: recipes,
+              navigation.navigate('Steps', {
+                day: day,
+                recipe: recipe,
                 userInfo: userInfo,
-                recipeCompleted: recipeCompleted
               });
             }}
           />
@@ -53,16 +52,20 @@ export default class SingleRecipe extends Component {
   }
 
   render() {
-    const { index, recipes } = this.props.route.params;
-    const { summary, title, image, ingredients } = recipes[index];
+    const {
+      summary,
+      title,
+      image,
+      ingredients,
+    } = this.props.route.params.recipe;
     const listIngredients = ingredients
       .map((ingredient) => ingredient.original)
-      .join(", ");
+      .join(', ');
     const newTagsSummary = summary
       .split(/\<a\b[^>]*>/)
-      .join("<b><i>")
+      .join('<b><i>')
       .split(/\<\/a>/)
-      .join("</i></b>");
+      .join('</i></b>');
 
     return (
       <SafeAreaView>
@@ -88,7 +91,7 @@ export default class SingleRecipe extends Component {
               </View>
               <View>
                 <Text style={styles.text}>
-                  <Text style={{ fontWeight: "bold" }}>Ingredients: </Text>
+                  <Text style={{ fontWeight: 'bold' }}>Ingredients: </Text>
                   {listIngredients}
                 </Text>
               </View>
@@ -104,38 +107,38 @@ export default class SingleRecipe extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F4F1DE",
+    backgroundColor: '#F4F1DE',
   },
   title: {
     fontSize: 32,
-    textAlign: "center",
+    textAlign: 'center',
     marginTop: 10,
-    fontWeight: "bold",
-    color: "#F18F01",
-    backgroundColor: "#f4f1de",
+    fontWeight: 'bold',
+    color: '#F18F01',
+    backgroundColor: '#f4f1de',
   },
   image: {
     top: 10,
-    alignItems: "center",
-    resizeMode: "contain",
-    overflow: "hidden",
+    alignItems: 'center',
+    resizeMode: 'contain',
+    overflow: 'hidden',
     borderRadius: 37,
   },
   text: {
     padding: 30,
     fontSize: 18,
-    backgroundColor: "#F4F1DE",
-    textAlign: "justify",
+    backgroundColor: '#F4F1DE',
+    textAlign: 'justify',
     bottom: 50,
   },
 
   startButton: {
-    width: "100%",
+    width: '100%',
     height: 50,
-    backgroundColor: "#F18F01",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
+    backgroundColor: '#F18F01',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
     bottom: 0,
   },
 });
