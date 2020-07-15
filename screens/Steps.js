@@ -20,33 +20,15 @@ const equipmentLink = 'https://spoonacular.com/cdn/equipment_500x500/'
 export default function Steps(props) {
     const [currStep, setCurrStep] = useState(0)
 
-    const { navigation } = props
-    let { index, recipes, userInfo, recipeCompleted } = props.route.params
-    const currRecipeId = recipes[2].id
-    const currRecipeSteps = recipes[2].analyzedInstructions[0].steps
-    const { equipment, ingredients, number, step } = currRecipeSteps[currStep]
-    const newUserPts = userInfo.points + 10
-    const recipeHistory = userInfo.recipeHistory
+  const { navigation } = props;
+  let { recipe, userInfo } = props.route.params;
 
-    const updatePoints = () => {
-        if (userInfo.recipeHistory.hasOwnProperty(currRecipeId)) {
-            db.collection('users').doc(userInfo.userId).update({
-                points: newUserPts,
-            })
-        } else {
-            db.collection('users')
-                .doc(userInfo.userId)
-                .update({
-                    points: newUserPts,
-                    recipeHistory: {
-                        ...recipeHistory,
-                        [currRecipeId]: recipes[index],
-                    },
-                })
-        }
-        recipeCompleted()
-        userInfo.points += 10
-    }
+  const currRecipeId = recipe.id;
+  const currRecipeSteps = recipe.analyzedInstructions[0].steps;
+  const { equipment, ingredients, number, step } = currRecipeSteps[currStep];
+
+  const newUserPts = userInfo.points + 10;
+  const recipeHistory = userInfo.recipeHistory;
 
     const checkStep = (currStep) => {
         if (currStep === 0) {

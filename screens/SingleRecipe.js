@@ -1,95 +1,74 @@
-import React, { Component } from 'react'
-import HTML from 'react-native-render-html'
+
+import React, { Component } from 'react';
+import HTML from 'react-native-render-html';
 
 import {
-    StyleSheet,
-    Text,
-    ScrollView,
-    View,
-    Button,
-    Image,
-    Alert,
-    Dimensions,
-    TouchableOpacity,
-} from 'react-native'
+  StyleSheet,
+  Text,
+  ScrollView,
+  View,
+  Button,
+  Image,
+  Alert,
+  SafeAreaView,
+} from 'react-native';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
+
 export default class SingleRecipe extends Component {
     constructor(props) {
         super(props)
     }
 
-    checkDay() {
-        const weekdays = [
-            'Sunday',
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-        ]
-        const today = weekdays[new Date().getDay()]
-        const { navigation } = this.props
-        const {
-            index,
-            recipes,
-            userInfo,
-            recipeCompleted,
-            recipeFinished,
-        } = this.props.route.params
+  checkDay() {
+    const weekdays = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ];
+    const today = weekdays[new Date().getDay()];
+    const { navigation } = this.props;
+    const { recipe, userInfo, day } = this.props.route.params;
 
-        if (weekdays[index] === today && !recipeFinished) {
-            return (
-                <View style={styles.startButton}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            navigation.navigate('Steps', {
-                                index: index,
-                                recipes: recipes,
-                                userInfo: userInfo,
-                                recipeCompleted: recipeCompleted,
-                            })
-                        }}
-                        style={{
-                            // elevation: 12,
-                            backgroundColor: '#EF233C',
-                            borderRadius: 10,
-                            width: '100%',
-                            height: 35,
-                            alignItems: 'center',
-                            alignContent: 'center',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <View>
-                            <Text style={{ color: 'white' }}>START RECIPE</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            )
-        } else {
-            return <View />
-        }
+    if (day === today) {
+      return (
+        <View style={styles.startButton}>
+          <Button
+            title='Start'
+            onPress={() => {
+              navigation.navigate('Steps', {
+                day: day,
+                recipe: recipe,
+                userInfo: userInfo,
+              });
+            }}
+          />
+        </View>
+      );
+    } else {
+      return <View />;
     }
 
-    render() {
-        const { index, recipes } = this.props.route.params
-        const {
-            summary,
-            title,
-            image,
-            ingredients,
-            readyInMinutes,
+  render() {
+    const {
+      summary,
+      title,
+      image,
+      ingredients,
+      readyInMinutes,
             servings,
-        } = recipes[index]
-        const listIngredients = ingredients
-            .map((ingredient) => ingredient.original)
-            .join(', ')
-        const newTagsSummary = summary
-            .split(/\<a\b[^>]*>/)
-            .join('<b><i>')
-            .split(/\<\/a>/)
-            .join('</i></b>')
+    } = this.props.route.params.recipe;
+    const listIngredients = ingredients
+      .map((ingredient) => ingredient.original)
+      .join(', ');
+    const newTagsSummary = summary
+      .split(/\<a\b[^>]*>/)
+      .join('<b><i>')
+      .split(/\<\/a>/)
+      .join('</i></b>');
 
         return (
             <View>
