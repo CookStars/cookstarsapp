@@ -7,19 +7,29 @@ import {
   Alert,
   Image,
   ActivityIndicator,
+  RefreshControl,
 } from "react-native";
 import { db } from "../firebaseconfig.js";
 import Lead from "react-native-leaderboard";
-import { ButtonGroup } from "react-native-elements";
+import { ButtonGroup, ThemeConsumer } from "react-native-elements";
 import { fetchAllUsers } from "../redux/leaderboardReducer";
 import { connect } from "react-redux";
 
 export class Leaderboard extends Component {
+  state = {
+    refresh: false,
+  };
+
   alert = (title, body) => {
     Alert.alert(title, body, [{ text: "OK", onPress: () => {} }], {
       cancelable: false,
     });
   };
+
+  onRefresh() {
+    this.setState({ refresh: true });
+    this.props.getAllUsers().finally(() => this.setState({ refresh: false }));
+  }
 
   async componentDidMount() {
     await this.props.getAllUsers();
@@ -101,19 +111,29 @@ export class Leaderboard extends Component {
         {users.length ? (
           <View>
             {this.renderHeader(rank)}
-            <Lead
-              data={users}
-              sortBy="points"
-              labelBy="email"
-              icon="icon"
-              onRowPress={(item, index) => {
-                this.alert(
-                  item.firstName + " clicked",
-                  item.points + " points, wow!"
-                );
-              }}
-              evenRowColor="#edfcf9"
-            />
+            <ScrollView
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refresh}
+                  onRefresh={() => this.onRefresh()}
+                  tintColor="red"
+                />
+              }
+            >
+              <Lead
+                data={users}
+                sortBy="points"
+                labelBy="email"
+                icon="icon"
+                onRowPress={(item, index) => {
+                  this.alert(
+                    item.firstName + " clicked",
+                    item.points + " points, wow!"
+                  );
+                }}
+                evenRowColor="#edfcf9"
+              />
+            </ScrollView>
           </View>
         ) : (
           // Activity Indicator to indicate that code is loading
