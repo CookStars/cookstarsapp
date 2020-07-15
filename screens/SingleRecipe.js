@@ -9,10 +9,12 @@ import {
     Button,
     Image,
     Alert,
+    SafeAreaView,
     Dimensions,
     TouchableOpacity,
 } from 'react-native'
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
+
 export default class SingleRecipe extends Component {
     constructor(props) {
         super(props)
@@ -30,41 +32,21 @@ export default class SingleRecipe extends Component {
         ]
         const today = weekdays[new Date().getDay()]
         const { navigation } = this.props
-        const {
-            index,
-            recipes,
-            userInfo,
-            recipeCompleted,
-            recipeFinished,
-        } = this.props.route.params
+        const { recipe, userInfo, day } = this.props.route.params
 
-        if (weekdays[index] === today && !recipeFinished) {
+        if (day === today) {
             return (
                 <View style={styles.startButton}>
-                    <TouchableOpacity
+                    <Button
+                        title="Start"
                         onPress={() => {
                             navigation.navigate('Steps', {
-                                index: index,
-                                recipes: recipes,
+                                day: day,
+                                recipe: recipe,
                                 userInfo: userInfo,
-                                recipeCompleted: recipeCompleted,
                             })
                         }}
-                        style={{
-                            // elevation: 12,
-                            backgroundColor: '#EF233C',
-                            borderRadius: 10,
-                            width: '100%',
-                            height: 35,
-                            alignItems: 'center',
-                            alignContent: 'center',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <View>
-                            <Text style={{ color: 'white' }}>START RECIPE</Text>
-                        </View>
-                    </TouchableOpacity>
+                    />
                 </View>
             )
         } else {
@@ -73,7 +55,6 @@ export default class SingleRecipe extends Component {
     }
 
     render() {
-        const { index, recipes } = this.props.route.params
         const {
             summary,
             title,
@@ -81,7 +62,7 @@ export default class SingleRecipe extends Component {
             ingredients,
             readyInMinutes,
             servings,
-        } = recipes[index]
+        } = this.props.route.params.recipe
         const listIngredients = ingredients
             .map((ingredient) => ingredient.original)
             .join(', ')

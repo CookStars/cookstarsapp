@@ -13,12 +13,37 @@ import {
     ImageBackground,
 } from 'react-native'
 import { Feather } from '@expo/vector-icons'
+import { db } from '../firebaseconfig';
+import { connect } from 'react-redux';
+import { fetchRecipes } from '../redux/recipeReducer';
 //may want to write congrats! you earned __ badge. or __ points to next badge!
 
-export default function SuccessPage(props) {
-    const { navigation } = props
-    const { index, recipes, userInfo } = props.route.params
-    const img = recipes[index + 1].image
+const weekdays = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+export function SuccessPage(props) {
+  const { navigation, recipes, userInfo } = props;
+
+  const today = new Date().getDay();
+  const img = recipes[today + 1].image;
+
+  const handleFavorite = () => {
+    db.collection('users')
+      .doc(userInfo.userId)
+      .update({
+        favoriteRecipes: {
+          ...userInfo.favoriteRecipes,
+          [recipes[today].id]: recipes[today],
+        },
+      });
+  };
+
     return (
         <View style={styles.container}>
             <View style={styles.image}>
@@ -47,9 +72,7 @@ export default function SuccessPage(props) {
                         <Text style={{fontSize:17, paddingBottom:3}}> Enjoyed the recipe? </Text>
                         <View>
                             <TouchableOpacity
-                                onPress={() => {
-                                    console.log('favorited')
-                                }}
+                               onPress={() => handleFavorite()}
                                 style={{
                                  borderWidth: 1,
                                  borderColor:'#EF233C',
@@ -112,6 +135,20 @@ export default function SuccessPage(props) {
         </View>
     )
 }
+
+// Map State + Dispatch
+const mapState = (state) => ({
+  recipes: state.recipes,
+  userInfo: state.user,
+});
+
+const mapDispatch = (dispatch) => {
+  return {
+    getRecipes: (pref) => dispatch(fetchRecipes(pref)),
+  };
+};
+
+export default connect(mapState, mapDispatch)(SuccessPage);
 
 const styles = StyleSheet.create({
     container: {

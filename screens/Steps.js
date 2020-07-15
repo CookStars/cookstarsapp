@@ -21,31 +21,23 @@ export default function Steps(props) {
     const [currStep, setCurrStep] = useState(0)
 
     const { navigation } = props
-    let { index, recipes, userInfo, recipeCompleted } = props.route.params
-    const currRecipeId = recipes[2].id
-    const currRecipeSteps = recipes[2].analyzedInstructions[0].steps
+    let { recipe, userInfo } = props.route.params
+
+    const currRecipeId = recipe.id
+    const currRecipeSteps = recipe.analyzedInstructions[0].steps
     const { equipment, ingredients, number, step } = currRecipeSteps[currStep]
-    const newUserPts = userInfo.points + 10
+
     const recipeHistory = userInfo.recipeHistory
 
     const updatePoints = () => {
-        if (userInfo.recipeHistory.hasOwnProperty(currRecipeId)) {
-            db.collection('users').doc(userInfo.userId).update({
-                points: newUserPts,
-            })
-        } else {
+        if (!userInfo.recipeHistory.hasOwnProperty(currRecipeId)) {
             db.collection('users')
                 .doc(userInfo.userId)
                 .update({
-                    points: newUserPts,
-                    recipeHistory: {
-                        ...recipeHistory,
-                        [currRecipeId]: recipes[index],
-                    },
+                    points: userInfo.points + 10,
+                    recipeHistory: { ...recipeHistory, [currRecipeId]: recipe },
                 })
         }
-        recipeCompleted()
-        userInfo.points += 10
     }
 
     const checkStep = (currStep) => {
@@ -161,8 +153,7 @@ export default function Steps(props) {
                             onPress={() => {
                                 updatePoints()
                                 navigation.navigate('Success', {
-                                    index: index,
-                                    recipes: recipes,
+                                    recipe: recipe,
                                     userInfo: userInfo,
                                 })
                             }}
@@ -217,7 +208,7 @@ export default function Steps(props) {
                             Equipment
                         </Text>
                         <ScrollView
-                            key={index}
+                            // key={index}
                             horizontal={true}
                             contentContainerStyle={
                                 styles.scrollArea_contentContainerStyle
@@ -286,7 +277,7 @@ export default function Steps(props) {
                         </Text>
                     </View>
                     <ScrollView
-                        key={index}
+                        // key={index}
                         horizontal={true}
                         contentContainerStyle={
                             styles.scrollArea_contentContainerStyle

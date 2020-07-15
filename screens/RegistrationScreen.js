@@ -24,7 +24,6 @@ export default function RegistrationScreen({ navigation }) {
     const onFooterLinkPress = () => {
         // navigation.navigate('Login');
     }
-
     const onRegisterPress = () => {
         if (password !== confirmPassword) {
             alert('Please provide the correct credentials')
@@ -49,7 +48,7 @@ export default function RegistrationScreen({ navigation }) {
                 alert(error)
             })
     }
-
+    
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView
