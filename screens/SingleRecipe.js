@@ -41,14 +41,12 @@ export default class SingleRecipe extends Component {
                     <TouchableOpacity
                         onPress={() => {
                             navigation.navigate('Steps', {
-                                index: index,
-                                recipes: recipes,
+                                day: day,
+                                recipe: recipe,
                                 userInfo: userInfo,
-                                recipeCompleted: recipeCompleted,
                             })
                         }}
-                        style={{
-                            // elevation: 12,
+                           style={{
                             backgroundColor: '#EF233C',
                             borderRadius: 10,
                             width: '100%',
