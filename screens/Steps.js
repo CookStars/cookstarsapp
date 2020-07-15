@@ -20,15 +20,25 @@ const equipmentLink = 'https://spoonacular.com/cdn/equipment_500x500/'
 export default function Steps(props) {
     const [currStep, setCurrStep] = useState(0)
 
-  const { navigation } = props;
-  let { recipe, userInfo } = props.route.params;
+    const { navigation } = props
+    let { recipe, userInfo } = props.route.params
 
-  const currRecipeId = recipe.id;
-  const currRecipeSteps = recipe.analyzedInstructions[0].steps;
-  const { equipment, ingredients, number, step } = currRecipeSteps[currStep];
+    const currRecipeId = recipe.id
+    const currRecipeSteps = recipe.analyzedInstructions[0].steps
+    const { equipment, ingredients, number, step } = currRecipeSteps[currStep]
 
-  const newUserPts = userInfo.points + 10;
-  const recipeHistory = userInfo.recipeHistory;
+    const recipeHistory = userInfo.recipeHistory
+
+    const updatePoints = () => {
+        if (!userInfo.recipeHistory.hasOwnProperty(currRecipeId)) {
+            db.collection('users')
+                .doc(userInfo.userId)
+                .update({
+                    points: userInfo.points + 10,
+                    recipeHistory: { ...recipeHistory, [currRecipeId]: recipe },
+                })
+        }
+    }
 
     const checkStep = (currStep) => {
         if (currStep === 0) {
@@ -143,8 +153,7 @@ export default function Steps(props) {
                             onPress={() => {
                                 updatePoints()
                                 navigation.navigate('Success', {
-                                    index: index,
-                                    recipes: recipes,
+                                    recipe: recipe,
                                     userInfo: userInfo,
                                 })
                             }}
@@ -199,7 +208,7 @@ export default function Steps(props) {
                             Equipment
                         </Text>
                         <ScrollView
-                            key={index}
+                            // key={index}
                             horizontal={true}
                             contentContainerStyle={
                                 styles.scrollArea_contentContainerStyle
@@ -268,7 +277,7 @@ export default function Steps(props) {
                         </Text>
                     </View>
                     <ScrollView
-                        key={index}
+                        // key={index}
                         horizontal={true}
                         contentContainerStyle={
                             styles.scrollArea_contentContainerStyle
