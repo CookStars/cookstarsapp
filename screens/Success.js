@@ -12,6 +12,7 @@ import {
   Dimensions,
   ImageBackground,
 } from 'react-native';
+import { db } from '../firebaseconfig';
 import { connect } from 'react-redux';
 import { fetchRecipes } from '../redux/recipeReducer';
 
@@ -31,6 +32,17 @@ export function SuccessPage(props) {
 
   const today = new Date().getDay();
   const img = recipes[today + 1].image;
+
+  const handleFavorite = () => {
+    db.collection('users')
+      .doc(userInfo.userId)
+      .update({
+        favoriteRecipes: {
+          ...userInfo.favoriteRecipes,
+          [recipes[today].id]: recipes[today],
+        },
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -60,6 +72,10 @@ export function SuccessPage(props) {
           <Text>Point Status {userInfo.points}</Text>
         </View>
       </View>
+
+      <TouchableOpacity onPress={() => handleFavorite()}>
+        <Text>Did you like it? Add to Favorites!</Text>
+      </TouchableOpacity>
 
       <View style={styles.tmrwRecipe}>
         <TouchableOpacity

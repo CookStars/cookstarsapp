@@ -1,5 +1,4 @@
 import { firebase, db } from '../firebaseconfig';
-import AsyncStorage from '@react-native-community/async-storage';
 
 // Action Types
 export const SET_USER_INFO = 'SET_USER_INFO';
@@ -23,34 +22,34 @@ const updateUserInfo = (user) => {
 };
 
 // Action
-export const fetchUserInfo = () => async (dispatch) => {
+export const fetchUserInfo = () => (dispatch) => {
   try {
-    firebase.auth().onAuthStateChanged(async (user) => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         const docRef = db.collection(`users`).doc(user.uid);
-        await docRef.get().then((doc) => {
-          if (doc.exists) {
-            const {
+        docRef.get().then((doc) => {
+          // if (doc.exists) {
+          const {
+            favoriteRecipes,
+            foodPreference,
+            points,
+            recipeHistory,
+          } = doc.data();
+
+          dispatch(
+            setUserInfo({
+              userId: user.uid,
+              email: user.email,
+              isLoggedIn: true,
               favoriteRecipes,
               foodPreference,
               points,
               recipeHistory,
-            } = doc.data();
-
-            dispatch(
-              setUserInfo({
-                userId: user.uid,
-                email: user.email,
-                isLoggedIn: true,
-                favoriteRecipes,
-                foodPreference,
-                points,
-                recipeHistory,
-              })
-            );
-          } else {
-            console.log('No such document!');
-          }
+            })
+          );
+          // } else {
+          //   console.log('No such document! Lol');
+          // }
         });
       }
     });

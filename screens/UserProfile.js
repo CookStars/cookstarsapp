@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 import { logOut, update } from '../redux/userReducer';
 import { db } from '../firebaseconfig';
 import '@firebase/firestore';
-import { recipes } from '../Seed';
 
 export class UserProfile extends React.Component {
   handleClick() {
@@ -32,19 +31,36 @@ export class UserProfile extends React.Component {
 
   history = () => {
     const recipeHistory = this.props.userInfo.recipeHistory;
-    for (let key in recipeHistory) {
-      return (
+    return Object.entries(recipeHistory).map((item, index) => (
+      <TouchableHighlight key={index} onPress={() => console.log('hi')}>
         <View style={styles.mediaImageContainer}>
           <Image
             source={{
-              uri: recipeHistory[key].image,
+              uri: item[1].image,
             }}
             style={styles.image}
             resizeMode='cover'
           />
         </View>
-      );
-    }
+      </TouchableHighlight>
+    ));
+  };
+
+  favorites = () => {
+    const favoriteRecipes = this.props.userInfo.favoriteRecipes;
+    return Object.entries(favoriteRecipes).map((item, index) => (
+      <TouchableHighlight key={index} onPress={() => console.log('hi')}>
+        <View style={styles.mediaImageContainer}>
+          <Image
+            source={{
+              uri: item[1].image,
+            }}
+            style={styles.image}
+            resizeMode='cover'
+          />
+        </View>
+      </TouchableHighlight>
+    ));
   };
 
   render() {
@@ -52,25 +68,14 @@ export class UserProfile extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView showsHorizontalScrollIndicator={false}>
-          <View style={styles.titleBar}>
-            <Ionicons
-              name='ios-arrow-back'
-              size={24}
-              color={'#52575D'}
-            ></Ionicons>
-            <Ionicons name='md-more' size={24} color={'#52575D'}></Ionicons>
-          </View>
-
           <View style={{ alignSelf: 'center' }}>
             <View style={styles.profileImage}>
               <Image
                 source={require('../assets/usericonimages.png')}
                 style={styles.image}
                 resizeMode='center'
-              ></Image>
+              />
             </View>
-
-            <View style={styles.active}></View>
           </View>
           <View style={styles.infoContainer}>
             <Text style={[styles.text, { fontWeight: '200', fontSize: 36 }]}>
@@ -85,43 +90,41 @@ export class UserProfile extends React.Component {
           <View style={styles.statsContainer}>
             <View style={styles.statsBox}>
               <Text></Text>
-              <Text>Favorite Recipes</Text>
+              <Text>Recipe History</Text>
             </View>
           </View>
-          {this.history()}
+
           <View style={{ marginTop: 32 }}>
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-              <View style={styles.mediaImageContainer}>
-                <Image
-                  source={require('../assets/Paella.jpg')}
-                  style={styles.image}
-                  resizeMode='cover'
-                ></Image>
-              </View>
-
-              <View style={styles.mediaImageContainer}>
-                <Image
-                  source={require('../assets/kimchi.jpg')}
-                  style={styles.image}
-                  resizeMode='cover'
-                ></Image>
-              </View>
-
-              <View style={styles.mediaImageContainer}>
-                <Image
-                  source={require('../assets/Spaghetti.jpg')}
-                  style={styles.image}
-                  resizeMode='cover'
-                ></Image>
-              </View>
+              {this.history()}
             </ScrollView>
             <View style={styles.mediaCount}>
               <Text style={styles.text}></Text>
             </View>
           </View>
+
+          <View style={styles.statsContainer}>
+            <View style={styles.statsBox}>
+              <Text></Text>
+              <Text>Favorite Recipes</Text>
+            </View>
+          </View>
+
+          <View style={{ marginTop: 32 }}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              {this.favorites()}
+            </ScrollView>
+            <View style={styles.mediaCount}>
+              <Text style={styles.text}></Text>
+            </View>
+          </View>
+
           <View style={styles.buttonParent}>
             <TouchableHighlight
               style={styles.buttonContainer}
@@ -130,19 +133,6 @@ export class UserProfile extends React.Component {
               <Text>Log Out</Text>
             </TouchableHighlight>
           </View>
-
-          {/* <Text style={([styles.subtext], styles.recent)}>Recently Cooked</Text>
-          <View style={{ alignItems: 'center' }}>
-            <View style={styles.recentItem}>
-              <View style={styles.recentItemIndicator}></View>
-              <View style={{ width: 250 }}>
-                <Text style={styles.text}>
-                  Cooked Pizza{' '}
-                  <Text style={{ fontWeight: '400' }}>Cooked Ramen</Text>
-                </Text>
-              </View>
-            </View>
-          </View> */}
         </ScrollView>
       </SafeAreaView>
     );
