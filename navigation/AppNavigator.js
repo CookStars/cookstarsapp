@@ -25,7 +25,7 @@ export class AppNavigator extends React.Component {
         >
           {this.props.users.isLoggedIn ? (
             <Stack.Screen
-              name='TabNav'
+              name="TabNav"
               screenOptions={{ headerShown: false }}
               options={({ route }) => ({
                 headerTitle: getHeaderTitle(route),
@@ -36,7 +36,7 @@ export class AppNavigator extends React.Component {
               )}
             </Stack.Screen>
           ) : (
-            <Stack.Screen name='Login'>
+            <Stack.Screen name="Login">
               {(props) => <AuthStack {...props} log={this.log} />}
             </Stack.Screen>
           )}
@@ -62,23 +62,23 @@ export default connect(mapState, mapDispatch)(AppNavigator);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
 function getHeaderTitle(route) {
   const routeName = route.state
     ? route.state.routes[route.state.index].name
-    : route.params?.screen || 'Home';
+    : route.params?.screen || "Home";
 
   switch (routeName) {
-    case 'Home':
-      return 'Home';
-    case 'Leaderboard':
-      return 'Leaderboard';
-    case 'Profile':
-      return 'Profile';
+    case "Home":
+      return "Home";
+    case "Leaderboard":
+      return "Leaderboard";
+    case "Profile":
+      return "Profile";
   }
 }

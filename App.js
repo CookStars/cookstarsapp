@@ -6,11 +6,12 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 
 if (!global.btoa) {
-  global.btoa = encode;
+    global.btoa = encode
 }
 if (!global.atob) {
-  global.atob = decode;
+    global.atob = decode
 }
+
 YellowBox.ignoreWarnings(['Setting a timer']);
 
 export default function App() {

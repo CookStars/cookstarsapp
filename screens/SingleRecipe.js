@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import HTML from 'react-native-render-html';
 
@@ -11,11 +12,12 @@ import {
   Alert,
   SafeAreaView,
 } from 'react-native';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 
 export default class SingleRecipe extends Component {
-  constructor(props) {
-    super(props);
-  }
+    constructor(props) {
+        super(props)
+    }
 
   checkDay() {
     const weekdays = [
@@ -49,7 +51,6 @@ export default class SingleRecipe extends Component {
     } else {
       return <View />;
     }
-  }
 
   render() {
     const {
@@ -57,6 +58,8 @@ export default class SingleRecipe extends Component {
       title,
       image,
       ingredients,
+      readyInMinutes,
+            servings,
     } = this.props.route.params.recipe;
     const listIngredients = ingredients
       .map((ingredient) => ingredient.original)
@@ -67,78 +70,224 @@ export default class SingleRecipe extends Component {
       .split(/\<\/a>/)
       .join('</i></b>');
 
-    return (
-      <SafeAreaView>
-        <View>
-          <ScrollView>
-            <View style={styles.container}>
-              <View>
-                <Text style={styles.title}>{title}</Text>
-              </View>
-              <View style={styles.image}>
-                <Image
-                  source={{
-                    width: 350,
-                    height: 300,
-                    uri: image,
-                  }}
-                />
-              </View>
-            </View>
+        return (
             <View>
-              <View style={styles.text}>
-                <HTML html={newTagsSummary} baseFontStyle={styles.text} />
-              </View>
-              <View>
-                <Text style={styles.text}>
-                  <Text style={{ fontWeight: 'bold' }}>Ingredients: </Text>
-                  {listIngredients}
-                </Text>
-              </View>
+                <View>
+                    <ScrollView style={styles.scrollView}>
+                        <View style={styles.container}>
+                            <View style={styles.image}>
+                                <Image
+                                    source={{
+                                        width: Dimensions.get('screen').width,
+                                        height:
+                                            0.4 *
+                                            Dimensions.get('screen').height,
+                                        uri: image,
+                                    }}
+                                />
+
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        console.log('favorited')
+                                    }}
+                                    style={{
+                                        backgroundColor: '#EF233C',
+                                        position: 'absolute',
+                                        top: '85%',
+                                        right: -8,
+                                        borderRadius: 10,
+                                        width: '40%',
+                                        height: 35,
+                                        alignItems: 'center',
+                                        alignSelf: 'center',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <Feather
+                                            name="heart"
+                                            size={20}
+                                            color="white"
+                                        />
+                                        <Text
+                                            style={{ color: 'white', left: 6 }}
+                                        >
+                                            FAVORITE
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+                                <Text style={styles.title}>{title}</Text>
+                            </View>
+                            <View
+                                style={{
+                                    flexDirection: 'column',
+                                    height: '15%',
+                                    justifyContent: 'space-evenly',
+                                }}
+                            >
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        width:
+                                            0.8 *
+                                            Dimensions.get('screen').width,
+                                        justifyContent: 'space-around',
+                                        top: '3%',
+                                    }}
+                                >
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            top: '2%',
+                                        }}
+                                    >
+                                        <Feather
+                                            name="clock"
+                                            size={25}
+                                            color="red"
+                                            style={{ alignSelf: 'center' }}
+                                        />
+                                        <Text
+                                            style={{
+                                                left: '30%',
+                                                fontSize: 15,
+                                                alignSelf: 'center',
+                                            }}
+                                        >
+                                            {readyInMinutes} minutes
+                                        </Text>
+                                    </View>
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            top: '2%',
+                                        }}
+                                    >
+                                        <MaterialCommunityIcons
+                                            name="bowl"
+                                            size={25}
+                                            color="red"
+                                        />
+                                        <Text
+                                            style={{
+                                                left: '30%',
+                                                fontSize: 15,
+                                                alignSelf: 'center',
+                                            }}
+                                        >
+                                            {servings} Servings
+                                        </Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+
+                        <View
+                            style={{
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                                paddingBottom: 130,
+                                alignItems: 'center',
+                                flex: 6,
+                            }}
+                        >
+                            <View style={styles.description}>
+                                <Text
+                                    style={{
+                                        fontWeight: 'bold',
+                                        fontSize: 18,
+                                        height: '10%',
+                                    }}
+                                >
+                                    Description:
+                                </Text>
+                                <HTML
+                                    html={newTagsSummary}
+                                    baseFontStyle={styles.description}
+                                />
+                            </View>
+                            <View>
+                                <Text
+                                    style={{
+                                        fontWeight: 'bold',
+                                        fontSize: 18,
+                                        height: 35,
+                                        top: '10%',
+                                    }}
+                                >
+                                    Ingredients:
+                                </Text>
+                                <Text style={styles.ingredients}>
+                                    {listIngredients}
+                                </Text>
+                            </View>
+                        </View>
+                    </ScrollView>
+                </View>
+                <View>
+                    <View>{this.checkDay()}</View>
+                </View>
             </View>
-          </ScrollView>
-          <View>{this.checkDay()}</View>
-        </View>
-      </SafeAreaView>
-    );
-  }
+        )
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F4F1DE',
-  },
-  title: {
-    fontSize: 32,
-    textAlign: 'center',
-    marginTop: 10,
-    fontWeight: 'bold',
-    color: '#F18F01',
-    backgroundColor: '#f4f1de',
-  },
-  image: {
-    top: 10,
-    alignItems: 'center',
-    resizeMode: 'contain',
-    overflow: 'hidden',
-    borderRadius: 37,
-  },
-  text: {
-    padding: 30,
-    fontSize: 18,
-    backgroundColor: '#F4F1DE',
-    textAlign: 'justify',
-    bottom: 50,
-  },
+    scrollView: {
+        backgroundColor: 'white',
+    },
+    container: {
+        flex: 10,
+        width: Dimensions.get('screen').width,
+        height: 0.6 * Dimensions.get('screen').height,
+        backgroundColor: 'white',
+        alignContent: 'space-between',
+    },
+    title: {
+        left: '6%',
+        width: 0.9 * Dimensions.get('screen').width,
+        fontSize: 28,
+        marginTop: '2%',
+        fontWeight: 'bold',
+        color: 'black',
+    },
+    image: {
+        borderColor: '#EBEBD3',
+        alignItems: 'center',
+        resizeMode: 'stretch',
+    },
+    description: {
+        borderColor: '#F78764',
+        top: '2%',
+        alignSelf: 'center',
+        width: 0.88 * Dimensions.get('screen').width,
+        fontSize: 15,
+        textAlign: 'auto',
+    },
+    ingredients: {
+        top: '10%',
+        padding: 3,
+        borderWidth: 3,
+        borderColor: 'silver',
+        alignSelf: 'center',
+        width: 0.88 * Dimensions.get('screen').width,
+        fontSize: 15,
+        textAlign: 'auto',
+    },
 
-  startButton: {
-    width: '100%',
-    height: 50,
-    backgroundColor: '#F18F01',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 0,
-  },
-});
+    startButton: {
+        width: '50%',
+        height: 40,
+        justifyContent: 'center',
+        alignSelf: 'center',
+        position: 'absolute',
+        bottom: 0,
+    },
+})
