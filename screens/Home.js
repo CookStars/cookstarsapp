@@ -42,7 +42,7 @@ export class HomeScreen extends Component {
   // }
 
   componentDidMount() {
-    const pref = "meatlover";
+    const pref = this.props.userInfo.foodPreference;
     this.props.getRecipes(pref);
   }
 
