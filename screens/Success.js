@@ -12,7 +12,7 @@ import {
     Dimensions,
     ImageBackground,
 } from 'react-native'
-
+import { Feather } from '@expo/vector-icons'
 //may want to write congrats! you earned __ badge. or __ points to next badge!
 
 export default function SuccessPage(props) {
@@ -31,8 +31,6 @@ export default function SuccessPage(props) {
                     style={styles.avocadoImg}
                 />
             </View>
-
-            <View style={styles.congratsContainer}></View>
             <View style={styles.pointsContainer}>
                 <View>
                     <Image
@@ -45,6 +43,45 @@ export default function SuccessPage(props) {
                     <Text style={styles.pointsText}>
                         TOTAL POINTS: {userInfo.points}
                     </Text>
+                    <View style={{bottom:-20,backgroundColor:'white', borderWidth:1 }}>
+                        <Text style={{fontSize:17, paddingBottom:3}}> Enjoyed the recipe? </Text>
+                        <View>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    console.log('favorited')
+                                }}
+                                style={{
+                                 borderWidth: 1,
+                                 borderColor:'#EF233C',
+                                    backgroundColor: 'transparent',
+                                    bottom: -2,
+                                    right: -8,
+                                    borderRadius: 10,
+                                    width: '80%',
+                                    height: 35,
+                                    alignItems: 'center',
+                                    alignSelf: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <Feather
+                                        name="heart"
+                                        size={20}
+                                        color="#EF233C"
+                                    />
+                                    <Text style={{ color: 'black', left: 6 }}>
+                                        ADD FAVORITE 
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
             </View>
             <View style={styles.tmrwRecipe}>
@@ -61,7 +98,8 @@ export default function SuccessPage(props) {
                         source={{ uri: img }}
                         style={{
                             width: Dimensions.get('screen').width,
-                            height: 0.33 * Dimensions.get('screen').height,
+                         height: 0.33 * Dimensions.get('screen').height,
+                         bottom:0,
                         }}
                     />
                     <View style={styles.labelContainer}>
@@ -77,15 +115,17 @@ export default function SuccessPage(props) {
 
 const styles = StyleSheet.create({
     container: {
+     borderWidth:3,
         backgroundColor: 'white',
         alignItems: 'center',
         flexDirection: 'column',
-        alignContent: 'space-around',
+  alignContent: 'space-between',
+  paddingTop:'8%',
+        width:Dimensions.get('screen').width
     },
     image: {
         width: Dimensions.get('screen').width,
         height: 0.3 * Dimensions.get('screen').height,
-        paddingTop: '10%',
         alignItems: 'center',
     },
     banner: {
@@ -99,12 +139,12 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         paddingBottom: '10%',
     },
- pointsContainer: {
-  borderWidth: 2,
-  borderColor:'grey',
-     flexDirection: 'row',
-     alignContent:'center',
-        width: .95*Dimensions.get('screen').width,
+    pointsContainer: {
+        borderWidth: 2,
+        borderColor: 'grey',
+        flexDirection: 'row',
+        alignContent: 'center',
+        width: 0.95 * Dimensions.get('screen').width,
         justifyContent: 'space-evenly',
     },
     textContainer: {
@@ -121,8 +161,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     badge: {
-        width: .35*Dimensions.get('screen').width,
-        height: .45*Dimensions.get('screen').width,
+        width: 0.35 * Dimensions.get('screen').width,
+        height: 0.45 * Dimensions.get('screen').width,
     },
 
     labelContainer: {
