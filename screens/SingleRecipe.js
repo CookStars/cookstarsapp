@@ -13,6 +13,7 @@ import {
     Dimensions,
     TouchableOpacity,
 } from 'react-native'
+import { db } from '../firebaseconfig'
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 
 export default class SingleRecipe extends Component {
@@ -55,6 +56,7 @@ export default class SingleRecipe extends Component {
     }
 
     render() {
+        const { recipe, userInfo } = this.props.route.params
         const {
             summary,
             title,
@@ -90,7 +92,14 @@ export default class SingleRecipe extends Component {
 
                                 <TouchableOpacity
                                     onPress={() => {
-                                        console.log('favorited')
+                                        db.collection('users')
+                                            .doc(userInfo.userId)
+                                            .update({
+                                                favoriteRecipes: {
+                                                    ...userInfo.favoriteRecipes,
+                                                    [recipe.id]: recipe,
+                                                },
+                                            })
                                     }}
                                     style={{
                                         backgroundColor: '#EF233C',
