@@ -67,73 +67,77 @@ export class UserProfile extends React.Component {
     let user = this.props.userInfo;
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView showsHorizontalScrollIndicator={false}>
-          <View style={{ alignSelf: 'center' }}>
-            <View style={styles.profileImage}>
-              <Image
-                source={require('../assets/usericonimages.png')}
-                style={styles.image}
-                resizeMode='center'
-              />
+        {user.userId ? (
+          <ScrollView showsHorizontalScrollIndicator={false}>
+            <View style={{ alignSelf: 'center' }}>
+              <View style={styles.profileImage}>
+                <Image
+                  source={require('../assets/usericonimages.png')}
+                  style={styles.image}
+                  resizeMode='center'
+                />
+              </View>
             </View>
-          </View>
-          <View style={styles.infoContainer}>
-            <Text style={[styles.text, { fontWeight: '200', fontSize: 36 }]}>
-              {user.email}
-            </Text>
-            <Text style={[styles.text, { color: '#AEB5BC', fontSize: 14 }]}>
-              Master Chef
-            </Text>
-            <Text style={styles.points}>Total Points:{user.points} </Text>
-          </View>
-
-          <View style={styles.statsContainer}>
-            <View style={styles.statsBox}>
-              <Text></Text>
-              <Text>Recipe History</Text>
+            <View style={styles.infoContainer}>
+              <Text style={[styles.text, { fontWeight: '200', fontSize: 36 }]}>
+                {user.email}
+              </Text>
+              <Text style={[styles.text, { color: '#AEB5BC', fontSize: 14 }]}>
+                Master Chef
+              </Text>
+              <Text style={styles.points}>Total Points:{user.points} </Text>
             </View>
-          </View>
 
-          <View style={{ marginTop: 32 }}>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              {this.history()}
-            </ScrollView>
-            <View style={styles.mediaCount}>
-              <Text style={styles.text}></Text>
+            <View style={styles.statsContainer}>
+              <View style={styles.statsBox}>
+                <Text></Text>
+                <Text>Recipe History</Text>
+              </View>
             </View>
-          </View>
 
-          <View style={styles.statsContainer}>
-            <View style={styles.statsBox}>
-              <Text></Text>
-              <Text>Favorite Recipes</Text>
+            <View style={{ marginTop: 32 }}>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              >
+                {this.history()}
+              </ScrollView>
+              <View style={styles.mediaCount}>
+                <Text style={styles.text}></Text>
+              </View>
             </View>
-          </View>
 
-          <View style={{ marginTop: 32 }}>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              {this.favorites()}
-            </ScrollView>
-            <View style={styles.mediaCount}>
-              <Text style={styles.text}></Text>
+            <View style={styles.statsContainer}>
+              <View style={styles.statsBox}>
+                <Text></Text>
+                <Text>Favorite Recipes</Text>
+              </View>
             </View>
-          </View>
 
-          <View style={styles.buttonParent}>
-            <TouchableHighlight
-              style={styles.buttonContainer}
-              onPress={() => this.handleClick()}
-            >
-              <Text>Log Out</Text>
-            </TouchableHighlight>
-          </View>
-        </ScrollView>
+            <View style={{ marginTop: 32 }}>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              >
+                {this.favorites()}
+              </ScrollView>
+              <View style={styles.mediaCount}>
+                <Text style={styles.text}></Text>
+              </View>
+            </View>
+
+            <View style={styles.buttonParent}>
+              <TouchableHighlight
+                style={styles.buttonContainer}
+                onPress={() => this.handleClick()}
+              >
+                <Text>Log Out</Text>
+              </TouchableHighlight>
+            </View>
+          </ScrollView>
+        ) : (
+          <View></View>
+        )}
       </SafeAreaView>
     );
   }
