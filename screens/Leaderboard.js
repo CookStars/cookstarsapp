@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, { useState, Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,36 +7,140 @@ import {
   Alert,
   Image,
   ActivityIndicator,
-} from 'react-native';
-import { db } from '../firebaseconfig.js';
-import Lead from 'react-native-leaderboard';
-import { ButtonGroup } from 'react-native-elements';
-import { fetchAllUsers } from '../redux/leaderboardReducer';
-import { connect } from 'react-redux';
+} from "react-native";
+import { db } from "../firebaseconfig.js";
+import Lead from "react-native-leaderboard";
+import { ButtonGroup } from "react-native-elements";
+import { fetchAllUsers } from "../redux/leaderboardReducer";
+import { connect } from "react-redux";
 
 export class Leaderboard extends Component {
-  componentDidMount() {
-    this.props.getAllUsers();
+  alert = (title, body) => {
+    Alert.alert(title, body, [{ text: "OK", onPress: () => {} }], {
+      cancelable: false,
+    });
+  };
+
+  async componentDidMount() {
+    await this.props.getAllUsers();
+  }
+
+  //HEADER FOR THE LEADERBOARD CONTAINING USER'S INFORMATION
+  renderHeader(rank) {
+    return (
+      <View
+        colors={[, "#F2CC8F", "#F4F1DE"]}
+        style={{
+          backgroundColor: "#F18F01",
+          padding: 15,
+          paddingTop: 35,
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ fontSize: 25, color: "white" }}>Leaderboard</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: 15,
+            marginTop: 20,
+            backgroundColor: "#F18F01",
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              fontSize: 25,
+              flex: 1,
+              textAlign: "right",
+              marginRight: 40,
+            }}
+          >
+            {ordinal_suffix_of(rank)}
+          </Text>
+          <Image
+            style={{ flex: 0.66, height: 60, width: 60, borderRadius: 60 / 2 }}
+            source={{
+              uri:
+                "https:www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png",
+            }}
+          />
+          <Text
+            style={{ color: "white", fontSize: 25, flex: 1, marginLeft: 40 }}
+          >
+            {this.props.currentUser.points}pts
+          </Text>
+        </View>
+        {/* <ButtonGroup
+          onPress={(x) => {
+            this.setState({ filter: x });
+          }}
+          selectedIndex={this.state.filter}
+          buttons={["Global", "Friends"]}
+          containerStyle={{ height: 30 }}
+        /> */}
+      </View>
+    );
   }
 
   render() {
-    const users = this.props.users;
-
+    const users = this.props.users.sort((item1, item2) => {
+      return item2.points - item1.points;
+    });
+    users.forEach((user) => {
+      user.icon =
+        "https:www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png";
+    });
+    const rank =
+      users.findIndex((item) => {
+        return item.email === this.props.currentUser.email;
+      }) + 1;
     return (
       <View>
         {users.length ? (
           <View>
-            <Text>{users[0].email}</Text>
-            <Text>Current User Points {this.props.currentUser.points}</Text>
+            {this.renderHeader(rank)}
+            <Lead
+              data={users}
+              sortBy="points"
+              labelBy="email"
+              icon="icon"
+              onRowPress={(item, index) => {
+                this.alert(
+                  item.firstName + " clicked",
+                  item.points + " points, wow!"
+                );
+              }}
+              evenRowColor="#edfcf9"
+            />
           </View>
         ) : (
           // Activity Indicator to indicate that code is loading
-          <ActivityIndicator size='large'></ActivityIndicator>
+          <ActivityIndicator
+            size="large"
+            alignItems="center"
+          ></ActivityIndicator>
         )}
       </View>
     );
   }
 }
+
+const ordinal_suffix_of = (i) => {
+  var j = i % 10,
+    k = i % 100;
+  if (j == 1 && k != 11) {
+    return i + "st";
+  }
+  if (j == 2 && k != 12) {
+    return i + "nd";
+  }
+  if (j == 3 && k != 13) {
+    return i + "rd";
+  }
+  return i + "th";
+};
 
 const mapState = (state) => ({
   users: state.users,
@@ -50,20 +154,6 @@ const mapDispatch = (dispatch) => {
 };
 
 export default connect(mapState, mapDispatch)(Leaderboard);
-// export default class Leaderboard extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       users: [],
-//       status: false,
-//       userInfo: this.props.userInfo,
-//       userRank: 1,
-//       filter: 0,
-//     };
-//     this.getUsers = this.getUsers.bind(this);
-//     this.alert = this.alert.bind(this);
-//     this.renderHeader = this.renderHeader.bind(this);
-//   }
 
 //   // FETCHING USERS FROM DATABASE, SORTING + GETTING THE RANK OF THE CURRENT USER
 //   async getUsers() {
@@ -98,129 +188,6 @@ export default connect(mapState, mapDispatch)(Leaderboard);
 //     //set state with data retrieved
 //     this.setState({ users: allUsers, status: true, userRank: ++userRank });
 //   }
-
-//   //ALERT FUNCTION - CAN CLICK ON EACH USER IN LEADERBOARD TO SEE THEIR POINTS
-//   alert = (title, body) => {
-//     Alert.alert(title, body, [{ text: "OK", onPress: () => { } }], {
-//       cancelable: false,
-//     });
-//   };
-
-//   //HEADER FOR THE LEADERBOARD CONTAINING USER'S INFORMATION
-//   renderHeader(rank) {
-//     return (
-//       <View
-//         colors={[, "#F2CC8F", "#F4F1DE"]}
-//         style={{
-//           backgroundColor: "#F18F01",
-//           padding: 15,
-//           paddingTop: 35,
-//           alignItems: "center",
-//         }}
-//       >
-//         <Text style={{ fontSize: 25, color: "white" }}>Leaderboard</Text>
-//         <View
-//           style={{
-//             flexDirection: "row",
-//             justifyContent: "center",
-//             alignItems: "center",
-//             marginBottom: 15,
-//             marginTop: 20,
-//           }}
-//         >
-//           <Text
-//             style={{
-//               color: "white",
-//               fontSize: 25,
-//               flex: 1,
-//               textAlign: "right",
-//               marginRight: 40,
-//             }}
-//           >
-//             {ordinal_suffix_of(rank)}
-//           </Text>
-//           <Image
-//             style={{ flex: 0.66, height: 60, width: 60, borderRadius: 60 / 2 }}
-//             source={{
-//               uri:
-//                 "https://www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png",
-//             }}
-//           />
-//           <Text
-//             style={{ color: "white", fontSize: 25, flex: 1, marginLeft: 40 }}
-//           >
-//             {this.state.userInfo.points}pts
-//           </Text>
-//         </View>
-//         <ButtonGroup
-//           onPress={(x) => {
-//             this.setState({ filter: x });
-//           }}
-//           selectedIndex={this.state.filter}
-//           buttons={["Global", "Friends"]}
-//           containerStyle={{ height: 30 }}
-//         />
-//       </View>
-//     );
-//   }
-
-//   componentDidMount() {
-//     this.getUsers();
-//   }
-
-//   //RENDER FUNCTION
-//   render() {
-//     const users = this.state.users
-//       .sort((a, b) => a.points - b.points)
-//       .map((user) => {
-//         if (user.firstName === "") {
-//           user.firstName = "Mysterious Cook";
-//         }
-//         user.icon =
-//           "https://www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png";
-//         return user;
-//       });
-//     const currentUser = this.state.userInfo;
-
-//     if (!this.state.status) {
-//       return null;
-//     }
-
-//     return (
-//       <View style={{ flex: 1, backgroundColor: "white" }}>
-//         {this.renderHeader(this.state.userRank)}
-//         <Lead
-//           data={users}
-//           sortBy="points"
-//           labelBy="firstName"
-//           icon="icon"
-//           onRowPress={(item, index) => {
-//             this.alert(
-//               item.firstName + " clicked",
-//               item.points + " points, wow!"
-//             );
-//           }}
-//           evenRowColor="#edfcf9"
-//         />
-//       </View>
-//     );
-//   }
-// }
-
-// const ordinal_suffix_of = (i) => {
-//   var j = i % 10,
-//     k = i % 100;
-//   if (j == 1 && k != 11) {
-//     return i + "st";
-//   }
-//   if (j == 2 && k != 12) {
-//     return i + "nd";
-//   }
-//   if (j == 3 && k != 13) {
-//     return i + "rd";
-//   }
-//   return i + "th";
-// };
 
 //-------------------------------
 //PREVIOUS CODE USED
