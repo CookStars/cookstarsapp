@@ -28,7 +28,6 @@ export const fetchUserInfo = () => (dispatch) => {
       if (user) {
         const docRef = db.collection(`users`).doc(user.uid);
         docRef.get().then((doc) => {
-          // if (doc.exists) {
           const {
             favoriteRecipes,
             foodPreference,
@@ -47,9 +46,6 @@ export const fetchUserInfo = () => (dispatch) => {
               recipeHistory,
             })
           );
-          // } else {
-          //   console.log('No such document! Lol');
-          // }
         });
       }
     });
@@ -72,7 +68,6 @@ export const logOut = () => (dispatch) => {
       .auth()
       .signOut()
       .then(() => {
-        // await AsyncStorage.removeItem('userInfo');
         dispatch(setUserInfo({ isLoggedIn: false }));
       });
   } catch (err) {}
@@ -82,7 +77,6 @@ export const logOut = () => (dispatch) => {
 export default function recipeReducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER_INFO:
-      //   console.log(action.user);
       return action.user;
 
     case UPDATE_USER_INFO:

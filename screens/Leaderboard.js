@@ -1,44 +1,55 @@
-import React, { useState, Component } from "react";
-import { StyleSheet, Text, View, ScrollView, Alert, Image } from "react-native";
-import { db } from "../firebaseconfig.js";
-import Lead from "react-native-leaderboard";
-import { ButtonGroup } from "react-native-elements";
-import { fetchAllUsers } from '../redux/leaderboardReducer'
-import { connect } from 'react-redux'
+import React, { useState, Component } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Alert,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
+import { db } from '../firebaseconfig.js';
+import Lead from 'react-native-leaderboard';
+import { ButtonGroup } from 'react-native-elements';
+import { fetchAllUsers } from '../redux/leaderboardReducer';
+import { connect } from 'react-redux';
 
 export class Leaderboard extends Component {
-  async componentDidMount() {
-    await this.props.getAllUsers()
-    console.log("LABE::::", this.props)
-
+  componentDidMount() {
+    this.props.getAllUsers();
   }
 
   render() {
-    const users = this.props.users
-    // if (!users.exists) {
-    //   return null
-    // }
-    // console.log("USERSSSSS!!!!", users)
+    const users = this.props.users;
+
     return (
       <View>
-        <Text>help</Text>
-        <Text>{users[0].email}</Text>
-
+        {users.length ? (
+          <View>
+            <Text>{users[0].email}</Text>
+            <Text>Current User Points {this.props.currentUser.points}</Text>
+          </View>
+        ) : (
+          // Activity Indicator to indicate that code is loading
+          <ActivityIndicator size='large'></ActivityIndicator>
+        )}
       </View>
-    )
+    );
   }
 }
 
 const mapState = (state) => ({
-  users: state.users
+  users: state.users,
+  currentUser: state.user,
 });
 
 const mapDispatch = (dispatch) => {
   return {
-    getAllUsers: () => dispatch(fetchAllUsers())
+    getAllUsers: () => dispatch(fetchAllUsers()),
   };
 };
-export default connect(mapState, mapDispatch)(Leaderboard)
+
+export default connect(mapState, mapDispatch)(Leaderboard);
 // export default class Leaderboard extends Component {
 //   constructor(props) {
 //     super(props);
