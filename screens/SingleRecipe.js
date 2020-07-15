@@ -9,7 +9,6 @@ import {
     Button,
     Image,
     Alert,
-    SafeAreaView,
     Dimensions,
     TouchableOpacity,
 } from 'react-native'
@@ -66,18 +65,6 @@ export default class SingleRecipe extends Component {
                             <Text style={{ color: 'white' }}>START RECIPE</Text>
                         </View>
                     </TouchableOpacity>
-                    {/*                   
-                    <Button
-                        title="Start"
-                        onPress={() => {
-                            navigation.navigate('Steps', {
-                                index: index,
-                                recipes: recipes,
-                                userInfo: userInfo,
-                                recipeCompleted: recipeCompleted,
-                            })
-                        }}
-                    /> */}
                 </View>
             )
         } else {
@@ -126,9 +113,9 @@ export default class SingleRecipe extends Component {
                                     }}
                                     style={{
                                         backgroundColor: '#EF233C',
-                                        position:'absolute',
-                                        top:'80%',
-                                        right:0,
+                                        position: 'absolute',
+                                        top: '80%',
+                                        right: 0,
                                         borderRadius: 10,
                                         width: '35%',
                                         height: 35,
@@ -148,8 +135,10 @@ export default class SingleRecipe extends Component {
                                             size={20}
                                             color="white"
                                         />
-                                        <Text style={{ color: 'white', left:6 }}>
-                                              FAVORITE
+                                        <Text
+                                            style={{ color: 'white', left: 6 }}
+                                        >
+                                            FAVORITE
                                         </Text>
                                     </View>
                                 </TouchableOpacity>
@@ -234,7 +223,7 @@ export default class SingleRecipe extends Component {
                                 <Text
                                     style={{
                                         fontWeight: 'bold',
-                                        fontSize: '18rem',
+                                        fontSize: 18,
                                         height: '10%',
                                     }}
                                 >
@@ -249,7 +238,7 @@ export default class SingleRecipe extends Component {
                                 <Text
                                     style={{
                                         fontWeight: 'bold',
-                                        fontSize: '18rem',
+                                        fontSize: 18,
                                         height: 35,
                                         top: '10%',
                                     }}
