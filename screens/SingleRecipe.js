@@ -1,17 +1,18 @@
-
-import React, { Component } from 'react';
-import HTML from 'react-native-render-html';
+import React, { Component } from 'react'
+import HTML from 'react-native-render-html'
 
 import {
-  StyleSheet,
-  Text,
-  ScrollView,
-  View,
-  Button,
-  Image,
-  Alert,
-  SafeAreaView,
-} from 'react-native';
+    StyleSheet,
+    Text,
+    ScrollView,
+    View,
+    Button,
+    Image,
+    Alert,
+    SafeAreaView,
+    Dimensions,
+    TouchableOpacity,
+} from 'react-native'
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 
 export default class SingleRecipe extends Component {
@@ -19,56 +20,57 @@ export default class SingleRecipe extends Component {
         super(props)
     }
 
-  checkDay() {
-    const weekdays = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ];
-    const today = weekdays[new Date().getDay()];
-    const { navigation } = this.props;
-    const { recipe, userInfo, day } = this.props.route.params;
+    checkDay() {
+        const weekdays = [
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+        ]
+        const today = weekdays[new Date().getDay()]
+        const { navigation } = this.props
+        const { recipe, userInfo, day } = this.props.route.params
 
-    if (day === today) {
-      return (
-        <View style={styles.startButton}>
-          <Button
-            title='Start'
-            onPress={() => {
-              navigation.navigate('Steps', {
-                day: day,
-                recipe: recipe,
-                userInfo: userInfo,
-              });
-            }}
-          />
-        </View>
-      );
-    } else {
-      return <View />;
+        if (day === today) {
+            return (
+                <View style={styles.startButton}>
+                    <Button
+                        title="Start"
+                        onPress={() => {
+                            navigation.navigate('Steps', {
+                                day: day,
+                                recipe: recipe,
+                                userInfo: userInfo,
+                            })
+                        }}
+                    />
+                </View>
+            )
+        } else {
+            return <View />
+        }
     }
 
-  render() {
-    const {
-      summary,
-      title,
-      image,
-      ingredients,
-      readyInMinutes,
+    render() {
+        const {
+            summary,
+            title,
+            image,
+            ingredients,
+            readyInMinutes,
             servings,
-    } = this.props.route.params.recipe;
-    const listIngredients = ingredients
-      .map((ingredient) => ingredient.original)
-      .join(', ');
-    const newTagsSummary = summary
-      .split(/\<a\b[^>]*>/)
-      .join('<b><i>')
-      .split(/\<\/a>/)
-      .join('</i></b>');
+        } = this.props.route.params.recipe
+        const listIngredients = ingredients
+            .map((ingredient) => ingredient.original)
+            .join(', ')
+        const newTagsSummary = summary
+            .split(/\<a\b[^>]*>/)
+            .join('<b><i>')
+            .split(/\<\/a>/)
+            .join('</i></b>')
 
         return (
             <View>
