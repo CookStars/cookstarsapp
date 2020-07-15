@@ -14,8 +14,18 @@ export const fetchAllUsers = () => {
   return async (dispatch) => {
     try {
       const users = await db.collection("users").get()
-      console.log(users)
-      dispatch(getAllUsers(users))
+      // console.log(users)
+      if (users.empty) {
+        console.log("No data found");
+        return;
+      }
+      const tempArr = []
+      users.forEach((doc) => {
+        tempArr.push(doc.data());
+        console.log("DOCCCC", doc.data())
+      });
+
+      dispatch(getAllUsers(tempArr))
 
 
     } catch (error) {
