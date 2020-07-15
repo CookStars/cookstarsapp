@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,22 +8,22 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
-} from 'react-native';
-import favicon from '../assets/favicon.png';
-import { CardView, Cards } from '../components';
-import { recipes } from '../Seed';
-import { db } from '../firebaseconfig.js';
-import { connect } from 'react-redux';
-import { fetchRecipes } from '../redux/recipeReducer';
+} from "react-native";
+import favicon from "../assets/favicon.png";
+import { CardView, Cards } from "../components";
+import { recipes } from "../Seed";
+import { db } from "../firebaseconfig.js";
+import { connect } from "react-redux";
+import { fetchRecipes } from "../redux/recipeReducer";
 
 const weekdays = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
 ];
 const today = new Date().getDay();
 
@@ -97,15 +97,15 @@ export default connect(mapState, mapDispatch)(HomeScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   scrollArea_contentContainerStyle: {
-    flexWrap: 'wrap',
-    alignContent: 'space-around',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexWrap: "wrap",
+    alignContent: "space-around",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   Text: {
     fontSize: 30,
