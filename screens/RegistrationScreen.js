@@ -21,7 +21,7 @@ export default function RegistrationScreen({ navigation }) {
     // navigation.navigate('Login');
   };
 
-  const onRegisterPress = () => {
+  const onRegisterPress = async () => {
     if (password !== confirmPassword) {
       alert('Please provide the correct credentials');
       return;
@@ -30,7 +30,8 @@ export default function RegistrationScreen({ navigation }) {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((response) => {
-        const uid = response.user.uid;
+        // const uid = response.user.uid;
+        // firebase.auth().signInWithEmailAndPassword(email, password);
       })
       .catch((error) => {
         alert(error);

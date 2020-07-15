@@ -26,7 +26,7 @@ export default class Login extends Component {
   handleLogin = async () => {
     const { email, password } = this.state;
     // Set persistence locally. This will make sure user is logged in through firebase until they log out
-    firebase
+    await firebase
       .auth()
       .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {
