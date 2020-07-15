@@ -37,17 +37,31 @@ export default class SingleRecipe extends Component {
 
         if (day === today) {
             return (
-                <View style={styles.startButton}>
-                    <Button
-                        title="Start"
+                      <View style={styles.startButton}>
+                    <TouchableOpacity
                         onPress={() => {
                             navigation.navigate('Steps', {
-                                day: day,
-                                recipe: recipe,
+                                index: index,
+                                recipes: recipes,
                                 userInfo: userInfo,
+                                recipeCompleted: recipeCompleted,
                             })
                         }}
-                    />
+                        style={{
+                            // elevation: 12,
+                            backgroundColor: '#EF233C',
+                            borderRadius: 10,
+                            width: '100%',
+                            height: 35,
+                            alignItems: 'center',
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <View>
+                            <Text style={{ color: 'white' }}>START RECIPE</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             )
         } else {
