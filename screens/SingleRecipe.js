@@ -114,10 +114,10 @@ export default class SingleRecipe extends Component {
                                     style={{
                                         backgroundColor: '#EF233C',
                                         position: 'absolute',
-                                        top: '80%',
-                                        right: 0,
+                                        top: '85%',
+                                        right: -8,
                                         borderRadius: 10,
-                                        width: '35%',
+                                        width: '40%',
                                         height: 35,
                                         alignItems: 'center',
                                         alignSelf: 'center',
