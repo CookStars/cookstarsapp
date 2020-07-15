@@ -10,38 +10,26 @@ import {
 } from 'react-native';
 
 export default function Cards(props) {
-  const {
-    day,
-    index,
-    navigation,
-    recipes,
-    userInfo,
-    recipeCompleted,
-    recipeFinished,
-  } = props;
+  const { day, navigation, recipe, userInfo } = props;
 
   return (
     <View style={styles.cardContainer}>
-      {recipes[index] ? (
+      {recipe ? (
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() =>
             navigation.navigate('SingleRecipe', {
-              index: index,
               day: day,
-              recipes: recipes,
+              recipe: recipe,
               userInfo: userInfo,
-              recipeCompleted: recipeCompleted,
-              recipeFinished: recipeFinished,
             })
           }
         >
           <View style={styles.imgContainer}>
-            {/* {showRecipeImg()} */}
             <Image
               source={{
-                uri: recipes[index].image
-                  ? recipes[index].image
+                uri: recipe.image
+                  ? recipe.image
                   : 'https://webknox.com/recipeImages/641671-556x370.jpg',
               }}
               style={{ width: 200, height: 200, borderRadius: 100 }}
@@ -54,7 +42,6 @@ export default function Cards(props) {
       ) : (
         <TouchableOpacity activeOpacity={0.7}>
           <View style={styles.imgContainer}>
-            {/* {showRecipeImg()} */}
             <Image
               source={{
                 uri: 'https://webknox.com/recipeImages/641671-556x370.jpg',

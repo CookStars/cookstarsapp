@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,45 +8,41 @@ import {
   Image,
   Alert,
   SafeAreaView,
-} from "react-native";
-import { db } from "../firebaseconfig";
+} from 'react-native';
+import { db } from '../firebaseconfig';
 
-const ingredientsLink = "https://spoonacular.com/cdn/ingredients_100x100/";
-const equipmentLink = "https://spoonacular.com/cdn/equipment_100x100/";
+const ingredientsLink = 'https://spoonacular.com/cdn/ingredients_100x100/';
+const equipmentLink = 'https://spoonacular.com/cdn/equipment_100x100/';
 
 export default function Steps(props) {
   const [currStep, setCurrStep] = useState(0);
 
   const { navigation } = props;
-  let { index, recipes, userInfo, recipeCompleted } = props.route.params;
-  const currRecipeId = recipes[index].id;
-  const currRecipeSteps = recipes[index].analyzedInstructions[0].steps;
+  let { recipe, userInfo } = props.route.params;
+
+  const currRecipeId = recipe.id;
+  const currRecipeSteps = recipe.analyzedInstructions[0].steps;
   const { equipment, ingredients, number, step } = currRecipeSteps[currStep];
+
   const newUserPts = userInfo.points + 10;
-  const recipeHistory = userInfo.recipeHistory
+  const recipeHistory = userInfo.recipeHistory;
 
   const updatePoints = () => {
-    if (userInfo.recipeHistory.hasOwnProperty(currRecipeId)) {
-      db.collection("users").doc(userInfo.userId).update({
-        points: newUserPts,
-      });
-    } else {
-      db.collection("users") 
+    if (!userInfo.recipeHistory.hasOwnProperty(currRecipeId)) {
+      db.collection('users')
         .doc(userInfo.userId)
         .update({
           points: newUserPts,
-          recipeHistory: {...recipeHistory, [currRecipeId]: recipes[index] },
+          recipeHistory: { ...recipeHistory, [currRecipeId]: recipe },
         });
-    } 
-    recipeCompleted()
-    userInfo.points += 10;
+    }
   };
 
   const checkStep = (currStep) => {
     if (currStep === 0) {
       return (
         <Button
-          title="NEXT"
+          title='NEXT'
           onPress={() => {
             setCurrStep(currStep + 1);
           }}
@@ -56,13 +52,13 @@ export default function Steps(props) {
       return (
         <View>
           <Button
-            title="PREVIOUS"
+            title='PREVIOUS'
             onPress={() => {
               setCurrStep(currStep - 1);
             }}
           />
           <Button
-            title="NEXT"
+            title='NEXT'
             onPress={() => {
               setCurrStep(currStep + 1);
             }}
@@ -73,20 +69,16 @@ export default function Steps(props) {
       return (
         <View style={styles.buttonContainer}>
           <Button
-            title="PREVIOUS"
+            title='FINISH'
             onPress={() => {
-              setCurrStep(currStep - 1);
+              updatePoints();
+              navigation.navigate('Success');
             }}
           />
           <Button
-            title="FINISH"
+            title='PREVIOUS'
             onPress={() => {
-              updatePoints();
-              navigation.navigate("Success", {
-                index: index,
-                recipes: recipes,
-                userInfo: userInfo,
-              });
+              setCurrStep(currStep - 1);
             }}
           />
         </View>
@@ -116,7 +108,6 @@ export default function Steps(props) {
         <View>
           <Text>Equipment</Text>
           <ScrollView
-            key={index}
             horizontal={true}
             contentContainerStyle={styles.scrollArea_contentContainerStyle}
           >
@@ -138,7 +129,6 @@ export default function Steps(props) {
               height: 150,
               uri: image,
             }}
-            // style={styles.image}
           />
           <Text>{ingredient.name}</Text>
         </View>
@@ -152,7 +142,6 @@ export default function Steps(props) {
             <Text>Ingredients</Text>
           </View>
           <ScrollView
-            key={index}
             horizontal={true}
             contentContainerStyle={styles.scrollArea_contentContainerStyle}
           >
@@ -183,17 +172,17 @@ export default function Steps(props) {
 const styles = StyleSheet.create({
   parentContainer: {
     flex: 1,
-    backgroundColor: "#F4F1DE",
+    backgroundColor: '#F4F1DE',
   },
   listContainer: {
     flex: 3,
-    flexDirection: "column",
+    flexDirection: 'column',
   },
   image: {
     top: 10,
-    alignItems: "center",
-    resizeMode: "contain",
-    overflow: "hidden",
+    alignItems: 'center',
+    resizeMode: 'contain',
+    overflow: 'hidden',
     borderRadius: 37,
   },
   stepContainer: {
@@ -201,28 +190,28 @@ const styles = StyleSheet.create({
   },
   scrollArea_contentContainerStyle: {
     flex: 2,
-    alignContent: "space-between",
-    flexDirection: "row",
+    alignContent: 'space-between',
+    flexDirection: 'row',
   },
   title: {
     fontSize: 32,
-    textAlign: "center",
+    textAlign: 'center',
     marginTop: 10,
-    fontWeight: "bold",
-    color: "#F18F01",
-    backgroundColor: "#f4f1de",
+    fontWeight: 'bold',
+    color: '#F18F01',
+    backgroundColor: '#f4f1de',
   },
   image: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   step: {
     padding: 30,
     fontSize: 18,
-    backgroundColor: "#F4F1DE",
-    textAlign: "justify",
+    backgroundColor: '#F4F1DE',
+    textAlign: 'justify',
   },
   buttonContainer: {
-    backgroundColor: "#008F68",
+    backgroundColor: '#008F68',
     borderRadius: 5,
     padding: 8,
     margin: 8,

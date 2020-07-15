@@ -12,14 +12,10 @@ import { fetchUserInfo } from '../redux/userReducer';
 const Stack = createStackNavigator();
 
 export class AppNavigator extends React.Component {
-  constructor() {
-    super();
-    this.state = { isLoggedIn: false };
-    // this.log();
-
-    this.log = this.log.bind(this);
-    this.logOut = this.logOut.bind(this);
-  }
+  // constructor() {
+  //   super();
+  //   // this.state = { isLoggedIn: false };
+  // }
 
   // Does not work right now
   // async getData() {
@@ -30,71 +26,71 @@ export class AppNavigator extends React.Component {
   //   } else return;
   // }
 
-  async log() {
-    // When there is a change on firebase authentication load user data onto application state
-    firebase.auth().onAuthStateChanged(async (user) => {
-      if (user) {
-        const userInfo = {
-          userId: user.uid,
-          email: user.email,
-          isLoggedIn: true,
-        };
+  // async log() {
+  //   // When there is a change on firebase authentication load user data onto application state
+  //   firebase.auth().onAuthStateChanged(async (user) => {
+  //     if (user) {
+  //       const userInfo = {
+  //         userId: user.uid,
+  //         email: user.email,
+  //         isLoggedIn: true,
+  //       };
 
-        const docRef = db.collection(`users`).doc(user.uid);
-        docRef
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              const {
-                favoriteRecipes,
-                foodPreference,
-                points,
-                recipeHistory,
-              } = doc.data();
+  //       const docRef = db.collection(`users`).doc(user.uid);
+  //       docRef
+  //         .get()
+  //         .then((doc) => {
+  //           if (doc.exists) {
+  //             const {
+  //               favoriteRecipes,
+  //               foodPreference,
+  //               points,
+  //               recipeHistory,
+  //             } = doc.data();
 
-              this.setState({
-                favoriteRecipes,
-                foodPreference,
-                points,
-                recipeHistory,
-              });
+  //             this.setState({
+  //               favoriteRecipes,
+  //               foodPreference,
+  //               points,
+  //               recipeHistory,
+  //             });
 
-              // console.log('Document data:', doc.data());
-            } else {
-              // doc.data() will be undefined in this case
-              console.log('No such document!');
-            }
-          })
-          .catch(function (error) {
-            console.log('Error getting document:', error);
-          });
+  //             // console.log('Document data:', doc.data());
+  //           } else {
+  //             // doc.data() will be undefined in this case
+  //             console.log('No such document!');
+  //           }
+  //         })
+  //         .catch(function (error) {
+  //           console.log('Error getting document:', error);
+  //         });
 
-        // Store User info using Async Storage inside userInfo
-        try {
-          const jsonValue = JSON.stringify(userInfo);
-          await AsyncStorage.setItem('userInfo', jsonValue);
-        } catch (e) {
-          console.log(e);
-        }
+  //       // Store User info using Async Storage inside userInfo
+  //       try {
+  //         const jsonValue = JSON.stringify(userInfo);
+  //         await AsyncStorage.setItem('userInfo', jsonValue);
+  //       } catch (e) {
+  //         console.log(e);
+  //       }
 
-        // Set state with user information
-        const jsonValue = await AsyncStorage.getItem('userInfo');
-        if (jsonValue) {
-          this.setState(JSON.parse(jsonValue));
-        }
-      }
-    });
-  }
+  //       // Set state with user information
+  //       const jsonValue = await AsyncStorage.getItem('userInfo');
+  //       if (jsonValue) {
+  //         this.setState(JSON.parse(jsonValue));
+  //       }
+  //     }
+  //   });
+  // }
 
-  logOut() {
-    firebase
-      .auth()
-      .signOut()
-      .then(async () => {
-        await AsyncStorage.removeItem('userInfo');
-        this.setState({ isLoggedIn: false });
-      });
-  }
+  // logOut() {
+  //   firebase
+  //     .auth()
+  //     .signOut()
+  //     .then(async () => {
+  //       await AsyncStorage.removeItem('userInfo');
+  //       this.setState({ isLoggedIn: false });
+  //     });
+  // }
 
   async componentDidMount() {
     await this.props.getUserInfo();

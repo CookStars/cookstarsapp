@@ -25,25 +25,25 @@ const weekdays = [
   'Friday',
   'Saturday',
 ];
+const today = new Date().getDay();
 
 export class HomeScreen extends Component {
-  constructor(props) {
-    super(props);
-    // this.state = {};
-    // this.state = {
-    //   vegan: [],
-    //   meatlover: [],
-    //   recipeFinished: false,
-    // };
-    // this.recipeCompleted = this.recipeCompleted.bind(this);
-    // this.getRecipes = this.getRecipes.bind(this);
-    // this.props.getVeganRecipes();
-  }
+  // constructor(props) {
+  //   super(props);
+  //   // this.state = {};
+  //   // this.state = {
+  //   //   vegan: [],
+  //   //   meatlover: [],
+  //   //   recipeFinished: false,
+  //   // };
+  //   // this.recipeCompleted = this.recipeCompleted.bind(this);
+  //   // this.getRecipes = this.getRecipes.bind(this);
+  //   // this.props.getVeganRecipes();
+  // }
 
   componentDidMount() {
     const pref = this.props.userInfo.foodPreference;
     this.props.getRecipes(pref);
-    // console.log(this.props);
   }
 
   cards = () => {
@@ -51,12 +51,9 @@ export class HomeScreen extends Component {
       <Cards
         key={index}
         day={weekday}
-        index={index}
         navigation={this.props.navigation}
-        recipes={this.props.recipes}
+        recipe={this.props.recipes[index]}
         userInfo={this.props.userInfo}
-        // recipeFinished={this.state.recipeFinished}
-        // recipeCompleted={this.recipeCompleted}
       />
     ));
   };
@@ -70,11 +67,10 @@ export class HomeScreen extends Component {
         >
           <CardView
             style={styles.card}
+            day={weekdays[today]}
             navigation={this.props.navigation}
             recipes={this.props.recipes}
             userInfo={this.props.userInfo}
-            // recipeFinished={this.state.recipeFinished}
-            // recipeCompleted={this.recipeCompleted}
           />
           <Text style={styles.Text}>Recipes of the Week</Text>
           {this.cards()}

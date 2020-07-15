@@ -9,14 +9,18 @@ import {
   Dimensions,
 } from 'react-native';
 
+const weekdays = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+
 export default function CardView(props) {
-  const {
-    navigation,
-    recipes,
-    userInfo,
-    recipeFinished,
-    recipeCompleted,
-  } = props;
+  const { navigation, recipes, userInfo, day } = props;
   const today = new Date().getDay();
 
   return (
@@ -26,11 +30,9 @@ export default function CardView(props) {
           activeOpacity={0.7}
           onPress={() =>
             navigation.navigate('SingleRecipe', {
-              index: today,
-              recipes: recipes,
+              day: day,
+              recipe: recipes[today],
               userInfo: userInfo,
-              recipeCompleted: recipeCompleted,
-              recipeFinished: recipeFinished,
             })
           }
         >
