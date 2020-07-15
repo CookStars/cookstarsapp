@@ -10,6 +10,7 @@ import {
   Image,
   Alert,
   SafeAreaView,
+  Dimensions,
 } from "react-native";
 
 export default class SingleRecipe extends Component {
@@ -29,7 +30,13 @@ export default class SingleRecipe extends Component {
     ];
     const today = weekdays[new Date().getDay()];
     const { navigation } = this.props;
-    const { index, recipes, userInfo, recipeCompleted, recipeFinished } = this.props.route.params;
+    const {
+      index,
+      recipes,
+      userInfo,
+      recipeCompleted,
+      recipeFinished,
+    } = this.props.route.params;
 
     if (weekdays[index] === today && !recipeFinished) {
       return (
@@ -41,7 +48,7 @@ export default class SingleRecipe extends Component {
                 index: index,
                 recipes: recipes,
                 userInfo: userInfo,
-                recipeCompleted: recipeCompleted
+                recipeCompleted: recipeCompleted,
               });
             }}
           />
@@ -67,34 +74,41 @@ export default class SingleRecipe extends Component {
     return (
       <SafeAreaView>
         <View>
-          <ScrollView>
+          <ScrollView style={{backgroundColor:'white', bottom:50}}>
             <View style={styles.container}>
-              <View>
-                <Text style={styles.title}>{title}</Text>
-              </View>
               <View style={styles.image}>
                 <Image
                   source={{
-                    width: 350,
-                    height: 300,
+                    width: Dimensions.get("screen").width,
+                    height: 0.4 * Dimensions.get("screen").height,
                     uri: image,
                   }}
                 />
               </View>
+              <View>
+                <Text style={styles.title}>{title}</Text>
+              </View>
             </View>
             <View>
-              <View style={styles.text}>
-                <HTML html={newTagsSummary} baseFontStyle={styles.text} />
+              <View></View>
+   
+                <View style={styles.text}>             
+                <Text style={{fontWeight: 'bold'}}> Description: </Text>
+                  <HTML html={newTagsSummary} baseFontStyle={styles.text} />
+                </View>
+                <View>
+                  <Text style={styles.text}>
+                    <Text style={{ fontWeight: "bold" }}>Ingredients: </Text>
+                    {listIngredients}
+                  </Text>
+                </View>
               </View>
-              <View>
-                <Text style={styles.text}>
-                  <Text style={{ fontWeight: "bold" }}>Ingredients: </Text>
-                  {listIngredients}
-                </Text>
-              </View>
-            </View>
+
           </ScrollView>
+          <View>
           <View>{this.checkDay()}</View>
+          </View>
+
         </View>
       </SafeAreaView>
     );
@@ -103,30 +117,35 @@ export default class SingleRecipe extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#F4F1DE",
+    width: Dimensions.get("screen").width,
+    height: 0.6 * Dimensions.get("screen").height,
+    backgroundColor: "white",
+    // borderColor: "green",
+    // borderWidth: 3,
+    alignContent: "space-between",
   },
   title: {
-    fontSize: 32,
-    textAlign: "center",
-    marginTop: 10,
+    // borderWidth: 3,
+    // borderColor: "purple",
+    left: "6%",
+    width: 0.9 * Dimensions.get("screen").width,
+    fontSize: 28,
+    marginTop: "5%",
     fontWeight: "bold",
-    color: "#F18F01",
-    backgroundColor: "#f4f1de",
+    color: "black",
   },
   image: {
-    top: 10,
+    // borderWidth: 3,
+    // borderColor: "#EBEBD3",
     alignItems: "center",
-    resizeMode: "contain",
-    overflow: "hidden",
-    borderRadius: 37,
+    resizeMode: "stretch",
   },
   text: {
-    padding: 30,
-    fontSize: 18,
-    backgroundColor: "#F4F1DE",
-    textAlign: "justify",
-    bottom: 50,
+    // borderWidth:3,
+    // borderColor:'#F78764',
+    padding:30,
+    fontSize: 16,
+    textAlign: "auto",
   },
 
   startButton: {
