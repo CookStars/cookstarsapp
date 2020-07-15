@@ -68,14 +68,23 @@ export function SuccessPage(props) {
                     <Text style={styles.pointsText}>
                         TOTAL POINTS: {userInfo.points}
                     </Text>
-                    <View style={{bottom:-20,backgroundColor:'white', borderWidth:1 }}>
-                        <Text style={{fontSize:17, paddingBottom:3}}> Enjoyed the recipe? </Text>
+                    <View
+                        style={{
+                            bottom: -20,
+                            backgroundColor: 'white',
+                            borderWidth: 1,
+                        }}
+                    >
+                        <Text style={{ fontSize: 17, paddingBottom: 3 }}>
+                            {' '}
+                            Enjoyed the recipe?{' '}
+                        </Text>
                         <View>
                             <TouchableOpacity
-                               onPress={() => handleFavorite()}
+                                onPress={() => handleFavorite()}
                                 style={{
-                                 borderWidth: 1,
-                                 borderColor:'#EF233C',
+                                    borderWidth: 1,
+                                    borderColor: '#EF233C',
                                     backgroundColor: 'transparent',
                                     bottom: -2,
                                     right: -8,
@@ -99,7 +108,7 @@ export function SuccessPage(props) {
                                         color="#EF233C"
                                     />
                                     <Text style={{ color: 'black', left: 6 }}>
-                                        ADD FAVORITE 
+                                        ADD FAVORITE
                                     </Text>
                                 </View>
                             </TouchableOpacity>
@@ -112,8 +121,8 @@ export function SuccessPage(props) {
                     activeOpacity={0.7}
                     onPress={() =>
                         navigation.navigate('SingleRecipe', {
-                            index: index + 1,
-                            recipes: recipes,
+                            recipe: recipes[today + 1],
+                            day: weekdays[today + 1],
                         })
                     }
                 >
@@ -121,8 +130,8 @@ export function SuccessPage(props) {
                         source={{ uri: img }}
                         style={{
                             width: Dimensions.get('screen').width,
-                         height: 0.33 * Dimensions.get('screen').height,
-                         bottom:0,
+                            height: 0.33 * Dimensions.get('screen').height,
+                            bottom: 0,
                         }}
                     />
                     <View style={styles.labelContainer}>
