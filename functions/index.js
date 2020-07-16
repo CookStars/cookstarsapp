@@ -40,8 +40,8 @@ exports.getMeatRecipes = functions.pubsub
         return null
     })
 
-//   return null;
-// });
+// return null;
+//   });
 
 exports.newUserSignUp = functions.auth.user().onCreate((user) => {
     return admin.firestore().collection('users').doc(user.uid).set({

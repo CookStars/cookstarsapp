@@ -38,23 +38,25 @@ export default function RegistrationScreen({ navigation }) {
         firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
+            .then(async (response) => {
+                console.log('USER FROM REGISTRATION', response.user.uid)
 
-            .then((response) => {
-                setTimeout(() => {
-                    const user = db.collection('users').doc(response.user.uid)
-                    user.set(
-                        {
-                            firstName: firstName
-                                ? firstName
-                                : 'Mysterious Cook',
-                            lastName: lastName ? lastName : '',
-                            foodPreference: foodPreference
-                                ? foodPreference.toString()
-                                : 'vegan',
-                        },
-                        { merge: true }
-                    )
-                }, 3000)
+                db.collection('users')
+                    .doc(response.user.uid)
+                    .set({
+                        email: response.user.email,
+                        firstName: firstName ? firstName : 'Mysterious',
+                        lastName: lastName ? lastName : 'Cook',
+                        foodPreference: foodPreference
+                            ? foodPreference.toString()
+                            : 'vegan',
+                        points: 0,
+                        favoriteRecipes: {},
+                        recipeHistory: {},
+                    })
+            })
+            .catch((error) => {
+                alert(error)
             })
             .catch((error) => console.log('ERROR') || alert(error))
             .finally(() => setIsCreatingAccount(false))

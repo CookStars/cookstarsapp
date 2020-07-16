@@ -14,6 +14,13 @@ var firebaseConfig = {
   measurementId: "G-1GYL1VR4VH",
 };
 
+// const FireFunctions = {
+//   passwordReset: email => {
+//     // return firebase.auth().sendPasswordResetEmail(email)
+//   }
+// }
+
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();

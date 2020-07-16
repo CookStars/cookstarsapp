@@ -1,88 +1,103 @@
-import React, { useState, Component } from "react";
+import React, { useState, Component } from 'react'
 import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Alert,
-  Image,
-  ActivityIndicator,
-  RefreshControl,
-} from "react-native";
-import { db } from "../firebaseconfig.js";
-import Lead from "react-native-leaderboard";
-import { ButtonGroup, ThemeConsumer } from "react-native-elements";
-import { fetchAllUsers } from "../redux/leaderboardReducer";
-import { connect } from "react-redux";
+    StyleSheet,
+    Text,
+    View,
+    ScrollView,
+    Alert,
+    Image,
+    ActivityIndicator,
+    RefreshControl,
+    Dimensions,
+} from 'react-native'
+import { db } from '../firebaseconfig.js'
+import Lead from 'react-native-leaderboard'
+import { ButtonGroup, ThemeConsumer } from 'react-native-elements'
+import { fetchAllUsers } from '../redux/leaderboardReducer'
+import { connect } from 'react-redux'
 
 export class Leaderboard extends Component {
-  state = {
-    refresh: false,
-  };
+    state = {
+        refresh: false,
+    }
 
-  alert = (title, body) => {
-    Alert.alert(title, body, [{ text: "OK", onPress: () => {} }], {
-      cancelable: false,
-    });
-  };
+    alert = (title, body) => {
+        Alert.alert(title, body, [{ text: 'OK', onPress: () => {} }], {
+            cancelable: false,
+        })
+    }
 
-  onRefresh() {
-    this.setState({ refresh: true });
-    this.props.getAllUsers().finally(() => this.setState({ refresh: false }));
-  }
+    onRefresh() {
+        this.setState({ refresh: true })
+        this.props
+            .getAllUsers()
+            .finally(() => this.setState({ refresh: false }))
+    }
 
-  async componentDidMount() {
-    await this.props.getAllUsers();
-  }
+    async componentDidMount() {
+        await this.props.getAllUsers()
+    }
 
-  //HEADER FOR THE LEADERBOARD CONTAINING USER'S INFORMATION
-  renderHeader(rank) {
-    return (
-      <View
-        colors={[, "#F2CC8F", "#F4F1DE"]}
-        style={{
-          backgroundColor: "#F18F01",
-          padding: 15,
-          paddingTop: 35,
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ fontSize: 25, color: "white" }}>Leaderboard</Text>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: 15,
-            marginTop: 20,
-            backgroundColor: "#F18F01",
-          }}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontSize: 25,
-              flex: 1,
-              textAlign: "right",
-              marginRight: 40,
-            }}
-          >
-            {ordinal_suffix_of(rank)}
-          </Text>
-          <Image
-            style={{ flex: 0.66, height: 60, width: 60, borderRadius: 60 / 2 }}
-            source={{
-              uri:
-                "https:www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png",
-            }}
-          />
-          <Text
-            style={{ color: "white", fontSize: 25, flex: 1, marginLeft: 40 }}
-          >
-            {this.props.currentUser.points}pts
-          </Text>
-        </View>
-        {/* <ButtonGroup
+    //HEADER FOR THE LEADERBOARD CONTAINING USER'S INFORMATION
+    renderHeader(rank) {
+        return (
+            <View
+                colors={[, '#F2CC8F', '#F4F1DE']}
+                style={{
+                    backgroundColor: '#F18F01',
+                    padding: 15,
+                    paddingTop: 35,
+                    alignItems: 'center',
+                }}
+            >
+                <Text style={{ fontSize: 25, color: 'white' }}>
+                    Leaderboard
+                </Text>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: 15,
+                        marginTop: 20,
+                        backgroundColor: '#F18F01',
+                    }}
+                >
+                    <Text
+                        style={{
+                            color: 'white',
+                            fontSize: 25,
+                            flex: 1,
+                            textAlign: 'right',
+                            marginRight: 40,
+                        }}
+                    >
+                        {ordinal_suffix_of(rank)}
+                    </Text>
+                    <Image
+                        style={{
+                            flex: 0.66,
+                            height: 60,
+                            width: 60,
+                            borderRadius: 60 / 2,
+                        }}
+                        source={{
+                            uri:
+                                'https:www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png',
+                        }}
+                    />
+                    <Text
+                        style={{
+                            color: 'white',
+                            fontSize: 25,
+                            flex: 1,
+                            marginLeft: 40,
+                        }}
+                    >
+                        {this.props.currentUser.points}pts
+                    </Text>
+                </View>
+                {/* <ButtonGroup
           onPress={(x) => {
             this.setState({ filter: x });
           }}
@@ -90,61 +105,73 @@ export class Leaderboard extends Component {
           buttons={["Global", "Friends"]}
           containerStyle={{ height: 30 }}
         /> */}
-      </View>
-    );
-  }
+            </View>
+        )
+    }
 
-  render() {
-    const users = this.props.users.sort((item1, item2) => {
-      return item2.points - item1.points;
-    });
-    users.forEach((user) => {
-      user.icon =
-        "https:www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png";
-    });
-    const rank =
-      users.findIndex((item) => {
-        return item.email === this.props.currentUser.email;
-      }) + 1;
-    return (
-      <View>
-        {users.length ? (
-          <View>
-            {this.renderHeader(rank)}
-            <ScrollView
-              refreshControl={
-                <RefreshControl
-                  refreshing={this.state.refresh}
-                  onRefresh={() => this.onRefresh()}
-                  tintColor="red"
-                />
-              }
-            >
-              <Lead
-                data={users}
-                sortBy="points"
-                labelBy="email"
-                icon="icon"
-                onRowPress={(item, index) => {
-                  this.alert(
-                    item.firstName + " clicked",
-                    item.points + " points, wow!"
-                  );
-                }}
-                evenRowColor="#edfcf9"
-              />
-            </ScrollView>
-          </View>
-        ) : (
-          // Activity Indicator to indicate that code is loading
-          <ActivityIndicator
-            size="large"
-            alignItems="center"
-          ></ActivityIndicator>
-        )}
-      </View>
-    );
-  }
+    render() {
+        const users = this.props.users.sort((item1, item2) => {
+            return item2.points - item1.points
+        })
+        users.forEach((user) => {
+            user.icon =
+                'https:www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png'
+        })
+        const rank =
+            users.findIndex((item) => {
+                return item.email === this.props.currentUser.email
+            }) + 1
+        return (
+            <View>
+                {users.length ? (
+                    <View
+                        style={{
+                            height: Dimensions.get('window').height,
+                        }}
+                    >
+                        {this.renderHeader(rank)}
+                        <ScrollView
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.refresh}
+                                    onRefresh={() => this.onRefresh()}
+                                    tintColor="red"
+                                />
+                            }
+                        >
+                            <Lead
+                                data={users}
+                                sortBy="points"
+                                labelBy="email"
+                                icon="icon"
+                                onRowPress={(item, index) => {
+                                    this.alert(
+                                        item.firstName + ' clicked',
+                                        item.points + ' points, wow!'
+                                    )
+                                }}
+                                evenRowColor="#edfcf9"
+                            />
+                        </ScrollView>
+                    </View>
+                ) : (
+                    // Activity Indicator to indicate that code is loading
+                    <View
+                        style={{
+                            width: '100%',
+                            top: '500%',
+                            alignContent: 'center',
+                        }}
+                    >
+                        <ActivityIndicator
+                            size="large"
+                            alignItems="center"
+                        ></ActivityIndicator>
+                    </View>
+                )}
+            </View>
+        )
+    }
 }
 
 const ordinal_suffix_of = (i) => {
@@ -163,17 +190,17 @@ const ordinal_suffix_of = (i) => {
 }
 
 const mapState = (state) => ({
-  users: state.users,
-  currentUser: state.user,
-});
+    users: state.users,
+    currentUser: state.user,
+})
 
 const mapDispatch = (dispatch) => {
-  return {
-    getAllUsers: () => dispatch(fetchAllUsers()),
-  };
-};
+    return {
+        getAllUsers: () => dispatch(fetchAllUsers()),
+    }
+}
 
-export default connect(mapState, mapDispatch)(Leaderboard);
+export default connect(mapState, mapDispatch)(Leaderboard)
 
 //   // FETCHING USERS FROM DATABASE, SORTING + GETTING THE RANK OF THE CURRENT USER
 //   async getUsers() {
