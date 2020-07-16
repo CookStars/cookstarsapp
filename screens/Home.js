@@ -95,17 +95,17 @@ const mapDispatch = (dispatch) => {
 export default connect(mapState, mapDispatch)(HomeScreen);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+ container: {
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
-  scrollArea_contentContainerStyle: {
+ scrollArea_contentContainerStyle: {
+   paddingVertical:'20%',
     flexWrap: "wrap",
     alignContent: "space-around",
     flexDirection: "row",
-    justifyContent: "space-around",
+  justifyContent: "space-around",
   },
   Text: {
     fontSize: 30,
