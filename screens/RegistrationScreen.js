@@ -8,9 +8,10 @@ import {
     TouchableOpacity,
     View,
     StyleSheet,
-    Picker,
+    // Picker,
     ActivityIndicator,
 } from 'react-native'
+import DropDownPicker from 'react-native-dropdown-picker'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { db } from '../firebaseconfig.js'
 
@@ -37,18 +38,23 @@ export default function RegistrationScreen({ navigation }) {
         firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
-            .then(async (response) => {
-                const user = db.collection('users').doc(response.user.uid)
-                await user.set(
-                    {
-                        firstName: firstName ? firstName : 'Mysterious Cook',
-                        lastName: lastName ? lastName : '',
-                        foodPreference: foodPreference
-                            ? foodPreference.toString()
-                            : 'vegan',
-                    },
-                    { merge: true }
-                )
+
+            .then((response) => {
+                setTimeout(() => {
+                    const user = db.collection('users').doc(response.user.uid)
+                    user.set(
+                        {
+                            firstName: firstName
+                                ? firstName
+                                : 'Mysterious Cook',
+                            lastName: lastName ? lastName : '',
+                            foodPreference: foodPreference
+                                ? foodPreference.toString()
+                                : 'vegan',
+                        },
+                        { merge: true }
+                    )
+                }, 3000)
             })
             .catch((error) => console.log('ERROR') || alert(error))
             .finally(() => setIsCreatingAccount(false))
@@ -89,19 +95,23 @@ export default function RegistrationScreen({ navigation }) {
                 >
                     Select your food preference:{' '}
                 </Text>
-                <Picker
+                <DropDownPicker
+                    items={[
+                        { label: 'Vegan', value: 'vegan' },
+                        { label: 'Meatlover', value: 'meatlover' },
+                    ]}
                     style={styles.input}
-                    placeholder="Food Preference"
-                    placeholderTextColor="#aaaaaa"
-                    selectedValue={foodPreference}
-                    value="vegan"
-                    onValueChange={(itemValue, itemIndex) =>
+                    // placeholder="Food Preference"
+                    // placeholderTextColor="#aaaaaa"
+                    // selectedValue={foodPreference}
+                    defaultValue="vegan"
+                    onChangeItem={(itemValue, itemIndex) =>
                         setFoodPreference(itemValue)
                     }
                 >
-                    <Picker.Item label="Vegan" value="vegan" />
-                    <Picker.Item label="Meatlover" value="meatlover" />
-                </Picker>
+                    {/* <Picker.Item label="Vegan" value="vegan" />
+                    <Picker.Item label="Meatlover" value="meatlover" /> */}
+                </DropDownPicker>
                 <TextInput
                     style={styles.input}
                     placeholder="E-mail"
