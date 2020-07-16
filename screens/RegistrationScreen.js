@@ -32,23 +32,26 @@ export default function RegistrationScreen({ navigation }) {
         firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
-            .then(async (response) => {
+            .then((response) => {
                 const user = db.collection('users').doc(response.user.uid)
                 console.log('USER FROM REGISTRATION', response.user.uid)
-                await user.update({
-                    firstName: firstName ? firstName : 'Mysterious Cook',
-                    lastName: lastName ? lastName : '',
-                    foodPreference: foodPreference
-                        ? foodPreference.toString()
-                        : 'vegan',
-                })
+                setTimeout(async () => {
+                    await user.update({
+                        firstName: firstName ? firstName : 'Mysterious Cook',
+                        lastName: lastName ? lastName : '',
+                        foodPreference: foodPreference
+                            ? foodPreference.toString()
+                            : 'vegan',
+                    })
+                }, 3000)
+
                 // uid = response.user.uid
             })
             .catch((error) => {
                 alert(error)
             })
     }
-    
+
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView

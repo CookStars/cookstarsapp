@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import { firebase } from '../firebaseconfig'
 import 'firebase/functions'
+let loadingIndicator = false
 
 export default class Login extends Component {
     state = {
@@ -24,20 +25,24 @@ export default class Login extends Component {
         return viewId
     }
 
-  handleLogin = async () => {
-    const { email, password } = this.state;
-    // Set persistence locally. This will make sure user is logged in through firebase until they log out
-    await firebase
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then(() => {
-        return firebase.auth().signInWithEmailAndPassword(email, password);
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        this.setState({ errorMessage: error.message });
-      });
-  };
+    handleLogin = async () => {
+        const { email, password } = this.state
+        // loadingIndicator = true
+        // Set persistence locally. This will make sure user is logged in through firebase until they log out
+        await firebase
+            .auth()
+            .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+            .then(() => {
+                return firebase
+                    .auth()
+                    .signInWithEmailAndPassword(email, password)
+            })
+            .catch((error) => {
+                // Handle Errors here.
+                // loadingIndicator = false
+                this.setState({ errorMessage: error.message })
+            })
+    }
 
     render() {
         return (
@@ -108,7 +113,9 @@ export default class Login extends Component {
                 >
                     <Text>Register</Text>
                 </TouchableHighlight>
-                <ActivityIndicator size="large"></ActivityIndicator>
+                {/* {loadingIndicator ? (
+                    <ActivityIndicator size="large"></ActivityIndicator>
+                ) : null} */}
             </View>
         )
     }
