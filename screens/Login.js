@@ -40,6 +40,7 @@ export default class Login extends Component {
             })
     }
 
+
     render() {
         return (
             <View style={styles.container}>
@@ -95,7 +96,8 @@ export default class Login extends Component {
                 {/* Forgot password Button */}
                 <TouchableHighlight
                     style={styles.buttonContainer}
-                    onPress={() => this.onClickListener('restore_password')}
+                    onPress={() => this.props.navigation.navigate('ForgotPassword')
+                    }
                 >
                     <Text>Forgot your password?</Text>
                 </TouchableHighlight>
@@ -171,4 +173,5 @@ const styles = StyleSheet.create({
         marginTop: 3,
         marginLeft: -10,
     },
+
 })
