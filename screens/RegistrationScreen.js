@@ -8,7 +8,6 @@ import {
     TouchableOpacity,
     View,
     StyleSheet,
-    // Picker,
     ActivityIndicator,
 } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
@@ -103,17 +102,11 @@ export default function RegistrationScreen({ navigation }) {
                         { label: 'Meatlover', value: 'meatlover' },
                     ]}
                     style={styles.input}
-                    // placeholder="Food Preference"
-                    // placeholderTextColor="#aaaaaa"
-                    // selectedValue={foodPreference}
                     defaultValue="vegan"
-                    onChangeItem={(itemValue, itemIndex) =>
-                        setFoodPreference(itemValue)
-                    }
-                >
-                    {/* <Picker.Item label="Vegan" value="vegan" />
-                    <Picker.Item label="Meatlover" value="meatlover" /> */}
-                </DropDownPicker>
+                    onChangeItem={(itemValue, itemIndex) => {
+                        setFoodPreference(itemValue.value)
+                    }}
+                ></DropDownPicker>
                 <TextInput
                     style={styles.input}
                     placeholder="E-mail"
