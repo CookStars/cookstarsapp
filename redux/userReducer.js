@@ -25,31 +25,29 @@ const updateUserInfo = (user) => {
 export const fetchUserInfo = () => (dispatch) => {
     try {
         firebase.auth().onAuthStateChanged((user) => {
-            setTimeout(() => {
-                if (user) {
-                    const docRef = db.collection(`users`).doc(user.uid)
-                    docRef.get().then((doc) => {
-                        const {
+            if (user) {
+                const docRef = db.collection(`users`).doc(user.uid)
+                docRef.get().then((doc) => {
+                    const {
+                        favoriteRecipes,
+                        foodPreference,
+                        points,
+                        recipeHistory,
+                    } = doc.data()
+
+                    dispatch(
+                        setUserInfo({
+                            userId: user.uid,
+                            email: user.email,
+                            isLoggedIn: true,
                             favoriteRecipes,
                             foodPreference,
                             points,
                             recipeHistory,
-                        } = doc.data()
-
-                        dispatch(
-                            setUserInfo({
-                                userId: user.uid,
-                                email: user.email,
-                                isLoggedIn: true,
-                                favoriteRecipes,
-                                foodPreference,
-                                points,
-                                recipeHistory,
-                            })
-                        )
-                    })
-                }
-            }, 4000)
+                        })
+                    )
+                })
+            }
         })
     } catch (err) {
         console.log(err)

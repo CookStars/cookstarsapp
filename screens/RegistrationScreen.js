@@ -9,6 +9,7 @@ import {
     View,
     StyleSheet,
     Picker,
+    ActivityIndicator,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { db } from '../firebaseconfig.js'
@@ -20,36 +21,44 @@ export default function RegistrationScreen({ navigation }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [isCreatingAccount, setIsCreatingAccount] = useState(false)
 
     const onFooterLinkPress = () => {
-        // navigation.navigate('Login');
+        navigation.navigate('Login')
     }
     const onRegisterPress = () => {
         if (password !== confirmPassword) {
             alert('Please provide the correct credentials')
             return
         }
+
+        setIsCreatingAccount(true)
+
         firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
-            .then((response) => {
-                const user = db.collection('users').doc(response.user.uid)
+            .then(async (response) => {
                 console.log('USER FROM REGISTRATION', response.user.uid)
-                setTimeout(async () => {
-                    await user.update({
-                        firstName: firstName ? firstName : 'Mysterious Cook',
-                        lastName: lastName ? lastName : '',
+
+                db.collection('users')
+                    .doc(response.user.uid)
+                    .set({
+                        email: response.user.email,
+                        firstName: firstName ? firstName : 'Mysterious',
+                        lastName: lastName ? lastName : 'Cook',
                         foodPreference: foodPreference
                             ? foodPreference.toString()
                             : 'vegan',
+                        points: 0,
+                        favoriteRecipes: {},
+                        recipeHistory: {},
                     })
-                }, 3000)
-
-                // uid = response.user.uid
             })
             .catch((error) => {
                 alert(error)
             })
+            .catch((error) => console.log('ERROR') || alert(error))
+            .finally(() => setIsCreatingAccount(false))
     }
 
     return (
@@ -131,9 +140,14 @@ export default function RegistrationScreen({ navigation }) {
                 />
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => onRegisterPress()}
+                    onPress={onRegisterPress}
+                    disabled={isCreatingAccount}
                 >
-                    <Text style={styles.buttonTitle}>Create account</Text>
+                    {isCreatingAccount ? (
+                        <ActivityIndicator size="large"></ActivityIndicator>
+                    ) : (
+                        <Text style={styles.buttonTitle}>Create account</Text>
+                    )}
                 </TouchableOpacity>
 
                 <View style={styles.footerView}>

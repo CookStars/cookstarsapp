@@ -5,9 +5,9 @@ import {
     View,
     TextInput,
     TouchableHighlight,
+    ActivityIndicator,
     Image,
     Alert,
-    ActivityIndicator,
 } from 'react-native'
 import { firebase } from '../firebaseconfig'
 import 'firebase/functions'
@@ -18,6 +18,7 @@ export default class Login extends Component {
         email: '',
         password: '',
         errorMessage: null,
+        loggingIn: false,
     }
 
     onClickListener = (viewId) => {
@@ -27,7 +28,7 @@ export default class Login extends Component {
 
     handleLogin = async () => {
         const { email, password } = this.state
-        // loadingIndicator = true
+        this.setState({ loggingIn: true })
         // Set persistence locally. This will make sure user is logged in through firebase until they log out
         await firebase
             .auth()
@@ -39,7 +40,7 @@ export default class Login extends Component {
             })
             .catch((error) => {
                 // Handle Errors here.
-                // loadingIndicator = false
+                this.setState({ loggingIn: false })
                 this.setState({ errorMessage: error.message })
             })
     }
@@ -93,7 +94,11 @@ export default class Login extends Component {
                     style={[styles.buttonContainer, styles.loginButton]}
                     onPress={() => this.handleLogin()}
                 >
-                    <Text style={styles.loginText}>Login</Text>
+                    {this.state.loggingIn ? (
+                        <ActivityIndicator size="large"></ActivityIndicator>
+                    ) : (
+                        <Text style={styles.loginText}>Login</Text>
+                    )}
                 </TouchableHighlight>
 
                 {/* Forgot password Button */}
@@ -113,9 +118,6 @@ export default class Login extends Component {
                 >
                     <Text>Register</Text>
                 </TouchableHighlight>
-                {/* {loadingIndicator ? (
-                    <ActivityIndicator size="large"></ActivityIndicator>
-                ) : null} */}
             </View>
         )
     }
