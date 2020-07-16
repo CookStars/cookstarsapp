@@ -12,9 +12,12 @@ import {
 import favicon from '../assets/favicon.png';
 import { CardView, Cards } from '../components';
 import { recipes } from '../Seed';
-import { db } from '../firebaseconfig.js';
+import { db, firebase } from '../firebaseconfig.js';
 import { connect } from 'react-redux';
 import { fetchRecipes } from '../redux/recipeReducer';
+// import * as Permissions from 'expo-permissions'
+// import Notifications from 'expo-notifications'
+// import Constants from 'expo-constants'
 
 const weekdays = [
   'Sunday',
@@ -41,9 +44,36 @@ export class HomeScreen extends Component {
   //   // this.props.getVeganRecipes();
   // }
 
-  componentDidMount() {
+  // registerForPushNotifications = async () => {
+  //   if (Constants.isDevice) {
+  //     const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
+  //     let finalStatus = existingStatus
+
+  //     if (existingStatus !== 'granted') {
+  //       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+  //       finalStatus = status
+  //     }
+
+  //     if (finalStatus !== 'granted') { return }
+  //     try {
+  //       let token = await Notifications.getExpoPushTokenAsync()
+  //       console.log('token:', token)
+
+  //       firebase.database().ref('users/' + this.currentUser.uid + '/token').update({
+  //         token: token
+  //       })
+  //     }
+  //     catch (error) {
+  //       console.log(error)
+  //     }
+  //   } else { ('must use physical device') }
+  // }
+
+  async componentDidMount() {
     const pref = this.props.userInfo.foodPreference;
     this.props.getRecipes(pref);
+    // this.currentUser = await firebase.auth().currentUser
+    // await this.registerForPushNotifications()
   }
 
   cards = () => {
