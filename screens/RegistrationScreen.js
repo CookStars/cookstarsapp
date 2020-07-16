@@ -38,17 +38,24 @@ export default function RegistrationScreen({ navigation }) {
             .auth()
             .createUserWithEmailAndPassword(email, password)
             .then(async (response) => {
-                const user = db.collection('users').doc(response.user.uid)
-                await user.set(
-                    {
-                        firstName: firstName ? firstName : 'Mysterious Cook',
-                        lastName: lastName ? lastName : '',
+                console.log('USER FROM REGISTRATION', response.user.uid)
+
+                db.collection('users')
+                    .doc(response.user.uid)
+                    .set({
+                        email: response.user.email,
+                        firstName: firstName ? firstName : 'Mysterious',
+                        lastName: lastName ? lastName : 'Cook',
                         foodPreference: foodPreference
                             ? foodPreference.toString()
                             : 'vegan',
-                    },
-                    { merge: true }
-                )
+                        points: 0,
+                        favoriteRecipes: {},
+                        recipeHistory: {},
+                    })
+            })
+            .catch((error) => {
+                alert(error)
             })
             .catch((error) => console.log('ERROR') || alert(error))
             .finally(() => setIsCreatingAccount(false))

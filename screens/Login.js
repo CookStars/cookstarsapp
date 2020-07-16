@@ -5,17 +5,20 @@ import {
     View,
     TextInput,
     TouchableHighlight,
+    ActivityIndicator,
     Image,
     Alert,
 } from 'react-native'
 import { firebase } from '../firebaseconfig'
 import 'firebase/functions'
+let loadingIndicator = false
 
 export default class Login extends Component {
     state = {
         email: '',
         password: '',
         errorMessage: null,
+        loggingIn: false,
     }
 
     onClickListener = (viewId) => {
@@ -25,6 +28,7 @@ export default class Login extends Component {
 
     handleLogin = async () => {
         const { email, password } = this.state
+        this.setState({ loggingIn: true })
         // Set persistence locally. This will make sure user is logged in through firebase until they log out
         await firebase
             .auth()
@@ -36,6 +40,7 @@ export default class Login extends Component {
             })
             .catch((error) => {
                 // Handle Errors here.
+                this.setState({ loggingIn: false })
                 this.setState({ errorMessage: error.message })
             })
     }
@@ -90,7 +95,11 @@ export default class Login extends Component {
                     style={[styles.buttonContainer, styles.loginButton]}
                     onPress={() => this.handleLogin()}
                 >
-                    <Text style={styles.loginText}>Login</Text>
+                    {this.state.loggingIn ? (
+                        <ActivityIndicator size="large"></ActivityIndicator>
+                    ) : (
+                        <Text style={styles.loginText}>Login</Text>
+                    )}
                 </TouchableHighlight>
 
                 {/* Forgot password Button */}
