@@ -8,6 +8,7 @@ import {
     Image,
     ActivityIndicator,
     RefreshControl,
+    Dimensions,
 } from 'react-native'
 import { db } from '../firebaseconfig.js'
 import Lead from 'react-native-leaderboard'
@@ -123,7 +124,11 @@ export class Leaderboard extends Component {
         return (
             <View>
                 {users.length ? (
-                    <View>
+                    <View
+                        style={{
+                            height: Dimensions.get('window').height,
+                        }}
+                    >
                         {this.renderHeader(rank)}
                         <ScrollView
                             refreshControl={
@@ -154,7 +159,7 @@ export class Leaderboard extends Component {
                     <View
                         style={{
                             width: '100%',
-                            top: '200%',
+                            top: '500%',
                             alignContent: 'center',
                         }}
                     >
