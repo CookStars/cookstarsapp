@@ -8,9 +8,9 @@ import {
     TouchableOpacity,
     View,
     StyleSheet,
-    Picker,
     ActivityIndicator,
 } from 'react-native'
+import DropDownPicker from 'react-native-dropdown-picker'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { db } from '../firebaseconfig.js'
 
@@ -96,19 +96,17 @@ export default function RegistrationScreen({ navigation }) {
                 >
                     Select your food preference:{' '}
                 </Text>
-                <Picker
+                <DropDownPicker
+                    items={[
+                        { label: 'Vegan', value: 'vegan' },
+                        { label: 'Meatlover', value: 'meatlover' },
+                    ]}
                     style={styles.input}
-                    placeholder="Food Preference"
-                    placeholderTextColor="#aaaaaa"
-                    selectedValue={foodPreference}
-                    value="vegan"
-                    onValueChange={(itemValue, itemIndex) =>
-                        setFoodPreference(itemValue)
-                    }
-                >
-                    <Picker.Item label="Vegan" value="vegan" />
-                    <Picker.Item label="Meatlover" value="meatlover" />
-                </Picker>
+                    defaultValue="vegan"
+                    onChangeItem={(itemValue, itemIndex) => {
+                        setFoodPreference(itemValue.value)
+                    }}
+                ></DropDownPicker>
                 <TextInput
                     style={styles.input}
                     placeholder="E-mail"
