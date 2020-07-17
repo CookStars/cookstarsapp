@@ -3,8 +3,9 @@ import { Image, View, Text, ScrollView, TouchableHighlight } from 'react-native'
 import profileImages from '../assets/profileIcons/index'
 
 export default function Icons({ setProfileImage }) {
-    // const [image, setImage] = useState('')
-    console.log('I got to icons component')
+    // console.log('I got to icons component')
+    // console.log(profileImages)
+
     return (
         <View>
             {/* <Text>Hello</Text> */}
@@ -29,8 +30,12 @@ export default function Icons({ setProfileImage }) {
                                     //     profileModalVisible: !this.state
                                     //         .profileModalVisible,
                                     // })
-                                    setProfileImage(profileImages[key])
-                                    console.log('hi')
+                                    // console.log(
+                                    //     profileImages[key],
+                                    //     profileImages
+                                    // )
+                                    setProfileImage(key)
+                                    // console.log('hi')
                                 }}
                             >
                                 <Image

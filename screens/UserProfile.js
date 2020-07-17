@@ -20,12 +20,13 @@ import { logOut, update } from '../redux/userReducer'
 import { db, firebase } from '../firebaseconfig'
 import '@firebase/firestore'
 import Icons from '../components/Icons'
+import profileImages from '../assets/profileIcons/index.js'
 
 export class UserProfile extends React.Component {
     state = {
         modalVisible: false,
         profileModalVisible: false,
-        profileImage: require('../assets/profileIcons/icons8-ice-cream-cone-50.png'),
+        profileImage: 'default',
     }
 
     handleClick() {
@@ -45,6 +46,7 @@ export class UserProfile extends React.Component {
             lastName: this.props.userInfo.lastName,
             email: this.props.userInfo.email,
             foodPreference: this.props.userInfo.foodPreference,
+            profileImage: this.props.userInfo.icon,
         })
     }
 
@@ -187,9 +189,24 @@ export class UserProfile extends React.Component {
         )
     }
 
+    onUpdateProfileImage = async (icon) => {
+        await db
+            .collection('users')
+            .doc(this.props.userInfo.userId)
+            .set(
+                {
+                    icon: icon,
+                },
+                { merge: true }
+            )
+            .catch((error) => {
+                alert(error)
+            })
+            .catch((error) => console.log('ERROR') || alert(error))
+    }
+
     profileModal = () => {
-        const setProfileImage = (profileImage) =>
-            this.setState({ profileImage })
+        const setProfileImage = (key) => this.setState({ profileImage: key })
         return (
             <Modal
                 // animationType="slide"
@@ -211,7 +228,10 @@ export class UserProfile extends React.Component {
                                 ...styles.openButton,
                                 backgroundColor: '#F18F01',
                             }}
-                            onPress={() => {
+                            onPress={async () => {
+                                await this.onUpdateProfileImage(
+                                    this.state.profileImage
+                                )
                                 this.setState({
                                     profileModalVisible: !this.state
                                         .profileModalVisible,
@@ -310,6 +330,8 @@ export class UserProfile extends React.Component {
 
     render() {
         let user = this.props.userInfo
+        // const { profileImage } = this.state
+        // console.log(`${profileImages.profileImage}`)
         return (
             <SafeAreaView style={styles.container}>
                 {user.userId ? (
@@ -320,7 +342,7 @@ export class UserProfile extends React.Component {
                                 <TouchableHighlight
                                     style={styles.profileBotton}
                                     onPress={() => {
-                                        console.log('blah')
+                                        // console.log('blah')
                                         this.setState({
                                             profileModalVisible: !this.state
                                                 .profileModalVisible,
@@ -331,7 +353,11 @@ export class UserProfile extends React.Component {
                                     }}
                                 >
                                     <Image
-                                        source={this.state.profileImage}
+                                        source={
+                                            profileImages[
+                                                this.state.profileImage
+                                            ]
+                                        }
                                         style={styles.image}
                                         // resizeMode="center"
                                     />

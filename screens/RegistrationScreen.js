@@ -52,6 +52,7 @@ export default function RegistrationScreen({ navigation }) {
                         points: 0,
                         favoriteRecipes: {},
                         recipeHistory: {},
+                        icon: 'default',
                     })
             })
             .catch((error) => {

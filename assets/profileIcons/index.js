@@ -25,6 +25,7 @@ const profileImages = {
     image24: require('./icons8-kawaii-taco-50.png'),
     image25: require('./icons8-melting-ice-cream-50.png'),
     image26: require('./icons8-naan-50.png'),
+    default: require('./icons8-test-account-100.png'),
 }
 
 export default profileImages
