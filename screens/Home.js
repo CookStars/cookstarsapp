@@ -1,20 +1,46 @@
 import React, { Component } from 'react'
 import {
-    StyleSheet,
-    Text,
-    View,
-    Button,
-    Image,
-    ScrollView,
-    Dimensions,
-    TouchableOpacity,
-} from 'react-native'
-import favicon from '../assets/favicon.png'
-import { CardView, Cards } from '../components'
-import { recipes } from '../Seed'
-import { db } from '../firebaseconfig.js'
-import { connect } from 'react-redux'
-import { fetchRecipes } from '../redux/recipeReducer'
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Image,
+  ScrollView,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+import favicon from "../assets/favicon.png";
+import { CardView, Cards } from "../components";
+import { recipes } from "../Seed";
+import { db } from "../firebaseconfig.js";
+import { connect } from "react-redux";
+import { fetchRecipes } from "../redux/recipeReducer";
+import * as Notifications from 'expo-notifications'
+
+
+
+if (today === 1) {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false
+    })
+  })
+
+  Notifications.scheduleNotificationAsync({
+    content: {
+      title: 'New Recipes Have Been added!',
+      body: 'Come take a look at this weeks Recipes!'
+    },
+    trigger: {
+      seconds: 21600,
+    }
+  })
+
+}
+
+
 
 const weekdays = [
     'Sunday',

@@ -33,6 +33,7 @@ export const fetchUserInfo = () => (dispatch) => {
                         foodPreference,
                         points,
                         recipeHistory,
+                        icon,
                     } = doc.data()
 
                     dispatch(
@@ -44,6 +45,7 @@ export const fetchUserInfo = () => (dispatch) => {
                             foodPreference,
                             points,
                             recipeHistory,
+                            icon,
                         })
                     )
                 })
