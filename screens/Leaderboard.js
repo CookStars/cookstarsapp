@@ -97,14 +97,6 @@ export class Leaderboard extends Component {
                         {this.props.currentUser.points}pts
                     </Text>
                 </View>
-                {/* <ButtonGroup
-          onPress={(x) => {
-            this.setState({ filter: x });
-          }}
-          selectedIndex={this.state.filter}
-          buttons={["Global", "Friends"]}
-          containerStyle={{ height: 30 }}
-        /> */}
             </View>
         )
     }
@@ -142,11 +134,11 @@ export class Leaderboard extends Component {
                             <Lead
                                 data={users}
                                 sortBy="points"
-                                labelBy="email"
+                                labelBy={'firstName'}
                                 icon="icon"
                                 onRowPress={(item, index) => {
                                     this.alert(
-                                        item.firstName + ' clicked',
+                                        item.firstName + ' has',
                                         item.points + ' points, wow!'
                                     )
                                 }}

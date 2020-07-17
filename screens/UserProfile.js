@@ -19,6 +19,7 @@ import { db, firebase } from '../firebaseconfig'
 import '@firebase/firestore'
 import Icons from '../components/Icons'
 import profileImages from '../assets/profileIcons/index.js'
+import DropDownPicker from 'react-native-dropdown-picker'
 
 export class UserProfile extends React.Component {
     state = {
@@ -58,7 +59,9 @@ export class UserProfile extends React.Component {
                     transparent={true}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {
-                        Alert.alert('Modal has been closed.')
+                        this.setState({
+                            modalVisible: !this.state.modalVisible,
+                        })
                     }}
                 >
                     <View style={styles.centeredView}>
@@ -66,7 +69,6 @@ export class UserProfile extends React.Component {
                             <Text style={styles.modalText}>
                                 Edit Your Profile Info
                             </Text>
-
                             <Text>First Name:</Text>
                             <TextInput
                                 style={styles.input}
@@ -104,27 +106,10 @@ export class UserProfile extends React.Component {
                                 autoCapitalize="none"
                             />
 
-                            {/* <Picker
-                                style={styles.input}
-                                placeholder="Food Preference"
-                                placeholderTextColor="#aaaaaa"
-                                // selectedValue={foodPreference}
-                                value="vegan"
-                                // onValueChange={(itemValue, itemIndex) =>
-                                //     setFoodPreference(itemValue)
-                                // }
-                            >
-                                <Picker.Item label="Vegan" value="vegan" />
-                                <Picker.Item
-                                    label="Meatlover"
-                                    value="meatlover"
-                                />
-                            </Picker> */}
-
                             <TouchableHighlight
                                 style={{
                                     ...styles.openButton,
-                                    backgroundColor: '#2196F3',
+                                    backgroundColor: '#ff5050',
                                 }}
                                 onPress={() => {
                                     this.setState({
@@ -138,8 +123,8 @@ export class UserProfile extends React.Component {
                             <TouchableHighlight
                                 style={{
                                     ...styles.openButton,
-                                    top: 15,
-                                    backgroundColor: '#2196F3',
+                                    top: 10,
+                                    backgroundColor: '#66ff99',
                                 }}
                                 onPress={async () => {
                                     await db
@@ -380,7 +365,7 @@ export class UserProfile extends React.Component {
                         {this.modal()}
                         <View style={styles.buttonParent}>
                             <TouchableHighlight
-                                style={styles.openButton}
+                                style={styles.logOut}
                                 onPress={() => this.handleClick()}
                             >
                                 <Text style={styles.textStyle}>Log Out</Text>
@@ -470,7 +455,7 @@ const styles = StyleSheet.create({
     modalView: {
         margin: 20,
         backgroundColor: 'white',
-        borderRadius: 20,
+        borderRadius: 30,
         padding: 35,
         alignItems: 'center',
         shadowColor: '#000',
@@ -483,7 +468,13 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     openButton: {
-        backgroundColor: '#F194FF',
+        backgroundColor: '#33ccff',
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+    },
+    logOut: {
+        backgroundColor: '#ff5050',
         borderRadius: 20,
         padding: 10,
         elevation: 2,
@@ -547,9 +538,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
+
     modalText: {
         marginBottom: 15,
-        fontSize: 25,
+        fontSize: 50,
         fontWeight: 'bold',
         textAlign: 'center',
     },
