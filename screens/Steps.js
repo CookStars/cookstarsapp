@@ -210,6 +210,7 @@ export default function Steps(props) {
                         <ScrollView
                             // key={index}
                             horizontal={true}
+                            showsHorizontalScrollIndicator={false}
                             contentContainerStyle={
                                 styles.scrollArea_contentContainerStyle
                             }
@@ -279,6 +280,7 @@ export default function Steps(props) {
                     <ScrollView
                         // key={index}
                         horizontal={true}
+                        showsHorizontalScrollIndicator={false}
                         contentContainerStyle={
                             styles.scrollArea_contentContainerStyle
                         }

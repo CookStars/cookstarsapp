@@ -87,7 +87,7 @@ export class SuccessPage extends Component {
                             </TouchableOpacity>
                             <Text style={{ fontSize: 30, top: -50 }}>
                                 {' '}
-                                Congrats!{' '}
+                                Congrats!
                             </Text>
                             <Text style={{ fontSize: 25, top: -45 }}>
                                 You Unlocked A Badge!
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
     },
     badge: {
         width: 0.35 * Dimensions.get('screen').width,
-        height: 0.45 * Dimensions.get('screen').width,
+     height: 0.45 * Dimensions.get('screen').width,
     },
 
     labelContainer: {

@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 10,
         width: Dimensions.get('screen').width,
-        height: 0.53 * Dimensions.get('screen').height,
+        height: 0.57 * Dimensions.get('screen').height,
         backgroundColor: 'white',
         alignContent: 'space-between',
     },
