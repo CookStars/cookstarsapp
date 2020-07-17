@@ -8,8 +8,8 @@ import {
     Image,
     ScrollView,
     TouchableHighlight,
+    Alert,
     TextInput,
-    Picker,
     Modal,
 } from 'react-native'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
@@ -17,10 +17,16 @@ import { connect } from 'react-redux'
 import { logOut, update } from '../redux/userReducer'
 import { db, firebase } from '../firebaseconfig'
 import '@firebase/firestore'
+import Icons from '../components/Icons'
+import profileImages from '../assets/profileIcons/index.js'
 
 export class UserProfile extends React.Component {
     state = {
         modalVisible: false,
+        profileModalVisible: false,
+        profileImage: this.props.userInfo.icon
+            ? this.props.userInfo.icon
+            : 'default',
     }
 
     handleClick() {
@@ -40,6 +46,7 @@ export class UserProfile extends React.Component {
             lastName: this.props.userInfo.lastName,
             email: this.props.userInfo.email,
             foodPreference: this.props.userInfo.foodPreference,
+            profileImage: this.props.userInfo.icon,
         })
     }
 
@@ -182,6 +189,54 @@ export class UserProfile extends React.Component {
         )
     }
 
+    onUpdateProfileImage = async (icon) => {
+        await db
+            .collection('users')
+            .doc(this.props.userInfo.userId)
+            .update({
+                icon: icon,
+            })
+            .catch((error) => console.log('ERROR') || alert(error))
+    }
+
+    profileModal = () => {
+        const setProfileImage = (key) => this.setState({ profileImage: key })
+        return (
+            <Modal
+                // animationType="slide"
+                visible={this.state.profileModalVisible}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.')
+                }}
+                transparent={true}
+            >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Icons setProfileImage={setProfileImage} />
+
+                        <TouchableHighlight
+                            style={{
+                                ...styles.openButton,
+                                backgroundColor: '#F18F01',
+                            }}
+                            onPress={() => {
+                                this.setState({
+                                    profileModalVisible: !this.state
+                                        .profileModalVisible,
+                                })
+                                this.onUpdateProfileImage(
+                                    this.state.profileImage
+                                )
+                            }}
+                        >
+                            <Text style={styles.textStyle}>Update</Text>
+                        </TouchableHighlight>
+                    </View>
+                </View>
+            </Modal>
+        )
+    }
+
     history = () => {
         const recipeHistory = this.props.userInfo.recipeHistory
         if (!recipeHistory || !Object.keys(recipeHistory).length) {
@@ -213,7 +268,7 @@ export class UserProfile extends React.Component {
                                 source={{
                                     uri: item[1].image,
                                 }}
-                                style={styles.image}
+                                style={styles.imageRecipe}
                                 resizeMode="cover"
                             />
                         </View>
@@ -254,7 +309,7 @@ export class UserProfile extends React.Component {
                                 source={{
                                     uri: item[1].image,
                                 }}
-                                style={styles.image}
+                                style={styles.imageRecipe}
                                 resizeMode="cover"
                             />
                         </View>
@@ -266,17 +321,36 @@ export class UserProfile extends React.Component {
 
     render() {
         let user = this.props.userInfo
+        console.log(this.state.profileImage)
         return (
             <SafeAreaView style={styles.container}>
                 {user.userId ? (
                     <ScrollView showsHorizontalScrollIndicator={false}>
+                        {this.profileModal()}
                         <View style={{ alignSelf: 'center' }}>
                             <View style={styles.profileImage}>
-                                <Image
-                                    source={require('../assets/usericonimages.png')}
-                                    style={styles.image}
-                                    resizeMode="center"
-                                />
+                                <TouchableHighlight
+                                    style={styles.profileBotton}
+                                    onPress={() => {
+                                        this.setState({
+                                            profileModalVisible: !this.state
+                                                .profileModalVisible,
+                                        })
+                                        Alert.alert(
+                                            'Your profile icon has been updated'
+                                        )
+                                    }}
+                                >
+                                    <Image
+                                        source={
+                                            profileImages[
+                                                this.state.profileImage
+                                            ]
+                                        }
+                                        style={styles.image}
+                                        // resizeMode="center"
+                                    />
+                                </TouchableHighlight>
                             </View>
                         </View>
                         <View style={styles.infoContainer}>
@@ -381,23 +455,11 @@ const styles = StyleSheet.create({
         // fontFamily: 'HelveticaNeue',
         color: '#52575D',
     },
-    image: {
-        flex: 1,
-        width: undefined,
-        height: undefined,
-    },
     titleBar: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 24,
         marginHorizontal: 16,
-    },
-    profileImage: {
-        top: 50,
-        width: 200,
-        height: 200,
-        borderRadius: 100,
-        overflow: 'hidden',
     },
     centeredView: {
         flex: 1,
@@ -426,6 +488,60 @@ const styles = StyleSheet.create({
         padding: 10,
         elevation: 2,
     },
+    //PROFILE IMAGE STYLING
+    //VIEW
+    profileImage: {
+        // flex: 1,
+        top: 50,
+        // width: 150,
+        // // height: 50,
+        // borderRadius: 100,
+        // overflow: 'hidden',
+        // alignItems: 'center',
+        backgroundColor: 'red',
+        // marginTop: 50,
+        height: 100,
+        width: 100,
+    },
+    //TOUCHABLE HIGHLIGHT
+    profileBotton: {
+        backgroundColor: '#F194FF',
+        // borderRadius: 20,
+        // padding: 10,
+        // elevation: 2,
+        height: 100,
+        width: 100,
+        alignItems: 'center',
+    },
+    //IMAGE
+    image: {
+        // flex: 1,
+        height: 80,
+        width: 80,
+        alignItems: 'center',
+        padding: 5,
+        margin: 10,
+
+        // height: 100,
+    },
+    imageRecipe: {
+        flex: 1,
+        height: 200,
+        width: 200,
+        alignItems: 'center',
+        // padding: 5,
+        // margin: 5,
+
+        // height: 100,
+    },
+    // openButton: {
+    //     width: '100%',
+    //     backgroundColor: 'red',
+    //     borderRadius: 50,
+    //     marginTop: 20,
+    //     padding: 10,
+    //     elevation: 2,
+    // },
     textStyle: {
         color: 'white',
         fontWeight: 'bold',
@@ -471,12 +587,12 @@ const styles = StyleSheet.create({
     infoContainer: {
         alignSelf: 'center',
         alignItems: 'center',
-        // marginTop: 2,
+        marginTop: 45,
     },
     statsContainer: {
         flexDirection: 'row',
         alignSelf: 'center',
-        marginTop: 15,
+        marginTop: 32,
     },
     statsBox: {
         alignItems: 'center',
@@ -528,6 +644,41 @@ const styles = StyleSheet.create({
         backgroundColor: '#F6E27F',
         marginTop: 15,
         borderStartWidth: 1,
+        borderRadius: 12,
+        fontWeight: 'bold',
+        overflow: 'visible',
+        padding: 4,
+        textAlign: 'center',
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    modalView: {
+        margin: 10,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 60,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        maxHeight: 500,
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
         borderRadius: 20,
         fontWeight: 'bold',
         overflow: 'visible',
