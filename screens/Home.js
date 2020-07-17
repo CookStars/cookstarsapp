@@ -17,8 +17,7 @@ import { connect } from "react-redux";
 import { fetchRecipes } from "../redux/recipeReducer";
 import * as Notifications from 'expo-notifications'
 
-let date = new Date();
-let today = date.getDay()
+
 
 if (today === 1) {
   Notifications.setNotificationHandler({
