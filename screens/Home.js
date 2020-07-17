@@ -13,6 +13,8 @@ import favicon from "../assets/favicon.png";
 import { CardView, Cards } from "../components";
 import { recipes } from "../Seed";
 import { db } from "../firebaseconfig.js";
+import { connect } from "react-redux";
+import { fetchRecipes } from "../redux/recipeReducer";
 
 const weekdays = [
   "Sunday",
@@ -23,80 +25,74 @@ const weekdays = [
   "Friday",
   "Saturday",
 ];
+const today = new Date().getDay();
 
-export default class HomeScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      vegan: [],
-      meatlover: [],
-      recipeFinished: false
-    };
-    this.recipeCompleted = this.recipeCompleted.bind(this)
-    this.getRecipes = this.getRecipes.bind(this);
-  }
-
-  recipeCompleted = () => {
-    this.setState({recipeFinished: true});
-  };
-
-  async getRecipes(pref) {
-    let allRecipes;
-    const recipes = await db.collection("recipes").doc(pref).get();
-    if (recipes.exists) {
-      allRecipes = recipes.data().recipe;
-      console.log("Success, recipes found");
-    } else {
-      console.log("No data found");
-    }
-
-    this.setState({ vegan: allRecipes });
-  }
+export class HomeScreen extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   // this.state = {};
+  //   // this.state = {
+  //   //   vegan: [],
+  //   //   meatlover: [],
+  //   //   recipeFinished: false,
+  //   // };
+  //   // this.recipeCompleted = this.recipeCompleted.bind(this);
+  //   // this.getRecipes = this.getRecipes.bind(this);
+  //   // this.props.getVeganRecipes();
+  // }
 
   componentDidMount() {
-    this.getRecipes("vegan");
+    const pref = this.props.userInfo.foodPreference;
+    this.props.getRecipes(pref);
   }
 
-  render() {
-    const cards = () => {
-      return weekdays.map((weekday, index) => (
-        <Cards
-          key={index}
-          day={weekday}
-          index={index}
-          navigation={this.props.navigation}
-          recipes={this.state.vegan}
-          userInfo = {this.props.userInfo}
-          recipeFinished={this.state.recipeFinished}
-          recipeCompleted={this.recipeCompleted}
-        />
-      ));
-    };
+  cards = () => {
+    return weekdays.map((weekday, index) => (
+      <Cards
+        key={index}
+        day={weekday}
+        navigation={this.props.navigation}
+        recipe={this.props.recipes[index]}
+        userInfo={this.props.userInfo}
+      />
+    ));
+  };
 
-    if (!this.state.vegan.length) {
-      return null;
-    }
+  render() {
     return (
       <View style={styles.container}>
-        <CardView
-          style={styles.card}
-          navigation={this.props.navigation}
-          recipes={this.state.vegan}
-          userInfo={this.props.userInfo}
-          recipeFinished={this.state.recipeFinished}
-          recipeCompleted={this.recipeCompleted}
-        />
-        <Text style={styles.Text}>Recipes of the Week</Text>
         <ScrollView
           vertical={true}
           contentContainerStyle={styles.scrollArea_contentContainerStyle}
         >
-          {cards()}
+          <CardView
+            style={styles.card}
+            day={weekdays[today]}
+            navigation={this.props.navigation}
+            recipes={this.props.recipes}
+            userInfo={this.props.userInfo}
+          />
+          <Text style={styles.Text}>Recipes of the Week</Text>
+          {this.cards()}
         </ScrollView>
       </View>
     );
   }
 }
+
+// Map State + Dispatch
+const mapState = (state) => ({
+  recipes: state.recipes,
+  userInfo: state.user,
+});
+
+const mapDispatch = (dispatch) => {
+  return {
+    getRecipes: (pref) => dispatch(fetchRecipes(pref)),
+  };
+};
+
+export default connect(mapState, mapDispatch)(HomeScreen);
 
 const styles = StyleSheet.create({
   container: {

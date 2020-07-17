@@ -5,18 +5,20 @@ import {
     View,
     TextInput,
     TouchableHighlight,
+    ActivityIndicator,
     Image,
     Alert,
-    ActivityIndicator,
 } from 'react-native'
 import { firebase } from '../firebaseconfig'
 import 'firebase/functions'
+let loadingIndicator = false
 
 export default class Login extends Component {
     state = {
         email: '',
         password: '',
         errorMessage: null,
+        loggingIn: false,
     }
 
     onClickListener = (viewId) => {
@@ -26,8 +28,9 @@ export default class Login extends Component {
 
     handleLogin = async () => {
         const { email, password } = this.state
+        this.setState({ loggingIn: true })
         // Set persistence locally. This will make sure user is logged in through firebase until they log out
-        firebase
+        await firebase
             .auth()
             .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
             .then(() => {
@@ -37,9 +40,11 @@ export default class Login extends Component {
             })
             .catch((error) => {
                 // Handle Errors here.
+                this.setState({ loggingIn: false })
                 this.setState({ errorMessage: error.message })
             })
     }
+
 
     render() {
         return (
@@ -90,13 +95,18 @@ export default class Login extends Component {
                     style={[styles.buttonContainer, styles.loginButton]}
                     onPress={() => this.handleLogin()}
                 >
-                    <Text style={styles.loginText}>Login</Text>
+                    {this.state.loggingIn ? (
+                        <ActivityIndicator size="large"></ActivityIndicator>
+                    ) : (
+                        <Text style={styles.loginText}>Login</Text>
+                    )}
                 </TouchableHighlight>
 
                 {/* Forgot password Button */}
                 <TouchableHighlight
                     style={styles.buttonContainer}
-                    onPress={() => this.onClickListener('restore_password')}
+                    onPress={() => this.props.navigation.navigate('ForgotPassword')
+                    }
                 >
                     <Text>Forgot your password?</Text>
                 </TouchableHighlight>
@@ -110,7 +120,6 @@ export default class Login extends Component {
                 >
                     <Text>Register</Text>
                 </TouchableHighlight>
-                <ActivityIndicator size="large"></ActivityIndicator>
             </View>
         )
     }
@@ -173,4 +182,5 @@ const styles = StyleSheet.create({
         marginTop: 3,
         marginLeft: -10,
     },
+
 })

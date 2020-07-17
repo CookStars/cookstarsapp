@@ -1,63 +1,41 @@
 import React, { useState, Component } from 'react'
-import { StyleSheet, Text, View, ScrollView, Alert, Image } from 'react-native'
+import {
+    StyleSheet,
+    Text,
+    View,
+    ScrollView,
+    Alert,
+    Image,
+    ActivityIndicator,
+    RefreshControl,
+    Dimensions,
+} from 'react-native'
 import { db } from '../firebaseconfig.js'
 import Lead from 'react-native-leaderboard'
-import { ButtonGroup } from 'react-native-elements'
+import { ButtonGroup, ThemeConsumer } from 'react-native-elements'
+import { fetchAllUsers } from '../redux/leaderboardReducer'
+import { connect } from 'react-redux'
 
-export default class Leaderboard extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            users: [],
-            status: false,
-            userInfo: this.props.userInfo,
-            userRank: 1,
-            filter: 0,
-        }
-        this.getUsers = this.getUsers.bind(this)
-        this.alert = this.alert.bind(this)
-        this.renderHeader = this.renderHeader.bind(this)
+export class Leaderboard extends Component {
+    state = {
+        refresh: false,
     }
 
-    // FETCHING USERS FROM DATABASE, SORTING + GETTING THE RANK OF THE CURRENT USER
-    async getUsers() {
-        let allUsers = []
-        const users = await db.collection('users').get()
-        if (users.empty) {
-            console.log('No data found')
-            return
-        }
-        users.forEach((doc) => {
-            allUsers.push(doc.data())
-        })
-
-        //add firstName if user didn't choose one and icon(similar for everyone now)
-        allUsers.map((user) => {
-            if (user.firstName === '') {
-                user.firstName = 'Mysterious Cook'
-            }
-            user.icon =
-                'https://www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png'
-            return user
-        })
-
-        //sort our users
-        const sorted = allUsers.sort((item1, item2) => {
-            return item2.score - item1.score
-        })
-        let userRank = sorted.findIndex((item) => {
-            return item.email === this.state.userInfo.email
-        })
-
-        //set state with data retrieved
-        this.setState({ users: allUsers, status: true, userRank: ++userRank })
-    }
-
-    //ALERT FUNCTION - CAN CLICK ON EACH USER IN LEADERBOARD TO SEE THEIR POINTS
     alert = (title, body) => {
         Alert.alert(title, body, [{ text: 'OK', onPress: () => {} }], {
             cancelable: false,
         })
+    }
+
+    onRefresh() {
+        this.setState({ refresh: true })
+        this.props
+            .getAllUsers()
+            .finally(() => this.setState({ refresh: false }))
+    }
+
+    async componentDidMount() {
+        await this.props.getAllUsers()
     }
 
     //HEADER FOR THE LEADERBOARD CONTAINING USER'S INFORMATION
@@ -82,6 +60,7 @@ export default class Leaderboard extends Component {
                         alignItems: 'center',
                         marginBottom: 15,
                         marginTop: 20,
+                        backgroundColor: '#F18F01',
                     }}
                 >
                     <Text
@@ -104,7 +83,7 @@ export default class Leaderboard extends Component {
                         }}
                         source={{
                             uri:
-                                'https://www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png',
+                                'https:www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png',
                         }}
                     />
                     <Text
@@ -115,60 +94,81 @@ export default class Leaderboard extends Component {
                             marginLeft: 40,
                         }}
                     >
-                        {this.state.userInfo.points || 0}pts
+                        {this.props.currentUser.points}pts
                     </Text>
                 </View>
-                <ButtonGroup
-                    onPress={(x) => {
-                        this.setState({ filter: x })
-                    }}
-                    selectedIndex={this.state.filter}
-                    buttons={['Global', 'Friends']}
-                    containerStyle={{ height: 30 }}
-                />
+                {/* <ButtonGroup
+          onPress={(x) => {
+            this.setState({ filter: x });
+          }}
+          selectedIndex={this.state.filter}
+          buttons={["Global", "Friends"]}
+          containerStyle={{ height: 30 }}
+        /> */}
             </View>
         )
     }
 
-    componentDidMount() {
-        this.getUsers()
-    }
-
-    //RENDER FUNCTION
     render() {
-        console.log('USER INFO', this.state.userInfo)
-        const users = this.state.users
-            .sort((a, b) => a.points - b.points)
-            .map((user) => {
-                if (user.firstName === '') {
-                    user.firstName = 'Mysterious Cook'
-                }
-                user.icon =
-                    'https://www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png'
-                return user
-            })
-        const currentUser = this.state.userInfo
-
-        if (!this.state.status) {
-            return null
-        }
-
+        const users = this.props.users.sort((item1, item2) => {
+            return item2.points - item1.points
+        })
+        users.forEach((user) => {
+            user.icon =
+                'https:www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png'
+        })
+        const rank =
+            users.findIndex((item) => {
+                return item.email === this.props.currentUser.email
+            }) + 1
         return (
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
-                {this.renderHeader(this.state.userRank)}
-                <Lead
-                    data={users}
-                    sortBy="points"
-                    labelBy="firstName"
-                    icon="icon"
-                    onRowPress={(item, index) => {
-                        this.alert(
-                            item.firstName + ' clicked',
-                            item.points + ' points, wow!'
-                        )
-                    }}
-                    evenRowColor="#edfcf9"
-                />
+            <View>
+                {users.length ? (
+                    <View
+                        style={{
+                            height: Dimensions.get('window').height,
+                        }}
+                    >
+                        {this.renderHeader(rank)}
+                        <ScrollView
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.refresh}
+                                    onRefresh={() => this.onRefresh()}
+                                    tintColor="red"
+                                />
+                            }
+                        >
+                            <Lead
+                                data={users}
+                                sortBy="points"
+                                labelBy="email"
+                                icon="icon"
+                                onRowPress={(item, index) => {
+                                    this.alert(
+                                        item.firstName + ' clicked',
+                                        item.points + ' points, wow!'
+                                    )
+                                }}
+                                evenRowColor="#edfcf9"
+                            />
+                        </ScrollView>
+                    </View>
+                ) : (
+                    // Activity Indicator to indicate that code is loading
+                    <View
+                        style={{
+                            width: '100%',
+                            top: '500%',
+                            alignContent: 'center',
+                        }}
+                    >
+                        <ActivityIndicator
+                            size="large"
+                            alignItems="center"
+                        ></ActivityIndicator>
+                    </View>
+                )}
             </View>
         )
     }
@@ -189,6 +189,54 @@ const ordinal_suffix_of = (i) => {
     return i + 'th'
 }
 
+const mapState = (state) => ({
+    users: state.users,
+    currentUser: state.user,
+})
+
+const mapDispatch = (dispatch) => {
+    return {
+        getAllUsers: () => dispatch(fetchAllUsers()),
+    }
+}
+
+export default connect(mapState, mapDispatch)(Leaderboard)
+
+//   // FETCHING USERS FROM DATABASE, SORTING + GETTING THE RANK OF THE CURRENT USER
+//   async getUsers() {
+//     let allUsers = [];
+//     const users = await db.collection("users").get();
+//     if (users.empty) {
+//       console.log("No data found");
+//       return;
+//     }
+//     users.forEach((doc) => {
+//       allUsers.push(doc.data());
+//     });
+
+//     //add firstName if user didn't choose one and icon(similar for everyone now)
+//     allUsers.map((user) => {
+//       if (user.firstName === "") {
+//         user.firstName = "Mysterious Cook";
+//       }
+//       user.icon =
+//         "https://www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png";
+//       return user;
+//     });
+
+//     //sort our users
+//     const sorted = allUsers.sort((item1, item2) => {
+//       return item2.score - item1.score;
+//     });
+//     let userRank = sorted.findIndex((item) => {
+//       return item.email === this.state.userInfo.email;
+//     });
+
+//     //set state with data retrieved
+//     this.setState({ users: allUsers, status: true, userRank: ++userRank });
+//   }
+
+//-------------------------------
 //PREVIOUS CODE USED
 // const styles = StyleSheet.create({
 //   container: {

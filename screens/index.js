@@ -7,6 +7,7 @@ import UserProfile from './UserProfile';
 import RegistrationScreen from './RegistrationScreen';
 import Steps from './Steps'
 import SuccessPage from './Success'
+import ForgotPassword from './ForgotPassword'
 
 
 export {
@@ -18,5 +19,6 @@ export {
   SingleRecipe,
   RegistrationScreen,
   Steps,
-  SuccessPage
+  SuccessPage,
+  ForgotPassword
 };
