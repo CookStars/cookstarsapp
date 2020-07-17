@@ -314,12 +314,13 @@ export class UserProfile extends React.Component {
             <View style={{ paddingVertical: '10%' }}>
                 <Text
                     style={{
-                        fontSize: 24,
+                        fontSize: 20,
                         alignSelf: 'center',
                         paddingBottom: '3%',
+                        fontWeight:'bold'
                     }}
                 >
-                    Badges
+                    BADGES
                 </Text>
 
                 <View
