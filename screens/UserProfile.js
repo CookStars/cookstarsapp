@@ -25,6 +25,7 @@ export class UserProfile extends React.Component {
     state = {
         modalVisible: false,
         profileModalVisible: false,
+        profileImage: require('../assets/profileIcons/icons8-ice-cream-cone-50.png'),
     }
 
     handleClick() {
@@ -187,6 +188,8 @@ export class UserProfile extends React.Component {
     }
 
     profileModal = () => {
+        const setProfileImage = (profileImage) =>
+            this.setState({ profileImage })
         return (
             <Modal
                 // animationType="slide"
@@ -201,7 +204,7 @@ export class UserProfile extends React.Component {
                         {/* <Text style={styles.modalText}>
                                     Hello World!
                                 </Text> */}
-                        <Icons />
+                        <Icons setProfileImage={setProfileImage} />
 
                         <TouchableHighlight
                             style={{
@@ -328,7 +331,7 @@ export class UserProfile extends React.Component {
                                     }}
                                 >
                                     <Image
-                                        source={require('../assets/profileIcons/icons8-ice-cream-cone-50.png')}
+                                        source={this.state.profileImage}
                                         style={styles.image}
                                         // resizeMode="center"
                                     />

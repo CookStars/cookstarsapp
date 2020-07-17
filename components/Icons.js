@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Image, View, Text, ScrollView, TouchableHighlight } from 'react-native'
 import profileImages from '../assets/profileIcons/index'
 
-export default function Icons() {
+export default function Icons({ setProfileImage }) {
+    // const [image, setImage] = useState('')
     console.log('I got to icons component')
     return (
         <View>
@@ -19,16 +20,30 @@ export default function Icons() {
                 >
                     {Object.keys(profileImages).map((key, index) => (
                         <View key={index}>
-                            <Image
-                                style={{
-                                    // flex: 0.66,
-                                    width: 70,
-                                    height: 70,
-                                    borderRadius: 12,
-                                    padding: 20,
+                            <TouchableHighlight
+                                // style={{
+                                //     backgroundColor: '#F18F01',
+                                // }}
+                                onPress={() => {
+                                    // this.setState({
+                                    //     profileModalVisible: !this.state
+                                    //         .profileModalVisible,
+                                    // })
+                                    setProfileImage(profileImages[key])
+                                    console.log('hi')
                                 }}
-                                source={profileImages[key]}
-                            />
+                            >
+                                <Image
+                                    style={{
+                                        // flex: 0.66,
+                                        width: 70,
+                                        height: 70,
+                                        borderRadius: 12,
+                                        padding: 20,
+                                    }}
+                                    source={profileImages[key]}
+                                />
+                            </TouchableHighlight>
                         </View>
                     ))}
                 </View>
