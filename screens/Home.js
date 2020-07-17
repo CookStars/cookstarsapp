@@ -29,16 +29,13 @@ if (today === 1) {
     })
   })
 
-
   Notifications.scheduleNotificationAsync({
     content: {
       title: 'New Recipes Have Been added!',
       body: 'Come take a look at this weeks Recipes! :)'
     },
     trigger: {
-      seconds: 604800,
-      repeats: true,
-
+      seconds: 21600,
     }
   })
 
