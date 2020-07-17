@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
     StyleSheet,
     Text,
@@ -8,14 +8,21 @@ import {
     Image,
     ScrollView,
     TouchableHighlight,
+    TextInput,
+    Picker,
+    Modal,
 } from 'react-native'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 import { logOut, update } from '../redux/userReducer'
-import { db } from '../firebaseconfig'
+import { db, firebase } from '../firebaseconfig'
 import '@firebase/firestore'
 
 export class UserProfile extends React.Component {
+    state = {
+        modalVisible: false,
+    }
+
     handleClick() {
         this.props.logUserOut()
     }
@@ -27,6 +34,152 @@ export class UserProfile extends React.Component {
             .onSnapshot((doc) => {
                 this.props.updateInfo(doc.data())
             })
+
+        this.setState({
+            firstName: this.props.userInfo.firstName,
+            lastName: this.props.userInfo.lastName,
+            email: this.props.userInfo.email,
+            foodPreference: this.props.userInfo.foodPreference,
+        })
+    }
+
+    modal = () => {
+        return (
+            <View style={styles.centeredView}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {
+                        Alert.alert('Modal has been closed.')
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={styles.modalText}>
+                                Edit Your Profile Info
+                            </Text>
+
+                            <Text>First Name:</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="First Name"
+                                placeholderTextColor="#aaaaaa"
+                                onChangeText={(text) =>
+                                    this.setState({ firstName: text })
+                                }
+                                value={this.state.firstName}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                            <Text>Last Name:</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Last Name"
+                                placeholderTextColor="#aaaaaa"
+                                onChangeText={(text) =>
+                                    this.setState({ lastName: text })
+                                }
+                                value={this.state.lastName}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                            <Text>Email:</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="E-mail"
+                                placeholderTextColor="#aaaaaa"
+                                onChangeText={(text) =>
+                                    this.setState({ email: text })
+                                }
+                                value={this.state.email}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+
+                            {/* <Picker
+                                style={styles.input}
+                                placeholder="Food Preference"
+                                placeholderTextColor="#aaaaaa"
+                                // selectedValue={foodPreference}
+                                value="vegan"
+                                // onValueChange={(itemValue, itemIndex) =>
+                                //     setFoodPreference(itemValue)
+                                // }
+                            >
+                                <Picker.Item label="Vegan" value="vegan" />
+                                <Picker.Item
+                                    label="Meatlover"
+                                    value="meatlover"
+                                />
+                            </Picker> */}
+
+                            <TouchableHighlight
+                                style={{
+                                    ...styles.openButton,
+                                    backgroundColor: '#2196F3',
+                                }}
+                                onPress={() => {
+                                    this.setState({
+                                        modalVisible: !this.state.modalVisible,
+                                    })
+                                }}
+                            >
+                                <Text style={styles.textStyle}>Cancel</Text>
+                            </TouchableHighlight>
+
+                            <TouchableHighlight
+                                style={{
+                                    ...styles.openButton,
+                                    top: 15,
+                                    backgroundColor: '#2196F3',
+                                }}
+                                onPress={async () => {
+                                    await db
+                                        .collection('users')
+                                        .doc(this.props.userInfo.userId)
+                                        .update({
+                                            firstName: this.state.firstName,
+                                            lastName: this.state.lastName,
+                                            // foodPreference:
+                                        })
+
+                                    // Update Email
+                                    var user = firebase.auth().currentUser
+                                    user.updateEmail(this.state.email)
+                                        .then(function () {
+                                            // Update successful.
+                                        })
+                                        .catch(function (error) {
+                                            console.log(error)
+                                        })
+
+                                    this.setState({
+                                        modalVisible: !this.state.modalVisible,
+                                    })
+                                }}
+                            >
+                                <Text style={styles.textStyle}>Confirm</Text>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                </Modal>
+
+                <TouchableHighlight
+                    style={styles.openButton}
+                    onPress={() => {
+                        this.setState({
+                            modalVisible: !this.state.modalVisible,
+                            firstName: this.props.userInfo.firstName,
+                            lastName: this.props.userInfo.lastName,
+                            email: this.props.userInfo.email,
+                        })
+                    }}
+                >
+                    <Text style={styles.textStyle}>Edit Profile</Text>
+                </TouchableHighlight>
+            </View>
+        )
     }
 
     history = () => {
@@ -47,7 +200,13 @@ export class UserProfile extends React.Component {
                 {Object.entries(recipeHistory).map((item, index) => (
                     <TouchableHighlight
                         key={index}
-                        onPress={() => console.log('hi')}
+                        onPress={() =>
+                            this.props.navigation.navigate('SingleRecipe', {
+                                // day: day,
+                                recipe: item[1],
+                                userInfo: this.props.userInfo,
+                            })
+                        }
                     >
                         <View style={styles.mediaImageContainer}>
                             <Image
@@ -82,7 +241,13 @@ export class UserProfile extends React.Component {
                 {Object.entries(favoriteRecipes).map((item, index) => (
                     <TouchableHighlight
                         key={index}
-                        onPress={() => console.log('hi')}
+                        onPress={() =>
+                            this.props.navigation.navigate('SingleRecipe', {
+                                // day: day,
+                                recipe: item[1],
+                                userInfo: this.props.userInfo,
+                            })
+                        }
                     >
                         <View style={styles.mediaImageContainer}>
                             <Image
@@ -118,10 +283,12 @@ export class UserProfile extends React.Component {
                             <Text
                                 style={[
                                     styles.text,
-                                    { fontWeight: '200', fontSize: 50 },
+                                    { fontWeight: 'bold', fontSize: 50 },
                                 ]}
                             >
-                                {user.firstName}
+                                {user.firstName
+                                    ? user.firstName + ' ' + user.lastName
+                                    : ' '}
                             </Text>
                             <Text
                                 style={[
@@ -134,6 +301,16 @@ export class UserProfile extends React.Component {
                             <Text style={styles.points}>
                                 Total Points:{user.points}{' '}
                             </Text>
+                        </View>
+
+                        {this.modal()}
+                        <View style={styles.buttonParent}>
+                            <TouchableHighlight
+                                style={styles.openButton}
+                                onPress={() => this.handleClick()}
+                            >
+                                <Text style={styles.textStyle}>Log Out</Text>
+                            </TouchableHighlight>
                         </View>
 
                         <View style={styles.statsContainer}>
@@ -171,15 +348,6 @@ export class UserProfile extends React.Component {
                             <View style={styles.mediaCount}>
                                 <Text style={styles.text}></Text>
                             </View>
-                        </View>
-
-                        <View style={styles.buttonParent}>
-                            <TouchableHighlight
-                                style={styles.buttonContainer}
-                                onPress={() => this.handleClick()}
-                            >
-                                <Text>Log Out</Text>
-                            </TouchableHighlight>
                         </View>
                     </ScrollView>
                 ) : (
@@ -225,13 +393,50 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
     },
     profileImage: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        marginTop: 80,
+        top: 50,
+        width: 200,
+        height: 200,
+        borderRadius: 100,
         overflow: 'hidden',
     },
-
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    openButton: {
+        backgroundColor: '#F194FF',
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        fontSize: 25,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
     active: {
         backgroundColor: '#34FFB9',
         position: 'absolute',
@@ -252,6 +457,16 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    input: {
+        height: 55,
+        borderRadius: 5,
+        overflow: 'hidden',
+        backgroundColor: 'white',
+        marginTop: 10,
+        marginBottom: 10,
+        alignSelf: 'center',
+        width: 300,
     },
     infoContainer: {
         alignSelf: 'center',

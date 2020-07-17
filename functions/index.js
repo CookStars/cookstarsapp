@@ -5,6 +5,10 @@ const db = admin.firestore();
 const key = '33c3ad3d272d40fa855ba50cb02be7b5';
 const axios = require('axios');
 
+
+
+
+
 exports.getVeganRecipes = functions.pubsub
   .schedule('0 4 * * 0')
   .onRun(async (context) => {
@@ -39,8 +43,8 @@ exports.getMeatRecipes = functions.pubsub
     return null;
   });
 
-    return null;
-  });
+// return null;
+//   });
 
 exports.newUserSignUp = functions.auth.user().onCreate((user) => {
   return admin.firestore().collection('users').doc(user.uid).set({
@@ -105,3 +109,4 @@ const refactorData = (recipesAPI) => {
   }
   return newArr;
 };
+

@@ -14,11 +14,14 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import { db } from '../firebaseconfig'
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Feather, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 
 export default class SingleRecipe extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            fave: true,
+        }
     }
 
     checkDay() {
@@ -37,7 +40,7 @@ export default class SingleRecipe extends Component {
 
         if (day === today) {
             return (
-                      <View style={styles.startButton}>
+                <View style={styles.startButton}>
                     <TouchableOpacity
                         onPress={() => {
                             navigation.navigate('Steps', {
@@ -46,7 +49,7 @@ export default class SingleRecipe extends Component {
                                 userInfo: userInfo,
                             })
                         }}
-                           style={{
+                        style={{
                             backgroundColor: '#EF233C',
                             borderRadius: 10,
                             width: '100%',
@@ -132,11 +135,20 @@ export default class SingleRecipe extends Component {
                                             alignItems: 'center',
                                         }}
                                     >
-                                        <Feather
-                                            name="heart"
-                                            size={20}
-                                            color="white"
-                                        />
+                                        {userInfo.favoriteRecipes[recipe.id] ? (
+                                            <AntDesign
+                                                name="heart"
+                                                size={20}
+                                                color="white"
+                                            />
+                                        ) : (
+                                            <AntDesign
+                                                name="hearto"
+                                                size={20}
+                                                color="white"
+                                            />
+                                        )}
+
                                         <Text
                                             style={{ color: 'white', left: 6 }}
                                         >
