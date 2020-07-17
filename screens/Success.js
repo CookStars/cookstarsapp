@@ -72,22 +72,23 @@ export class SuccessPage extends Component {
                     },
                 })
         }
-     // const checkLastCompleted = () => {
-     //  let date = new Date()
-     //  const dd = String(date.getDate()).padStart(2, '0')
-     //  const mm = String(date.getMonth() + 1).padStart(2, '0') //January is 0!
-     //  const yyyy = date.getFullYear()
+     const checkLastCompleted = () => {
+      let date = new Date()
+      const dd = String(date.getDate()).padStart(2, '0')
+      const mm = String(date.getMonth() + 1).padStart(2, '0') //January is 0!
+      const yyyy = date.getFullYear()
 
-     //  date = mm + '/' + dd + '/' + yyyy
-     //  return ((!userInfo.recipeHistory[currRecipeId]) || 
-     //      (userInfo.recipeHistory[currRecipeId].lastCompleted !==
-     //          date ))? (
-     //      <Text style={styles.pointsText}>YOU EARNED 10 PTS!</Text>
-     //  ) : (
-     //      <Text style={styles.pointsText}>YOU EARNED 0 PTS!</Text>
-     //  )
+      date = mm + '/' + dd + '/' + yyyy
+      return ((!userInfo.recipeHistory[currRecipeId]) || 
+          (userInfo.recipeHistory[currRecipeId].lastCompleted !==
+              date ))? (
+          <Text style={styles.pointsText}>YOU EARNED 10 PTS!</Text>
+      ) : (
+          <Text style={styles.pointsText}>YOU EARNED 0 PTS!</Text>
+      )
       
-     // }
+     }
+     
         return (
             <View style={styles.container}>
                 <View>
@@ -95,7 +96,8 @@ export class SuccessPage extends Component {
                         transparent={true}
                         visible={this.state.modalVisible}
                         animationType={'fade'}
-                        onRequestClose={this.toggleModal}
+            onRequestClose={this.toggleModal}
+            shadow={true}
                     >
                         <View style={styles.modalView}>
                             <TouchableOpacity onPress={this.toggleModal}>
@@ -141,10 +143,8 @@ export class SuccessPage extends Component {
                         />
                     </View>
                     <View style={styles.textContainer}>
-                        <Text style={styles.pointsText}>
-                            YOU EARNED 10 PTS!
-                        </Text>
-                        {/* {checkLastCompleted()} */}
+                        
+                        {checkLastCompleted()}
                         <Text style={styles.pointsText}>
                             TOTAL POINTS: {userInfo.points}
                         </Text>
