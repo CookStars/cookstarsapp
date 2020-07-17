@@ -254,7 +254,7 @@ export class UserProfile extends React.Component {
                                 source={{
                                     uri: item[1].image,
                                 }}
-                                style={styles.image}
+                                style={styles.imageRecipe}
                                 resizeMode="cover"
                             />
                         </View>
@@ -295,7 +295,7 @@ export class UserProfile extends React.Component {
                                 source={{
                                     uri: item[1].image,
                                 }}
-                                style={styles.image}
+                                style={styles.imageRecipe}
                                 resizeMode="cover"
                             />
                         </View>
@@ -315,12 +315,12 @@ export class UserProfile extends React.Component {
                         <View style={{ alignSelf: 'center' }}>
                             <View style={styles.profileImage}>
                                 <TouchableHighlight
-                                    style={styles.openButton}
+                                    style={styles.profileBotton}
                                     onPress={() => {
                                         console.log('blah')
                                         this.setState({
                                             profileModalVisible: !this.state
-                                                .modelVisible,
+                                                .profileModalVisible,
                                         })
                                         // Alert.alert(
                                         //     'Your profile icon has been updated'
@@ -328,9 +328,9 @@ export class UserProfile extends React.Component {
                                     }}
                                 >
                                     <Image
-                                        source={require('../assets/usericonimages.png')}
+                                        source={require('../assets/profileIcons/icons8-ice-cream-cone-50.png')}
                                         style={styles.image}
-                                        resizeMode="center"
+                                        // resizeMode="center"
                                     />
                                 </TouchableHighlight>
                             </View>
@@ -437,23 +437,11 @@ const styles = StyleSheet.create({
         // fontFamily: 'HelveticaNeue',
         color: '#52575D',
     },
-    image: {
-        flex: 1,
-        width: undefined,
-        height: undefined,
-    },
     titleBar: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 24,
         marginHorizontal: 16,
-    },
-    profileImage: {
-        top: 50,
-        width: 200,
-        height: 200,
-        borderRadius: 100,
-        overflow: 'hidden',
     },
     centeredView: {
         flex: 1,
@@ -482,6 +470,60 @@ const styles = StyleSheet.create({
         padding: 10,
         elevation: 2,
     },
+    //PROFILE IMAGE STYLING
+    //VIEW
+    profileImage: {
+        // flex: 1,
+        top: 50,
+        // width: 150,
+        // // height: 50,
+        // borderRadius: 100,
+        // overflow: 'hidden',
+        // alignItems: 'center',
+        backgroundColor: 'red',
+        // marginTop: 50,
+        height: 100,
+        width: 100,
+    },
+    //TOUCHABLE HIGHLIGHT
+    profileBotton: {
+        backgroundColor: '#F194FF',
+        // borderRadius: 20,
+        // padding: 10,
+        // elevation: 2,
+        height: 100,
+        width: 100,
+        alignItems: 'center',
+    },
+    //IMAGE
+    image: {
+        // flex: 1,
+        height: 80,
+        width: 80,
+        alignItems: 'center',
+        padding: 5,
+        margin: 10,
+
+        // height: 100,
+    },
+    imageRecipe: {
+        flex: 1,
+        height: 200,
+        width: 200,
+        alignItems: 'center',
+        // padding: 5,
+        // margin: 5,
+
+        // height: 100,
+    },
+    // openButton: {
+    //     width: '100%',
+    //     backgroundColor: 'red',
+    //     borderRadius: 50,
+    //     marginTop: 20,
+    //     padding: 10,
+    //     elevation: 2,
+    // },
     textStyle: {
         color: 'white',
         fontWeight: 'bold',
@@ -527,12 +569,12 @@ const styles = StyleSheet.create({
     infoContainer: {
         alignSelf: 'center',
         alignItems: 'center',
-        // marginTop: 2,
+        marginTop: 45,
     },
     statsContainer: {
         flexDirection: 'row',
         alignSelf: 'center',
-        marginTop: 15,
+        marginTop: 32,
     },
     statsBox: {
         alignItems: 'center',
@@ -590,12 +632,6 @@ const styles = StyleSheet.create({
         padding: 4,
         textAlign: 'center',
     },
-    openButton: {
-        width: '100%',
-        backgroundColor: 'red',
-        borderRadius: 50,
-        marginTop: 20,
-    },
     centeredView: {
         flex: 1,
         justifyContent: 'center',
@@ -617,12 +653,6 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         maxHeight: 500,
-    },
-    openButton: {
-        backgroundColor: '#F194FF',
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2,
     },
     textStyle: {
         color: 'white',
