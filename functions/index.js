@@ -43,17 +43,17 @@ exports.getMeatRecipes = functions.pubsub
 // return null;
 //   });
 
-exports.newUserSignUp = functions.auth.user().onCreate((user) => {
-    return admin.firestore().collection('users').doc(user.uid).set({
-        email: user.email,
-        firstName: '',
-        lastName: '',
-        points: 0,
-        foodPreference: '',
-        favoriteRecipes: {},
-        recipeHistory: {},
-    })
-})
+// exports.newUserSignUp = functions.auth.user().onCreate((user) => {
+//   return admin.firestore().collection('users').doc(user.uid).set({
+//     email: user.email,
+//     firstName: '',
+//     lastName: '',
+//     points: 0,
+//     foodPreference: '',
+//     favoriteRecipes: {},
+//     recipeHistory: {},
+//   });
+// });
 
 exports.userDeleted = functions.auth.user().onDelete((user) => {
     const doc = admin.firestore().collection('users').doc(user.uid)
@@ -61,46 +61,50 @@ exports.userDeleted = functions.auth.user().onDelete((user) => {
 })
 
 const refactorData = (recipesAPI) => {
-    const recipesArr = recipesAPI.recipes
-    let newArr = []
-    for (let i = 0; i < recipesArr.length; i++) {
-        let recipe = recipesArr[i]
-        const {
-            id,
-            vegan,
-            title,
-            extendedIngredients,
-            readyInMinutes,
-            servings,
-            image,
-            summary,
-            instructions,
-            analyzedInstructions,
-            spoonacularSourceUrl,
-        } = recipe
+  const recipesArr = recipesAPI.recipes;
+  let newArr = []
+  for (let i = 0; i < recipesArr.length; i++) {
+    let recipe = recipesArr[i]
+    const {
+      id,
+      vegan,
+      title,
+      extendedIngredients,
+      readyInMinutes,
+      servings,
+      image,
+      summary,
+      instructions,
+      analyzedInstructions,
+      spoonacularSourceUrl,
+    } = recipe;
 
-        if (analyzedInstructions.length > 1) {
-            continue
-        }
-
-        const ingredients = extendedIngredients.map((ingredient) => {
-            const { id, name, original, image } = ingredient
-            return { id, name, original, image }
-        })
-
-        newArr.push({
-            id,
-            vegan,
-            title,
-            ingredients,
-            readyInMinutes,
-            servings,
-            image,
-            summary,
-            instructions,
-            analyzedInstructions,
-            spoonacularSourceUrl,
-        })
+    if (analyzedInstructions.length > 1) {
+      continue;
     }
-    return newArr
-}
+    const lastCompleted = ""
+    const ingredients = extendedIngredients.map(ingredient => {
+      const { id, name, original, image } = ingredient
+      return { id, name, original, image }
+    }
+    )
+
+    newArr.push({
+
+      id,
+      vegan,
+      title,
+      ingredients,
+      readyInMinutes,
+      servings,
+      image,
+      summary,
+      instructions,
+      analyzedInstructions,
+     spoonacularSourceUrl,
+     lastCompleted
+    })
+  }
+  return newArr;
+};
+

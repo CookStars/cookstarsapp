@@ -163,7 +163,7 @@ export default class SingleRecipe extends Component {
                             <View
                                 style={{
                                     flexDirection: 'column',
-                                    height: '15%',
+                                    height: '12.5%',
                                     justifyContent: 'space-evenly',
                                 }}
                             >
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 10,
         width: Dimensions.get('screen').width,
-        height: 0.6 * Dimensions.get('screen').height,
+        height: 0.57 * Dimensions.get('screen').height,
         backgroundColor: 'white',
         alignContent: 'space-between',
     },

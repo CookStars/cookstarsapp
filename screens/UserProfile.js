@@ -11,12 +11,14 @@ import {
     Alert,
     TextInput,
     Modal,
+    Dimensions,
 } from 'react-native'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 import { logOut, update } from '../redux/userReducer'
 import { db, firebase } from '../firebaseconfig'
 import '@firebase/firestore'
+import badges from '../assets/badges/index'
 import Icons from '../components/Icons'
 import profileImages from '../assets/profileIcons/index.js'
 
@@ -318,6 +320,94 @@ export class UserProfile extends React.Component {
             </ScrollView>
         )
     }
+    showBadges = () => {
+        const badgeIds = Object.keys(badges).sort((a, b) => a - b)
+        const userPoints = this.props.userInfo.points
+        console.log(badgeIds)
+        const findPoints = badgeIds.filter(points => points > userPoints)
+        console.log('found', findPoints)
+     const pointsLeft = () => {
+      if (findPoints.length) {
+          return findPoints[0]-userPoints
+         }
+         else return 0
+        }
+        const listBadges = badgeIds.map((badgeId) => {
+            return (
+                <View
+                    key={badgeId}
+                    style={{ paddingBottom: '4%', paddingHorizontal: '4%' }}
+                >
+                    {badgeId <= userPoints ? (
+                        <Image
+                            source={badges[badgeId]}
+                            style={{
+                                alignSelf: 'center',
+                                width: 0.2 * Dimensions.get('screen').width,
+                                height: 0.2 * Dimensions.get('screen').width
+                                // bottom: '10%'
+                            }}
+                        />
+                    ) : (
+                        <Image
+                            source={badges[badgeId]}
+                            style={{
+                                tintColor: 'grey',
+                                opacity: 0.2,
+                                width: 0.2 * Dimensions.get('screen').width,
+                                height: 0.2 * Dimensions.get('screen').width,
+                                resizeMode: 'contain',
+                                // borderWidth: 1,
+                                // bottom: '10%',
+                            }}
+                        />
+                    )}
+                </View>
+            )
+        })
+
+        return (
+            <View style={{ paddingVertical: '10%' }}>
+                <Text
+                    style={{
+                        fontSize: 20,
+                        alignSelf: 'center',
+                        paddingBottom: '3%',
+                        fontWeight:'bold'
+                    }}
+                >
+                    BADGES
+                </Text>
+
+                <View
+                    style={{
+                        borderWidth: 2,
+                        width: 0.9 * Dimensions.get('screen').width,
+                        height: 0.3 * Dimensions.get('screen').height,
+                        alignSelf: 'center',
+                        justifyContent: 'flex-start',
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                        padding: '4%',
+                        alignContent: 'space-around',
+                    }}
+                >
+                    {listBadges}
+                </View>
+                <Text
+                    style={{
+                        fontSize: 19,
+                        paddingTop: '5%',
+                        left: '40%',
+                        color: 'violet',
+                    }}
+                >
+                    {pointsLeft()} Points To Next Badge
+                </Text>
+            </View>
+        )
+    }
 
     render() {
         let user = this.props.userInfo
@@ -386,12 +476,15 @@ export class UserProfile extends React.Component {
                                 <Text style={styles.textStyle}>Log Out</Text>
                             </TouchableHighlight>
                         </View>
-
+                        {this.showBadges()}
                         <View style={styles.statsContainer}>
                             <View style={styles.statsBox}>
                                 <Text></Text>
                                 <Text
-                                    style={{ fontWeight: 'bold', fontSize: 20 }}
+                                    style={{
+                                        fontWeight: 'bold',
+                                        fontSize: 20,
+                                    }}
                                 >
                                     HISTORY
                                 </Text>
@@ -410,7 +503,10 @@ export class UserProfile extends React.Component {
                             <View style={styles.statsBox}>
                                 <Text></Text>
                                 <Text
-                                    style={{ fontWeight: 'bold', fontSize: 20 }}
+                                    style={{
+                                        fontWeight: 'bold',
+                                        fontSize: 20,
+                                    }}
                                 >
                                     FAVORITES
                                 </Text>
