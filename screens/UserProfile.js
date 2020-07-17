@@ -8,10 +8,8 @@ import {
     Image,
     ScrollView,
     TouchableHighlight,
-    TouchableOpacity,
     Alert,
     TextInput,
-    Picker,
     Modal,
 } from 'react-native'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
@@ -26,7 +24,9 @@ export class UserProfile extends React.Component {
     state = {
         modalVisible: false,
         profileModalVisible: false,
-        profileImage: 'default',
+        profileImage: this.props.userInfo.icon
+            ? this.props.userInfo.icon
+            : 'default',
     }
 
     handleClick() {
@@ -193,14 +193,8 @@ export class UserProfile extends React.Component {
         await db
             .collection('users')
             .doc(this.props.userInfo.userId)
-            .set(
-                {
-                    icon: icon,
-                },
-                { merge: true }
-            )
-            .catch((error) => {
-                alert(error)
+            .update({
+                icon: icon,
             })
             .catch((error) => console.log('ERROR') || alert(error))
     }
@@ -210,17 +204,14 @@ export class UserProfile extends React.Component {
         return (
             <Modal
                 // animationType="slide"
-                transparent={true}
                 visible={this.state.profileModalVisible}
                 onRequestClose={() => {
                     Alert.alert('Modal has been closed.')
                 }}
+                transparent={true}
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        {/* <Text style={styles.modalText}>
-                                    Hello World!
-                                </Text> */}
                         <Icons setProfileImage={setProfileImage} />
 
                         <TouchableHighlight
@@ -228,17 +219,17 @@ export class UserProfile extends React.Component {
                                 ...styles.openButton,
                                 backgroundColor: '#F18F01',
                             }}
-                            onPress={async () => {
-                                await this.onUpdateProfileImage(
-                                    this.state.profileImage
-                                )
+                            onPress={() => {
                                 this.setState({
                                     profileModalVisible: !this.state
                                         .profileModalVisible,
                                 })
+                                this.onUpdateProfileImage(
+                                    this.state.profileImage
+                                )
                             }}
                         >
-                            <Text style={styles.textStyle}>Hide Modal</Text>
+                            <Text style={styles.textStyle}>Update</Text>
                         </TouchableHighlight>
                     </View>
                 </View>
@@ -330,8 +321,7 @@ export class UserProfile extends React.Component {
 
     render() {
         let user = this.props.userInfo
-        // const { profileImage } = this.state
-        // console.log(`${profileImages.profileImage}`)
+        console.log(this.state.profileImage)
         return (
             <SafeAreaView style={styles.container}>
                 {user.userId ? (
@@ -342,14 +332,13 @@ export class UserProfile extends React.Component {
                                 <TouchableHighlight
                                     style={styles.profileBotton}
                                     onPress={() => {
-                                        // console.log('blah')
                                         this.setState({
                                             profileModalVisible: !this.state
                                                 .profileModalVisible,
                                         })
-                                        // Alert.alert(
-                                        //     'Your profile icon has been updated'
-                                        // )
+                                        Alert.alert(
+                                            'Your profile icon has been updated'
+                                        )
                                     }}
                                 >
                                     <Image
