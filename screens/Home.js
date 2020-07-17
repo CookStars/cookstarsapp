@@ -15,6 +15,36 @@ import { recipes } from "../Seed";
 import { db } from "../firebaseconfig.js";
 import { connect } from "react-redux";
 import { fetchRecipes } from "../redux/recipeReducer";
+import * as Notifications from 'expo-notifications'
+
+let date = new Date();
+let today = date.getDay()
+
+if (today === 1) {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false
+    })
+  })
+
+
+  Notifications.scheduleNotificationAsync({
+    content: {
+      title: 'New Recipes Have Been added!',
+      body: 'Come take a look at this weeks Recipes! :)'
+    },
+    trigger: {
+      seconds: 604800,
+      repeats: true,
+
+    }
+  })
+
+}
+
+
 
 const weekdays = [
   "Sunday",
