@@ -29,6 +29,7 @@ const weekdays = [
     'Saturday',
 ]
 
+
 export class SuccessPage extends Component {
     constructor(props) {
         super(props)
@@ -38,6 +39,7 @@ export class SuccessPage extends Component {
         this.toggleModal = this.toggleModal.bind(this)
     }
 
+ 
     toggleModal() {
         console.log('huhu',this.state.modalVisible)
         this.setState({ modalVisible: !this.state.modalVisible })
@@ -52,9 +54,12 @@ export class SuccessPage extends Component {
          
         }
     }
+
     render() {
         const { navigation, recipes, userInfo } = this.props
-        const today = new Date().getDay()
+     const today = new Date().getDay()
+     const currRecipeId = recipes[today].id
+
         const img = recipes[today + 1].image
 
         const handleFavorite = () => {
@@ -67,8 +72,22 @@ export class SuccessPage extends Component {
                     },
                 })
         }
+     // const checkLastCompleted = () => {
+     //  let date = new Date()
+     //  const dd = String(date.getDate()).padStart(2, '0')
+     //  const mm = String(date.getMonth() + 1).padStart(2, '0') //January is 0!
+     //  const yyyy = date.getFullYear()
 
-        console.log(this.state)
+     //  date = mm + '/' + dd + '/' + yyyy
+     //  return ((!userInfo.recipeHistory[currRecipeId]) || 
+     //      (userInfo.recipeHistory[currRecipeId].lastCompleted !==
+     //          date ))? (
+     //      <Text style={styles.pointsText}>YOU EARNED 10 PTS!</Text>
+     //  ) : (
+     //      <Text style={styles.pointsText}>YOU EARNED 0 PTS!</Text>
+     //  )
+      
+     // }
         return (
             <View style={styles.container}>
                 <View>
@@ -86,10 +105,15 @@ export class SuccessPage extends Component {
                                 />
                             </TouchableOpacity>
                             <Text style={{ fontSize: 30, top: -50 }}>
-                                {' '}
                                 Congrats!
                             </Text>
-                            <Text style={{ fontSize: 25, top: -45 }}>
+                            <Text
+                                style={{
+                                    fontSize: 25,
+                                    top: -45,
+                                    textAlign: 'center',
+                                }}
+                            >
                                 You Unlocked A Badge!
                             </Text>
                             <Image
@@ -120,6 +144,7 @@ export class SuccessPage extends Component {
                         <Text style={styles.pointsText}>
                             YOU EARNED 10 PTS!
                         </Text>
+                        {/* {checkLastCompleted()} */}
                         <Text style={styles.pointsText}>
                             TOTAL POINTS: {userInfo.points}
                         </Text>

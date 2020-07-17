@@ -17,6 +17,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 const ingredientsLink = 'https://spoonacular.com/cdn/ingredients_500x500/'
 const equipmentLink = 'https://spoonacular.com/cdn/equipment_500x500/'
 
+
 export default function Steps(props) {
     const [currStep, setCurrStep] = useState(0)
 
@@ -27,19 +28,41 @@ export default function Steps(props) {
     const currRecipeSteps = recipe.analyzedInstructions[0].steps
     const { equipment, ingredients, number, step } = currRecipeSteps[currStep]
 
-    const recipeHistory = userInfo.recipeHistory
+ const recipeHistory = userInfo.recipeHistory
+   console.log(currRecipeId,'last completed', userInfo.recipeHistory[currRecipeId])
 
-    const updatePoints = () => {
-        if (!userInfo.recipeHistory.hasOwnProperty(currRecipeId)) {
-            db.collection('users')
-                .doc(userInfo.userId)
-                .update({
-                    points: userInfo.points + 10,
-                    recipeHistory: { ...recipeHistory, [currRecipeId]: recipe },
-                })
-        }
-    }
+ 
+ const updatePoints = () => {
+  let today = new Date()
+  const dd = String(today.getDate()).padStart(2, '0')
+  const mm = String(today.getMonth() + 1).padStart(2, '0') //January is 0!
+  const yyyy = today.getFullYear()
 
+  today = mm + '/' + dd + '/' + yyyy
+  console.log('last completed', lastCompleted)
+  const lastCompleted = userInfo.recipeHistory[currRecipeId].lastCompleted
+  if (!lastCompleted || lastCompleted !== today) {
+   db.collection('users')
+    .doc(userInfo.userId)
+    .update({
+     points: userInfo.points + 10,
+     recipeHistory: { ...recipeHistory, [currRecipeId]: {...recipe, lastCompleted: today}},
+    })
+  }
+ }
+
+
+    // const updatePoints = () => {
+    //     if (!userInfo.recipeHistory.hasOwnProperty(currRecipeId)) {
+    //         db.collection('users')
+    //             .doc(userInfo.userId)
+    //             .update({
+    //                 points: userInfo.points + 10,
+    //                 recipeHistory: { ...recipeHistory, [currRecipeId]: recipe },
+    //             })
+    //     }
+    // }
+ // console.log('LDAJFLJAFLJSDF',userInfo.recipeHistory[currRecipeId].lastCompleted)
     const checkStep = (currStep) => {
         if (currStep === 0) {
             return (
