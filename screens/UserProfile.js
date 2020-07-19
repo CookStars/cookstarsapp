@@ -10,16 +10,15 @@ import {
     Alert,
     TextInput,
     Modal,
-    Dimensions,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { logOut, update } from '../redux/actions/user'
 import { db, firebase } from '../firebaseconfig'
 import '@firebase/firestore'
-import badges from '../assets/badges/index'
-import Icons from '../components/Icons'
 import profileImages from '../assets/profileIcons/index.js'
 import RecipesList from '../components/RecipesList'
+import Badges from '../components/Badges'
+import UpdateProfileImage from '../components/UpdateProfileImage'
 
 export class UserProfile extends React.Component {
     state = {
@@ -103,23 +102,6 @@ export class UserProfile extends React.Component {
                                 autoCapitalize="none"
                             />
 
-                            {/* <Picker
-                                style={styles.input}
-                                placeholder="Food Preference"
-                                placeholderTextColor="#aaaaaa"
-                                // selectedValue={foodPreference}
-                                value="vegan"
-                                // onValueChange={(itemValue, itemIndex) =>
-                                //     setFoodPreference(itemValue)
-                                // }
-                            >
-                                <Picker.Item label="Vegan" value="vegan" />
-                                <Picker.Item
-                                    label="Meatlover"
-                                    value="meatlover"
-                                />
-                            </Picker> */}
-
                             <TouchableHighlight
                                 style={{
                                     ...styles.openButton,
@@ -188,141 +170,22 @@ export class UserProfile extends React.Component {
         )
     }
 
-    onUpdateProfileImage = async (icon) => {
+    onUpdateProfileImage = async () => {
         await db
             .collection('users')
             .doc(this.props.userInfo.userId)
             .update({
-                icon: icon,
+                icon: this.state.profileImage,
             })
             .catch((error) => console.log('ERROR') || alert(error))
+        Alert.alert('Your profile icon has been updated')
     }
 
-    profileModal = () => {
-        const setProfileImage = (key) => this.setState({ profileImage: key })
-        return (
-            <Modal
-                // animationType="slide"
-                visible={this.state.profileModalVisible}
-                onRequestClose={() => {
-                    Alert.alert('Modal has been closed.')
-                }}
-                transparent={true}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Icons setProfileImage={setProfileImage} />
-
-                        <TouchableHighlight
-                            style={{
-                                ...styles.openButton,
-                                backgroundColor: '#F18F01',
-                            }}
-                            onPress={() => {
-                                this.setState({
-                                    profileModalVisible: !this.state
-                                        .profileModalVisible,
-                                })
-                                this.onUpdateProfileImage(
-                                    this.state.profileImage
-                                )
-                            }}
-                        >
-                            <Text style={styles.textStyle}>Update</Text>
-                        </TouchableHighlight>
-                    </View>
-                </View>
-            </Modal>
-        )
-    }
-
-    showBadges = () => {
-        const badgeIds = Object.keys(badges).sort((a, b) => a - b)
-        const userPoints = this.props.userInfo.points
-        console.log(badgeIds)
-        const findPoints = badgeIds.filter((points) => points > userPoints)
-        console.log('found', findPoints)
-        const pointsLeft = () => {
-            if (findPoints.length) {
-                return findPoints[0] - userPoints
-            } else return 0
-        }
-        const listBadges = badgeIds.map((badgeId) => {
-            return (
-                <View
-                    key={badgeId}
-                    style={{ paddingBottom: '4%', paddingHorizontal: '4%' }}
-                >
-                    {badgeId <= userPoints ? (
-                        <Image
-                            source={badges[badgeId]}
-                            style={{
-                                alignSelf: 'center',
-                                width: 0.2 * Dimensions.get('screen').width,
-                                height: 0.2 * Dimensions.get('screen').width,
-                                // bottom: '10%'
-                            }}
-                        />
-                    ) : (
-                        <Image
-                            source={badges[badgeId]}
-                            style={{
-                                tintColor: 'grey',
-                                opacity: 0.2,
-                                width: 0.2 * Dimensions.get('screen').width,
-                                height: 0.2 * Dimensions.get('screen').width,
-                                resizeMode: 'contain',
-                                // borderWidth: 1,
-                                // bottom: '10%',
-                            }}
-                        />
-                    )}
-                </View>
-            )
+    setProfileImage = (key) => this.setState({ profileImage: key })
+    setProfileModalVisibility = () =>
+        this.setState({
+            profileModalVisible: !this.state.profileModalVisible,
         })
-
-        return (
-            <View style={{ paddingVertical: '10%' }}>
-                <Text
-                    style={{
-                        fontSize: 20,
-                        alignSelf: 'center',
-                        paddingBottom: '3%',
-                        fontWeight: 'bold',
-                    }}
-                >
-                    BADGES
-                </Text>
-
-                <View
-                    style={{
-                        borderWidth: 2,
-                        width: 0.9 * Dimensions.get('screen').width,
-                        height: 0.3 * Dimensions.get('screen').height,
-                        alignSelf: 'center',
-                        justifyContent: 'flex-start',
-                        flexDirection: 'row',
-                        flexWrap: 'wrap',
-                        alignItems: 'center',
-                        padding: '4%',
-                        alignContent: 'space-around',
-                    }}
-                >
-                    {listBadges}
-                </View>
-                <Text
-                    style={{
-                        fontSize: 19,
-                        paddingTop: '5%',
-                        left: '40%',
-                        color: 'violet',
-                    }}
-                >
-                    {pointsLeft()} Points To Next Badge
-                </Text>
-            </View>
-        )
-    }
 
     render() {
         let user = this.props.userInfo
@@ -331,7 +194,14 @@ export class UserProfile extends React.Component {
             <SafeAreaView style={styles.container}>
                 {user.userId ? (
                     <ScrollView showsHorizontalScrollIndicator={false}>
-                        {this.profileModal()}
+                        <UpdateProfileImage
+                            setProfileImage={this.setProfileImage}
+                            profileModalVisible={this.state.profileModalVisible}
+                            onUpdateProfileImage={this.onUpdateProfileImage}
+                            setProfileModalVisibility={
+                                this.setProfileModalVisibility
+                            }
+                        />
                         <View style={{ alignSelf: 'center' }}>
                             <View style={styles.profileImage}>
                                 <TouchableHighlight
@@ -341,9 +211,6 @@ export class UserProfile extends React.Component {
                                             profileModalVisible: !this.state
                                                 .profileModalVisible,
                                         })
-                                        Alert.alert(
-                                            'Your profile icon has been updated'
-                                        )
                                     }}
                                 >
                                     <Image
@@ -391,7 +258,7 @@ export class UserProfile extends React.Component {
                                 <Text style={styles.textStyle}>Log Out</Text>
                             </TouchableHighlight>
                         </View>
-                        {this.showBadges()}
+                        <Badges userInfo={this.props.userInfo} />
                         <View style={styles.statsContainer}>
                             <View style={styles.statsBox}>
                                 <Text></Text>
@@ -636,22 +503,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 10,
-    },
-    modalView: {
-        margin: 10,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 60,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        maxHeight: 500,
     },
     textStyle: {
         color: 'white',
