@@ -16,6 +16,7 @@ import { logOut, update } from '../redux/actions/user'
 import { db, firebase } from '../firebaseconfig'
 import '@firebase/firestore'
 import { RecipesList, Badges, UpdateProfileImage } from '../components'
+import { colors } from '../utils/constants'
 
 export class UserProfile extends React.Component {
     state = {
@@ -69,7 +70,7 @@ export class UserProfile extends React.Component {
                             <TextInput
                                 style={styles.input}
                                 placeholder="First Name"
-                                placeholderTextColor="#aaaaaa"
+                                placeholderTextColor={colors.placeHolder}
                                 onChangeText={(text) =>
                                     this.setState({ firstName: text })
                                 }
@@ -81,7 +82,7 @@ export class UserProfile extends React.Component {
                             <TextInput
                                 style={styles.input}
                                 placeholder="Last Name"
-                                placeholderTextColor="#aaaaaa"
+                                placeholderTextColor={colors.placeHolder}
                                 onChangeText={(text) =>
                                     this.setState({ lastName: text })
                                 }
@@ -93,7 +94,7 @@ export class UserProfile extends React.Component {
                             <TextInput
                                 style={styles.input}
                                 placeholder="E-mail"
-                                placeholderTextColor="#aaaaaa"
+                                placeholderTextColor={colors.placeHolder}
                                 onChangeText={(text) =>
                                     this.setState({ email: text })
                                 }
@@ -105,7 +106,7 @@ export class UserProfile extends React.Component {
                             <TouchableHighlight
                                 style={{
                                     ...styles.openButton,
-                                    backgroundColor: '#2196F3',
+                                    backgroundColor: colors.buttonCancel,
                                 }}
                                 onPress={() => {
                                     this.setState({
@@ -113,14 +114,21 @@ export class UserProfile extends React.Component {
                                     })
                                 }}
                             >
-                                <Text style={styles.textStyle}>Cancel</Text>
+                                <Text
+                                    style={{
+                                        ...styles.textStyle,
+                                        color: colors.offWhite,
+                                    }}
+                                >
+                                    Cancel
+                                </Text>
                             </TouchableHighlight>
 
                             <TouchableHighlight
                                 style={{
                                     ...styles.openButton,
                                     top: 15,
-                                    backgroundColor: '#2196F3',
+                                    backgroundColor: colors.buttonConfirm,
                                 }}
                                 onPress={async () => {
                                     await db
@@ -228,7 +236,7 @@ export class UserProfile extends React.Component {
                             <Text
                                 style={[
                                     styles.text,
-                                    { color: '#AEB5BC', fontSize: 14 },
+                                    { color: colors.placeHolder, fontSize: 14 },
                                 ]}
                             >
                                 Master Chef
@@ -237,15 +245,21 @@ export class UserProfile extends React.Component {
                                 Total Points:{user.points}{' '}
                             </Text>
                         </View>
-
-                        {this.modal()}
-                        <View style={styles.buttonParent}>
-                            <TouchableHighlight
-                                style={styles.openButton}
-                                onPress={() => this.handleClick()}
-                            >
-                                <Text style={styles.textStyle}>Log Out</Text>
-                            </TouchableHighlight>
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            {this.modal()}
+                            <View style={styles.buttonParent}>
+                                <TouchableHighlight
+                                    style={{
+                                        ...styles.openButton,
+                                        backgroundColor: colors.buttonCancel,
+                                    }}
+                                    onPress={() => this.handleClick()}
+                                >
+                                    <Text style={styles.textStyle}>
+                                        Log Out
+                                    </Text>
+                                </TouchableHighlight>
+                            </View>
                         </View>
                         <Badges userInfo={this.props.userInfo} />
                         <View style={styles.statsContainer}>
@@ -326,10 +340,10 @@ export default connect(mapState, mapDispatch)(UserProfile)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: colors.background,
     },
     text: {
-        color: '#52575D',
+        color: colors.text,
     },
     titleBar: {
         flexDirection: 'row',
@@ -345,11 +359,11 @@ const styles = StyleSheet.create({
     },
     modalView: {
         margin: 20,
-        backgroundColor: 'white',
+        backgroundColor: colors.modal,
         borderRadius: 20,
         padding: 35,
         alignItems: 'center',
-        shadowColor: '#000',
+        shadowColor: colors.placeHolder,
         shadowOffset: {
             width: 0,
             height: 2,
@@ -359,23 +373,24 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     openButton: {
-        backgroundColor: '#F194FF',
+        backgroundColor: colors.buttonConfirm,
         borderRadius: 20,
         padding: 10,
         elevation: 2,
+        width: 200,
     },
     //PROFILE IMAGE STYLING
     //VIEW
     profileImage: {
         top: 50,
-        backgroundColor: 'red',
+        backgroundColor: colors.background,
         height: 100,
         width: 100,
         alignSelf: 'center',
     },
     //TOUCHABLE HIGHLIGHT
     profileBotton: {
-        backgroundColor: '#F194FF',
+        backgroundColor: colors.extra,
         height: 100,
         width: 100,
         alignItems: 'center',
@@ -388,7 +403,7 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     textStyle: {
-        color: 'white',
+        color: colors.offWhite,
         fontWeight: 'bold',
         textAlign: 'center',
     },
@@ -398,32 +413,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
-    active: {
-        backgroundColor: '#34FFB9',
-        position: 'absolute',
-        bottom: 28,
-        left: 10,
-        padding: 4,
-        height: 20,
-        width: 20,
-        borderRadius: 10,
-    },
-    add: {
-        backgroundColor: '#41444B',
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     input: {
         height: 55,
         borderRadius: 5,
         overflow: 'hidden',
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
         marginTop: 10,
         marginBottom: 10,
         alignSelf: 'center',
@@ -454,17 +448,9 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         marginBottom: 16,
     },
-    recentItemIndicator: {
-        backgroundColor: '#CABFAB',
-        padding: 4,
-        height: 12,
-        width: 12,
-        borderRadius: 6,
-        marginTop: 20,
-    },
     buttonContainer: {
         backgroundColor: '#F18F01',
-        borderColor: 'white',
+        borderColor: colors.border,
         borderWidth: 1,
         borderRadius: 20,
         fontSize: 24,
@@ -478,15 +464,16 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     points: {
-        borderColor: 'white',
-        backgroundColor: '#F6E27F',
+        borderColor: colors.borderColor,
+        backgroundColor: colors.extra,
         marginTop: 15,
         borderStartWidth: 1,
-        borderRadius: 12,
+        borderRadius: 20,
         fontWeight: 'bold',
         overflow: 'visible',
-        padding: 4,
+        padding: 10,
         textAlign: 'center',
+        width: 200,
     },
     centeredView: {
         flex: 1,
@@ -495,7 +482,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     textStyle: {
-        color: 'white',
+        color: colors.text,
         fontWeight: 'bold',
         textAlign: 'center',
     },
