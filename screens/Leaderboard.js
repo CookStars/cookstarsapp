@@ -13,7 +13,7 @@ import {
 import { db } from '../firebaseconfig.js'
 import Lead from 'react-native-leaderboard'
 import { ButtonGroup, ThemeConsumer } from 'react-native-elements'
-import { fetchAllUsers } from '../redux/leaderboardReducer'
+import { fetchAllUsers } from '../redux/actions/users'
 import { connect } from 'react-redux'
 
 export class Leaderboard extends Component {

@@ -15,7 +15,7 @@ import {
 } from 'react-native'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
-import { logOut, update } from '../redux/userReducer'
+import { logOut, update } from '../redux/actions/user'
 import { db, firebase } from '../firebaseconfig'
 import '@firebase/firestore'
 import badges from '../assets/badges/index'
@@ -324,13 +324,12 @@ export class UserProfile extends React.Component {
         const badgeIds = Object.keys(badges).sort((a, b) => a - b)
         const userPoints = this.props.userInfo.points
         console.log(badgeIds)
-        const findPoints = badgeIds.filter(points => points > userPoints)
+        const findPoints = badgeIds.filter((points) => points > userPoints)
         console.log('found', findPoints)
-     const pointsLeft = () => {
-      if (findPoints.length) {
-          return findPoints[0]-userPoints
-         }
-         else return 0
+        const pointsLeft = () => {
+            if (findPoints.length) {
+                return findPoints[0] - userPoints
+            } else return 0
         }
         const listBadges = badgeIds.map((badgeId) => {
             return (
@@ -344,7 +343,7 @@ export class UserProfile extends React.Component {
                             style={{
                                 alignSelf: 'center',
                                 width: 0.2 * Dimensions.get('screen').width,
-                                height: 0.2 * Dimensions.get('screen').width
+                                height: 0.2 * Dimensions.get('screen').width,
                                 // bottom: '10%'
                             }}
                         />
@@ -373,7 +372,7 @@ export class UserProfile extends React.Component {
                         fontSize: 20,
                         alignSelf: 'center',
                         paddingBottom: '3%',
-                        fontWeight:'bold'
+                        fontWeight: 'bold',
                     }}
                 >
                     BADGES

@@ -16,7 +16,7 @@ import {
 import { Feather } from '@expo/vector-icons'
 import { db } from '../firebaseconfig'
 import { connect } from 'react-redux'
-import { fetchRecipes } from '../redux/recipeReducer'
+import { fetchRecipes } from '../redux/actions/recipes'
 import badges from '../assets/badges'
 
 const weekdays = [
@@ -29,7 +29,6 @@ const weekdays = [
     'Saturday',
 ]
 
-
 export class SuccessPage extends Component {
     constructor(props) {
         super(props)
@@ -39,26 +38,23 @@ export class SuccessPage extends Component {
         this.toggleModal = this.toggleModal.bind(this)
     }
 
- 
     toggleModal() {
-        console.log('huhu',this.state.modalVisible)
+        console.log('huhu', this.state.modalVisible)
         this.setState({ modalVisible: !this.state.modalVisible })
     }
     componentDidMount() {
         const badgePoints = [10, 50, 100, 200, 300, 450]
         const { navigation, recipes, userInfo } = this.props
 
-     if (badgePoints.includes(userInfo.points)) {
-      
-      this.toggleModal()
-         
+        if (badgePoints.includes(userInfo.points)) {
+            this.toggleModal()
         }
     }
 
     render() {
         const { navigation, recipes, userInfo } = this.props
-     const today = new Date().getDay()
-     const currRecipeId = recipes[today].id
+        const today = new Date().getDay()
+        const currRecipeId = recipes[today].id
 
         const img = recipes[today + 1].image
 
@@ -72,23 +68,21 @@ export class SuccessPage extends Component {
                     },
                 })
         }
-     const checkLastCompleted = () => {
-      let date = new Date()
-      const dd = String(date.getDate()).padStart(2, '0')
-      const mm = String(date.getMonth() + 1).padStart(2, '0') //January is 0!
-      const yyyy = date.getFullYear()
+        const checkLastCompleted = () => {
+            let date = new Date()
+            const dd = String(date.getDate()).padStart(2, '0')
+            const mm = String(date.getMonth() + 1).padStart(2, '0') //January is 0!
+            const yyyy = date.getFullYear()
 
-      date = mm + '/' + dd + '/' + yyyy
-      return ((!userInfo.recipeHistory[currRecipeId]) || 
-          (userInfo.recipeHistory[currRecipeId].lastCompleted !==
-              date ))? (
-          <Text style={styles.pointsText}>YOU EARNED 10 PTS!</Text>
-      ) : (
-          <Text style={styles.pointsText}>YOU EARNED 0 PTS!</Text>
-      )
-      
-     }
-     
+            date = mm + '/' + dd + '/' + yyyy
+            return !userInfo.recipeHistory[currRecipeId] ||
+                userInfo.recipeHistory[currRecipeId].lastCompleted !== date ? (
+                <Text style={styles.pointsText}>YOU EARNED 10 PTS!</Text>
+            ) : (
+                <Text style={styles.pointsText}>YOU EARNED 0 PTS!</Text>
+            )
+        }
+
         return (
             <View style={styles.container}>
                 <View>
@@ -96,8 +90,8 @@ export class SuccessPage extends Component {
                         transparent={true}
                         visible={this.state.modalVisible}
                         animationType={'fade'}
-            onRequestClose={this.toggleModal}
-            shadow={true}
+                        onRequestClose={this.toggleModal}
+                        shadow={true}
                     >
                         <View style={styles.modalView}>
                             <TouchableOpacity onPress={this.toggleModal}>
@@ -143,7 +137,6 @@ export class SuccessPage extends Component {
                         />
                     </View>
                     <View style={styles.textContainer}>
-                        
                         {checkLastCompleted()}
                         <Text style={styles.pointsText}>
                             TOTAL POINTS: {userInfo.points}
@@ -303,7 +296,7 @@ const styles = StyleSheet.create({
     },
     badge: {
         width: 0.35 * Dimensions.get('screen').width,
-     height: 0.45 * Dimensions.get('screen').width,
+        height: 0.45 * Dimensions.get('screen').width,
     },
 
     labelContainer: {

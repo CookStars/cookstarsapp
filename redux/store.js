@@ -1,16 +1,16 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import recipeReducer from './recipeReducer';
-import userReducer from './userReducer';
-import thunkMiddleware from 'redux-thunk';
-import leaderboardReducer from './leaderboardReducer';
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import recipes from './reducers/recipes'
+import user from './reducers/user'
+import thunkMiddleware from 'redux-thunk'
+import users from './reducers/users'
 
 //
 // Store...
 //
 const rootReducer = combineReducers({
-  recipes: recipeReducer,
-  user: userReducer,
-  users: leaderboardReducer
-});
+    recipes,
+    user,
+    users,
+})
 
-export default createStore(rootReducer, applyMiddleware(thunkMiddleware));
+export default createStore(rootReducer, applyMiddleware(thunkMiddleware))
