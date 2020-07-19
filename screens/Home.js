@@ -1,72 +1,15 @@
 import React, { Component } from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Image,
-  ScrollView,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
-import favicon from "../assets/favicon.png";
-import { CardView, Cards } from "../components";
-import { recipes } from "../Seed";
-import { db } from "../firebaseconfig.js";
-import { connect } from "react-redux";
-import { fetchRecipes } from "../redux/recipeReducer";
-import * as Notifications from 'expo-notifications'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { CardView, Cards } from '../components'
+import { weekdays } from '../utils/constants'
+import { newRecipeNotification } from '../utils/helper_functions'
+import { connect } from 'react-redux'
+import { fetchRecipes } from '../redux/actions/recipes'
 
-
-
-if (today === 1) {
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: true,
-      shouldSetBadge: false
-    })
-  })
-
-  Notifications.scheduleNotificationAsync({
-    content: {
-      title: 'New Recipes Have Been added!',
-      body: 'Come take a look at this weeks Recipes!'
-    },
-    trigger: {
-      seconds: 21600,
-    }
-  })
-
-}
-
-
-
-const weekdays = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-]
 const today = new Date().getDay()
+newRecipeNotification()
 
 export class HomeScreen extends Component {
-    // constructor(props) {
-    //   super(props);
-    //   // this.state = {};
-    //   // this.state = {
-    //   //   vegan: [],
-    //   //   meatlover: [],
-    //   //   recipeFinished: false,
-    //   // };
-    //   // this.recipeCompleted = this.recipeCompleted.bind(this);
-    //   // this.getRecipes = this.getRecipes.bind(this);
-    //   // this.props.getVeganRecipes();
-    // }
-
     componentDidMount() {
         const pref = this.props.userInfo.foodPreference
         this.props.getRecipes(pref)

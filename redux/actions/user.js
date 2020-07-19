@@ -1,25 +1,16 @@
-import { firebase, db } from '../firebaseconfig'
-
-// Action Types
-export const SET_USER_INFO = 'SET_USER_INFO'
-export const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
+import { firebase, db } from '../../firebaseconfig'
+import { SET_USER_INFO, UPDATE_USER_INFO } from '../constants/user'
 
 // Action Creator
-const initialState = { isLoggedIn: false }
+const setUserInfo = (user) => ({
+    type: SET_USER_INFO,
+    user,
+})
 
-const setUserInfo = (user) => {
-    return {
-        type: SET_USER_INFO,
-        user,
-    }
-}
-
-const updateUserInfo = (user) => {
-    return {
-        type: UPDATE_USER_INFO,
-        user,
-    }
-}
+const updateUserInfo = (user) => ({
+    type: UPDATE_USER_INFO,
+    user,
+})
 
 // Action
 export const fetchUserInfo = () => (dispatch) => {
@@ -52,7 +43,7 @@ export const fetchUserInfo = () => (dispatch) => {
             }
         })
     } catch (err) {
-        console.log(err)
+        console.error(err)
     }
 }
 
@@ -60,7 +51,7 @@ export const update = (userData) => (dispatch) => {
     try {
         dispatch(updateUserInfo(userData))
     } catch (err) {
-        console.log(err)
+        console.error(err)
     }
 }
 
@@ -72,19 +63,7 @@ export const logOut = () => (dispatch) => {
             .then(() => {
                 dispatch(setUserInfo({ isLoggedIn: false }))
             })
-    } catch (err) {}
-}
-
-// Reducer
-export default function recipeReducer(state = initialState, action) {
-    switch (action.type) {
-        case SET_USER_INFO:
-            return action.user
-
-        case UPDATE_USER_INFO:
-            return { ...state, ...action.user }
-
-        default:
-            return state
+    } catch (err) {
+        console.error(err)
     }
 }

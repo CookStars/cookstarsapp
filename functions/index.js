@@ -61,50 +61,47 @@ exports.userDeleted = functions.auth.user().onDelete((user) => {
 })
 
 const refactorData = (recipesAPI) => {
-  const recipesArr = recipesAPI.recipes;
-  let newArr = []
-  for (let i = 0; i < recipesArr.length; i++) {
-    let recipe = recipesArr[i]
-    const {
-      id,
-      vegan,
-      title,
-      extendedIngredients,
-      readyInMinutes,
-      servings,
-      image,
-      summary,
-      instructions,
-      analyzedInstructions,
-      spoonacularSourceUrl,
-    } = recipe;
+    const recipesArr = recipesAPI.recipes
+    let newArr = []
+    for (let i = 0; i < recipesArr.length; i++) {
+        let recipe = recipesArr[i]
+        const {
+            id,
+            vegan,
+            title,
+            extendedIngredients,
+            readyInMinutes,
+            servings,
+            image,
+            summary,
+            instructions,
+            analyzedInstructions,
+            spoonacularSourceUrl,
+        } = recipe
 
-    if (analyzedInstructions.length > 1) {
-      continue;
+        if (analyzedInstructions.length > 1) {
+            continue
+        }
+        const lastCompleted = ''
+        const ingredients = extendedIngredients.map((ingredient) => {
+            const { id, name, original, image } = ingredient
+            return { id, name, original, image }
+        })
+
+        newArr.push({
+            id,
+            vegan,
+            title,
+            ingredients,
+            readyInMinutes,
+            servings,
+            image,
+            summary,
+            instructions,
+            analyzedInstructions,
+            spoonacularSourceUrl,
+            lastCompleted,
+        })
     }
-    const lastCompleted = ""
-    const ingredients = extendedIngredients.map(ingredient => {
-      const { id, name, original, image } = ingredient
-      return { id, name, original, image }
-    }
-    )
-
-    newArr.push({
-
-      id,
-      vegan,
-      title,
-      ingredients,
-      readyInMinutes,
-      servings,
-      image,
-      summary,
-      instructions,
-      analyzedInstructions,
-     spoonacularSourceUrl,
-     lastCompleted
-    })
-  }
-  return newArr;
-};
-
+    return newArr
+}

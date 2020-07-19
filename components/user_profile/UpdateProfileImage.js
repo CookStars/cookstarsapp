@@ -1,40 +1,43 @@
 import React from 'react'
 import {
     StyleSheet,
-    View,
-    Image,
     Text,
-    TouchableOpacity,
-    Modal,
-    Dimensions,
+    View,
+    TouchableHighlight,
     Alert,
+    Modal,
 } from 'react-native'
+import Icons from './Icons'
 
-export default function IconPicker(props) {
-    const [modalVisible, setModalVisible] = useState(false)
+const UpdateProfileImage = ({
+    profileModalVisible,
+    setProfileImage,
+    setProfileModalVisibility,
+    onUpdateProfileImage,
+} = {}) => {
     return (
         <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
+            visible={profileModalVisible}
             onRequestClose={() => {
-                Alert.alert('Your profile icon has been updated')
+                Alert.alert('Modal has been closed.')
             }}
+            transparent={true}
         >
-            <View style={styles.container}>
+            <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Hello World!</Text>
+                    <Icons setProfileImage={setProfileImage} />
 
                     <TouchableHighlight
                         style={{
                             ...styles.openButton,
-                            backgroundColor: '#2196F3',
+                            backgroundColor: '#F18F01',
                         }}
                         onPress={() => {
-                            setModalVisible(!modalVisible)
+                            setProfileModalVisibility()
+                            onUpdateProfileImage()
                         }}
                     >
-                        <Text style={styles.textStyle}>Hide Modal</Text>
+                        <Text style={styles.textStyle}>Update</Text>
                     </TouchableHighlight>
                 </View>
             </View>
@@ -42,18 +45,20 @@ export default function IconPicker(props) {
     )
 }
 
+export default UpdateProfileImage
+
 const styles = StyleSheet.create({
-    container: {
+    centeredView: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 22,
     },
     modalView: {
-        margin: 20,
+        margin: 10,
         backgroundColor: 'white',
         borderRadius: 20,
-        padding: 35,
+        padding: 60,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
@@ -63,6 +68,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+        maxHeight: 500,
     },
     openButton: {
         backgroundColor: '#F194FF',
@@ -73,10 +79,6 @@ const styles = StyleSheet.create({
     textStyle: {
         color: 'white',
         fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    modalText: {
-        marginBottom: 15,
         textAlign: 'center',
     },
 })
