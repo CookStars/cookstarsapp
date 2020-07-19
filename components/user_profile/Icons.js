@@ -1,6 +1,6 @@
 import React from 'react'
 import { Image, View, ScrollView, TouchableHighlight } from 'react-native'
-import { profileImages2 } from '../../assets/profileIcons/index'
+import { profileImages } from '../../assets/profileIcons/index'
 
 export default function Icons({ setProfileImage }) {
     return (
@@ -14,11 +14,11 @@ export default function Icons({ setProfileImage }) {
                         width: 250,
                     }}
                 >
-                    {Object.keys(profileImages2).map((key, index) => (
+                    {Object.keys(profileImages).map((key, index) => (
                         <View key={index}>
                             <TouchableHighlight
                                 onPress={() => {
-                                    setProfileImage(profileImages2[key])
+                                    setProfileImage(key)
                                 }}
                             >
                                 <Image
@@ -28,7 +28,7 @@ export default function Icons({ setProfileImage }) {
                                         borderRadius: 12,
                                         padding: 20,
                                     }}
-                                    source={{ uri: profileImages2[key] }}
+                                    source={profileImages[key]}
                                 />
                             </TouchableHighlight>
                         </View>
