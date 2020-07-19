@@ -302,8 +302,8 @@ export class UserProfile extends React.Component {
                         </View>
                     </ScrollView>
                 ) : (
-                    <View></View>
-                )}
+                        <View></View>
+                    )}
             </SafeAreaView>
         )
     }

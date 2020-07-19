@@ -2,8 +2,11 @@ const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 admin.initializeApp()
 const db = admin.firestore()
-const key = '33c3ad3d272d40fa855ba50cb02be7b5'
+const key = process.env.API_KEY
 const axios = require('axios')
+require('dotenv').config()
+
+
 
 exports.getVeganRecipes = functions.pubsub
     .schedule('0 4 * * 0')
@@ -40,20 +43,7 @@ exports.getMeatRecipes = functions.pubsub
         return null
     })
 
-// return null;
-//   });
 
-// exports.newUserSignUp = functions.auth.user().onCreate((user) => {
-//   return admin.firestore().collection('users').doc(user.uid).set({
-//     email: user.email,
-//     firstName: '',
-//     lastName: '',
-//     points: 0,
-//     foodPreference: '',
-//     favoriteRecipes: {},
-//     recipeHistory: {},
-//   });
-// });
 
 exports.userDeleted = functions.auth.user().onDelete((user) => {
     const doc = admin.firestore().collection('users').doc(user.uid)
