@@ -3,7 +3,6 @@ import {
     StyleSheet,
     Text,
     View,
-    Button,
     SafeAreaView,
     Image,
     ScrollView,
@@ -13,7 +12,6 @@ import {
     Modal,
     Dimensions,
 } from 'react-native'
-import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 import { logOut, update } from '../redux/actions/user'
 import { db, firebase } from '../firebaseconfig'
@@ -21,14 +19,13 @@ import '@firebase/firestore'
 import badges from '../assets/badges/index'
 import Icons from '../components/Icons'
 import profileImages from '../assets/profileIcons/index.js'
+import RecipesList from '../components/RecipesList'
 
 export class UserProfile extends React.Component {
     state = {
         modalVisible: false,
         profileModalVisible: false,
-        profileImage: this.props.userInfo.icon
-            ? this.props.userInfo.icon
-            : 'default',
+        profileImage: this.props.userInfo.icon || 'default',
     }
 
     handleClick() {
@@ -239,87 +236,6 @@ export class UserProfile extends React.Component {
         )
     }
 
-    history = () => {
-        const recipeHistory = this.props.userInfo.recipeHistory
-        if (!recipeHistory || !Object.keys(recipeHistory).length) {
-            return (
-                <View style={styles.statsBox}>
-                    <Text>No favs selected</Text>
-                </View>
-            )
-        }
-        return (
-            <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                // style={{ flex: 1, flexDirection: 'row' }}
-            >
-                {Object.entries(recipeHistory).map((item, index) => (
-                    <TouchableHighlight
-                        key={index}
-                        onPress={() =>
-                            this.props.navigation.navigate('SingleRecipe', {
-                                // day: day,
-                                recipe: item[1],
-                                userInfo: this.props.userInfo,
-                            })
-                        }
-                    >
-                        <View style={styles.mediaImageContainer}>
-                            <Image
-                                source={{
-                                    uri: item[1].image,
-                                }}
-                                style={styles.imageRecipe}
-                                resizeMode="cover"
-                            />
-                        </View>
-                    </TouchableHighlight>
-                ))}
-            </ScrollView>
-        )
-    }
-
-    favorites = () => {
-        const favoriteRecipes = this.props.userInfo.favoriteRecipes
-        if (!favoriteRecipes || !Object.keys(favoriteRecipes).length) {
-            return (
-                <View style={styles.statsBox}>
-                    <Text>No favs selected</Text>
-                </View>
-            )
-        }
-
-        return (
-            <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-            >
-                {Object.entries(favoriteRecipes).map((item, index) => (
-                    <TouchableHighlight
-                        key={index}
-                        onPress={() =>
-                            this.props.navigation.navigate('SingleRecipe', {
-                                // day: day,
-                                recipe: item[1],
-                                userInfo: this.props.userInfo,
-                            })
-                        }
-                    >
-                        <View style={styles.mediaImageContainer}>
-                            <Image
-                                source={{
-                                    uri: item[1].image,
-                                }}
-                                style={styles.imageRecipe}
-                                resizeMode="cover"
-                            />
-                        </View>
-                    </TouchableHighlight>
-                ))}
-            </ScrollView>
-        )
-    }
     showBadges = () => {
         const badgeIds = Object.keys(badges).sort((a, b) => a - b)
         const userPoints = this.props.userInfo.points
@@ -491,7 +407,12 @@ export class UserProfile extends React.Component {
                         </View>
 
                         <View style={{ marginTop: 32 }}>
-                            {this.history()}
+                            <RecipesList
+                                userInfo={this.props.userInfo}
+                                navigation={this.props.navigation}
+                                noItemsText={"You haven't cooked anything yet"}
+                                recipes={this.props.userInfo.recipeHistory}
+                            />
 
                             <View style={styles.mediaCount}>
                                 <Text style={styles.text}></Text>
@@ -513,7 +434,12 @@ export class UserProfile extends React.Component {
                         </View>
 
                         <View style={{ marginTop: 32 }}>
-                            {this.favorites()}
+                            <RecipesList
+                                userInfo={this.props.userInfo}
+                                navigation={this.props.navigation}
+                                noItemsText={'No favs selected'}
+                                recipes={this.props.userInfo.favoriteRecipes}
+                            />
                             <View style={styles.mediaCount}>
                                 <Text style={styles.text}></Text>
                             </View>
@@ -547,7 +473,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     text: {
-        // fontFamily: 'HelveticaNeue',
         color: '#52575D',
     },
     titleBar: {
@@ -586,57 +511,25 @@ const styles = StyleSheet.create({
     //PROFILE IMAGE STYLING
     //VIEW
     profileImage: {
-        // flex: 1,
         top: 50,
-        // width: 150,
-        // // height: 50,
-        // borderRadius: 100,
-        // overflow: 'hidden',
-        // alignItems: 'center',
         backgroundColor: 'red',
-        // marginTop: 50,
         height: 100,
         width: 100,
     },
     //TOUCHABLE HIGHLIGHT
     profileBotton: {
         backgroundColor: '#F194FF',
-        // borderRadius: 20,
-        // padding: 10,
-        // elevation: 2,
         height: 100,
         width: 100,
         alignItems: 'center',
     },
-    //IMAGE
     image: {
-        // flex: 1,
         height: 80,
         width: 80,
         alignItems: 'center',
         padding: 5,
         margin: 10,
-
-        // height: 100,
     },
-    imageRecipe: {
-        flex: 1,
-        height: 200,
-        width: 200,
-        alignItems: 'center',
-        // padding: 5,
-        // margin: 5,
-
-        // height: 100,
-    },
-    // openButton: {
-    //     width: '100%',
-    //     backgroundColor: 'red',
-    //     borderRadius: 50,
-    //     marginTop: 20,
-    //     padding: 10,
-    //     elevation: 2,
-    // },
     textStyle: {
         color: 'white',
         fontWeight: 'bold',
@@ -692,13 +585,6 @@ const styles = StyleSheet.create({
     statsBox: {
         alignItems: 'center',
         flex: 1,
-    },
-    mediaImageContainer: {
-        width: 180,
-        height: 200,
-        borderRadius: 12,
-        overflow: 'hidden',
-        marginHorizontal: 10,
     },
     recent: {
         marginLeft: 78,
