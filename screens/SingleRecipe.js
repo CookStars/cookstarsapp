@@ -1,20 +1,18 @@
 import React, { Component } from 'react'
 import HTML from 'react-native-render-html'
-
 import {
     StyleSheet,
     Text,
     ScrollView,
     View,
-    Button,
     Image,
-    Alert,
     SafeAreaView,
     Dimensions,
-    TouchableOpacity,
 } from 'react-native'
-import { db } from '../firebaseconfig'
-import { Feather, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+import { ListItem } from 'react-native-elements'
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
+import checkDay from '../components/single_recipe/CheckDay'
+import favoriteButton from '../components/single_recipe/favoriteButton'
 
 export default class SingleRecipe extends Component {
     constructor(props) {
@@ -24,54 +22,8 @@ export default class SingleRecipe extends Component {
         }
     }
 
-    checkDay() {
-        const weekdays = [
-            'Sunday',
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-        ]
-        const today = weekdays[new Date().getDay()]
-        const { navigation } = this.props
-        const { recipe, userInfo, day } = this.props.route.params
-
-        if (day === today) {
-            return (
-                <View style={styles.startButton}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            navigation.navigate('Steps', {
-                                day: day,
-                                recipe: recipe,
-                                userInfo: userInfo,
-                            })
-                        }}
-                        style={{
-                            backgroundColor: '#EF233C',
-                            borderRadius: 10,
-                            width: '100%',
-                            height: 35,
-                            alignItems: 'center',
-                            alignContent: 'center',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <View>
-                            <Text style={{ color: 'white' }}>START RECIPE</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            )
-        } else {
-            return <View />
-        }
-    }
-
     render() {
-        const { recipe, userInfo } = this.props.route.params
+        // const { recipe, userInfo } = this.props.route.params
         const {
             summary,
             title,
@@ -80,9 +32,11 @@ export default class SingleRecipe extends Component {
             readyInMinutes,
             servings,
         } = this.props.route.params.recipe
-        const listIngredients = ingredients
-            .map((ingredient) => ingredient.original)
-            .join(', ')
+        const listIngredients = ingredients.map((ingredient, index) => {
+            const originalIngredDesc = ingredient.original
+            return <ListItem key={index} title={originalIngredDesc} />
+        })
+
         const newTagsSummary = summary
             .split(/\<a\b[^>]*>/)
             .join('<b><i>')
@@ -90,7 +44,7 @@ export default class SingleRecipe extends Component {
             .join('</i></b>')
 
         return (
-            <View>
+            <SafeAreaView>
                 <View>
                     <ScrollView style={styles.scrollView}>
                         <View style={styles.container}>
@@ -104,119 +58,31 @@ export default class SingleRecipe extends Component {
                                         uri: image,
                                     }}
                                 />
-
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        db.collection('users')
-                                            .doc(userInfo.userId)
-                                            .update({
-                                                favoriteRecipes: {
-                                                    ...userInfo.favoriteRecipes,
-                                                    [recipe.id]: recipe,
-                                                },
-                                            })
-                                    }}
-                                    style={{
-                                        backgroundColor: '#EF233C',
-                                        position: 'absolute',
-                                        top: '85%',
-                                        right: -8,
-                                        borderRadius: 10,
-                                        width: '40%',
-                                        height: 35,
-                                        alignItems: 'center',
-                                        alignSelf: 'center',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <View
-                                        style={{
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        {userInfo.favoriteRecipes[recipe.id] ? (
-                                            <AntDesign
-                                                name="heart"
-                                                size={20}
-                                                color="white"
-                                            />
-                                        ) : (
-                                            <AntDesign
-                                                name="hearto"
-                                                size={20}
-                                                color="white"
-                                            />
-                                        )}
-
-                                        <Text
-                                            style={{ color: 'white', left: 6 }}
-                                        >
-                                            FAVORITE
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
+                                {favoriteButton(this.props.route.params)}
                             </View>
                             <View>
                                 <Text style={styles.title}>{title}</Text>
                             </View>
-                            <View
-                                style={{
-                                    flexDirection: 'column',
-                                    height: '12.5%',
-                                    justifyContent: 'space-evenly',
-                                }}
-                            >
-                                <View
-                                    style={{
-                                        flexDirection: 'row',
-                                        width:
-                                            0.8 *
-                                            Dimensions.get('screen').width,
-                                        justifyContent: 'space-around',
-                                        top: '3%',
-                                    }}
-                                >
-                                    <View
-                                        style={{
-                                            flexDirection: 'row',
-                                            top: '2%',
-                                        }}
-                                    >
+                            <View style={styles.descIconOuterContainer}>
+                                <View style={styles.descIconInnerContainer}>
+                                    <View style={styles.descIcons}>
                                         <Feather
                                             name="clock"
                                             size={25}
                                             color="red"
                                             style={{ alignSelf: 'center' }}
                                         />
-                                        <Text
-                                            style={{
-                                                left: '30%',
-                                                fontSize: 15,
-                                                alignSelf: 'center',
-                                            }}
-                                        >
+                                        <Text style={styles.descIconText}>
                                             {readyInMinutes} minutes
                                         </Text>
                                     </View>
-                                    <View
-                                        style={{
-                                            flexDirection: 'row',
-                                            top: '2%',
-                                        }}
-                                    >
+                                    <View style={styles.descIcons}>
                                         <MaterialCommunityIcons
                                             name="bowl"
                                             size={25}
                                             color="red"
                                         />
-                                        <Text
-                                            style={{
-                                                left: '30%',
-                                                fontSize: 15,
-                                                alignSelf: 'center',
-                                            }}
-                                        >
+                                        <Text style={styles.descIconText}>
                                             {servings} Servings
                                         </Text>
                                     </View>
@@ -224,52 +90,29 @@ export default class SingleRecipe extends Component {
                             </View>
                         </View>
 
-                        <View
-                            style={{
-                                flexDirection: 'column',
-                                justifyContent: 'space-between',
-                                paddingBottom: 130,
-                                alignItems: 'center',
-                                flex: 6,
-                            }}
-                        >
+                        <View style={styles.detailsContainer}>
                             <View style={styles.description}>
-                                <Text
-                                    style={{
-                                        fontWeight: 'bold',
-                                        fontSize: 18,
-                                        height: '10%',
-                                    }}
-                                >
-                                    Description:
-                                </Text>
+                                <Text style={styles.descTitle}>Description:</Text>
                                 <HTML
                                     html={newTagsSummary}
                                     baseFontStyle={styles.description}
                                 />
                             </View>
                             <View>
-                                <Text
-                                    style={{
-                                        fontWeight: 'bold',
-                                        fontSize: 18,
-                                        height: 35,
-                                        top: '10%',
-                                    }}
-                                >
+                                <Text style={styles.ingredientsTitle}>
                                     Ingredients:
                                 </Text>
-                                <Text style={styles.ingredients}>
+                                <View style={styles.ingredients}>
                                     {listIngredients}
-                                </Text>
+                                </View>
                             </View>
                         </View>
                     </ScrollView>
                 </View>
                 <View>
-                    <View>{this.checkDay()}</View>
+                    <View>{checkDay(this.props)}</View>
                 </View>
-            </View>
+            </SafeAreaView>
         )
     }
 }
@@ -299,16 +142,19 @@ const styles = StyleSheet.create({
         resizeMode: 'stretch',
     },
     description: {
-        borderColor: '#F78764',
-        top: '2%',
+        // top: '2%',
         alignSelf: 'center',
         width: 0.88 * Dimensions.get('screen').width,
         fontSize: 15,
         textAlign: 'auto',
     },
+    descTitle: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        height: '10%',
+    },
     ingredients: {
-        top: '10%',
-        padding: 3,
+        top: 50,
         borderWidth: 3,
         borderColor: 'silver',
         alignSelf: 'center',
@@ -316,13 +162,30 @@ const styles = StyleSheet.create({
         fontSize: 15,
         textAlign: 'auto',
     },
-
-    startButton: {
-        width: '50%',
-        height: 40,
-        justifyContent: 'center',
-        alignSelf: 'center',
-        position: 'absolute',
-        bottom: 0,
+    ingredientsTitle: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        // height: '3%',
+        top: '3%',
+    },
+    descIcons: { flexDirection: 'row', top: '2%' },
+    descIconText: { left: '30%', fontSize: 15, alignSelf: 'center' },
+    descIconInnerContainer: {
+        flexDirection: 'row',
+        width: 0.8 * Dimensions.get('screen').width,
+        justifyContent: 'space-around',
+        // top: '3%',
+    },
+    descIconOuterContainer: {
+        flexDirection: 'column',
+        height: '12.5%',
+        justifyContent: 'space-evenly',
+    },
+    detailsContainer: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        paddingBottom: 0.25 * Dimensions.get('screen').height,
+        alignItems: 'center',
+        flex: 6,
     },
 })
