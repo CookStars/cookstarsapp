@@ -52,8 +52,7 @@ export default function RegistrationScreen({ navigation }) {
                         points: 0,
                         favoriteRecipes: {},
                         recipeHistory: {},
-                        icon:
-                            'http://192.168.1.154:19001/assets/assets/profileIcons/icons8-test-account-100.png?platform=android&hash=64f6306119855c06b5d5fe9e161127bc?platform=android&dev=true&minify=false&hot=false',
+                        icon: 'default',
                     })
             })
             .catch((error) => {

@@ -1,11 +1,9 @@
 import React from 'react'
 import { Text, View, Image } from 'react-native'
+import { profileImages } from '../../assets/profileIcons/index'
 
 const LeaderboardHeader = ({ userInfo, rank } = {}) => {
-    const icon =
-        userInfo.icon === '' || userInfo.icon.length < 15
-            ? 'http://192.168.1.154:19001/assets/assets/profileIcons/icons8-test-account-100.png?platform=android&hash=64f6306119855c06b5d5fe9e161127bc?platform=android&dev=true&minify=false&hot=false'
-            : userInfo.icon
+    const icon = userInfo.icon || 'default'
     return (
         <View
             colors={[, '#F2CC8F', '#F4F1DE']}
@@ -45,7 +43,7 @@ const LeaderboardHeader = ({ userInfo, rank } = {}) => {
                         width: 60,
                         borderRadius: 60 / 2,
                     }}
-                    source={{ uri: icon }}
+                    source={profileImages[icon]}
                 />
                 <Text
                     style={{
