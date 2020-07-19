@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Image, View, Text, ScrollView, TouchableHighlight } from 'react-native'
-import profileImages from '../assets/profileIcons/index'
+import profileImages from '../../assets/profileIcons/index'
 
 export default function Icons({ setProfileImage }) {
     return (

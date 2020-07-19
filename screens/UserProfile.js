@@ -16,9 +16,7 @@ import { logOut, update } from '../redux/actions/user'
 import { db, firebase } from '../firebaseconfig'
 import '@firebase/firestore'
 import profileImages from '../assets/profileIcons/index.js'
-import RecipesList from '../components/RecipesList'
-import Badges from '../components/Badges'
-import UpdateProfileImage from '../components/UpdateProfileImage'
+import { RecipesList, Badges, UpdateProfileImage } from '../components'
 
 export class UserProfile extends React.Component {
     state = {
@@ -189,7 +187,6 @@ export class UserProfile extends React.Component {
 
     render() {
         let user = this.props.userInfo
-        console.log(this.state.profileImage)
         return (
             <SafeAreaView style={styles.container}>
                 {user.userId ? (
@@ -202,28 +199,20 @@ export class UserProfile extends React.Component {
                                 this.setProfileModalVisibility
                             }
                         />
-                        <View style={{ alignSelf: 'center' }}>
-                            <View style={styles.profileImage}>
-                                <TouchableHighlight
-                                    style={styles.profileBotton}
-                                    onPress={() => {
-                                        this.setState({
-                                            profileModalVisible: !this.state
-                                                .profileModalVisible,
-                                        })
-                                    }}
-                                >
-                                    <Image
-                                        source={
-                                            profileImages[
-                                                this.state.profileImage
-                                            ]
-                                        }
-                                        style={styles.image}
-                                        // resizeMode="center"
-                                    />
-                                </TouchableHighlight>
-                            </View>
+                        <View style={styles.profileImage}>
+                            <TouchableHighlight
+                                style={styles.profileBotton}
+                                onPress={() => {
+                                    this.setProfileModalVisibility()
+                                }}
+                            >
+                                <Image
+                                    source={
+                                        profileImages[this.state.profileImage]
+                                    }
+                                    style={styles.image}
+                                />
+                            </TouchableHighlight>
                         </View>
                         <View style={styles.infoContainer}>
                             <Text
@@ -382,6 +371,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'red',
         height: 100,
         width: 100,
+        alignSelf: 'center',
     },
     //TOUCHABLE HIGHLIGHT
     profileBotton: {

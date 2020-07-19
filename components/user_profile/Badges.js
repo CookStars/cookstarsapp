@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, Image, Dimensions } from 'react-native'
-import badges from '../assets/badges/index'
+import badges from '../../assets/badges/index'
 
 const Badges = ({ userInfo } = {}) => {
     const badgeIds = Object.keys(badges).sort((a, b) => a - b)
