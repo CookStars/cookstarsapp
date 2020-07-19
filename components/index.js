@@ -7,6 +7,7 @@ import Badges from './user_profile/Badges'
 import FormButton from './forgot_password/FormButton'
 import FormInput from './forgot_password/FormInput'
 import ErrorMessage from './ErrorMessage'
+import LeaderboardHeader from './leaderboard/LeaderboardHeader'
 
 export {
     Cards,
@@ -18,4 +19,5 @@ export {
     FormButton,
     FormInput,
     ErrorMessage,
+    LeaderboardHeader,
 }

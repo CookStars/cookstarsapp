@@ -15,14 +15,16 @@ import { connect } from 'react-redux'
 import { logOut, update } from '../redux/actions/user'
 import { db, firebase } from '../firebaseconfig'
 import '@firebase/firestore'
-import profileImages from '../assets/profileIcons/index.js'
 import { RecipesList, Badges, UpdateProfileImage } from '../components'
 
 export class UserProfile extends React.Component {
     state = {
         modalVisible: false,
         profileModalVisible: false,
-        profileImage: this.props.userInfo.icon || 'default',
+        profileImage:
+            this.props.userInfo.icon.length > 15
+                ? this.props.userInfo.icon
+                : 'http://192.168.1.154:19001/assets/assets/profileIcons/icons8-test-account-100.png?platform=android&hash=64f6306119855c06b5d5fe9e161127bc?platform=android&dev=true&minify=false&hot=false',
     }
 
     handleClick() {
@@ -179,7 +181,7 @@ export class UserProfile extends React.Component {
         Alert.alert('Your profile icon has been updated')
     }
 
-    setProfileImage = (key) => this.setState({ profileImage: key })
+    setProfileImage = (link) => this.setState({ profileImage: link })
     setProfileModalVisibility = () =>
         this.setState({
             profileModalVisible: !this.state.profileModalVisible,
@@ -207,9 +209,7 @@ export class UserProfile extends React.Component {
                                 }}
                             >
                                 <Image
-                                    source={
-                                        profileImages[this.state.profileImage]
-                                    }
+                                    source={{ uri: this.state.profileImage }}
                                     style={styles.image}
                                 />
                             </TouchableHighlight>
