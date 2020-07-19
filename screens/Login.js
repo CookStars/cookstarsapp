@@ -11,7 +11,6 @@ import {
 } from 'react-native'
 import { firebase } from '../firebaseconfig'
 import 'firebase/functions'
-let loadingIndicator = false
 
 export default class Login extends Component {
     state = {
@@ -29,6 +28,7 @@ export default class Login extends Component {
     handleLogin = async () => {
         const { email, password } = this.state
         this.setState({ loggingIn: true })
+
         // Set persistence locally. This will make sure user is logged in through firebase until they log out
         await firebase
             .auth()
@@ -44,7 +44,6 @@ export default class Login extends Component {
                 this.setState({ errorMessage: error.message })
             })
     }
-
 
     render() {
         return (
@@ -105,7 +104,8 @@ export default class Login extends Component {
                 {/* Forgot password Button */}
                 <TouchableHighlight
                     style={styles.buttonContainer}
-                    onPress={() => this.props.navigation.navigate('ForgotPassword')
+                    onPress={() =>
+                        this.props.navigation.navigate('ForgotPassword')
                     }
                 >
                     <Text>Forgot your password?</Text>
@@ -182,5 +182,4 @@ const styles = StyleSheet.create({
         marginTop: 3,
         marginLeft: -10,
     },
-
 })
