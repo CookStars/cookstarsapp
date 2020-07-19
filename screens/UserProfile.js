@@ -18,7 +18,7 @@ import '@firebase/firestore'
 import { RecipesList, Badges, UpdateProfileImage } from '../components'
 import * as Fonts from 'expo-font'
 import { AppLoading } from 'expo'
-
+import { profileImages } from '../assets/profileIcons/index'
 
 
 export class UserProfile extends React.Component {
@@ -26,10 +26,7 @@ export class UserProfile extends React.Component {
         modalVisible: false,
         fontsLoaded: false,
         profileModalVisible: false,
-        profileImage:
-            this.props.userInfo.icon.length > 15
-                ? this.props.userInfo.icon
-                : 'http://192.168.1.154:19001/assets/assets/profileIcons/icons8-test-account-100.png?platform=android&hash=64f6306119855c06b5d5fe9e161127bc?platform=android&dev=true&minify=false&hot=false',
+        profileImage: this.props.userInfo.icon || 'default',
     }
 
     handleClick() {
@@ -195,7 +192,7 @@ export class UserProfile extends React.Component {
         Alert.alert('Your profile icon has been updated')
     }
 
-    setProfileImage = (link) => this.setState({ profileImage: link })
+    setProfileImage = (profileImage) => this.setState({ profileImage })
     setProfileModalVisibility = () =>
         this.setState({
             profileModalVisible: !this.state.profileModalVisible,
@@ -203,24 +200,78 @@ export class UserProfile extends React.Component {
 
     render() {
         let user = this.props.userInfo
+ gfonts
         if (this.state.fontsLoaded) {
-            return (
-                <SafeAreaView style={styles.container}>
-                    {user.userId ? (
-                        <ScrollView showsHorizontalScrollIndicator={false}>
-                            <UpdateProfileImage
-                                setProfileImage={this.setProfileImage}
-                                profileModalVisible={this.state.profileModalVisible}
-                                onUpdateProfileImage={this.onUpdateProfileImage}
-                                setProfileModalVisibility={
-                                    this.setProfileModalVisibility
-                                }
-                            />
-                            <View style={styles.profileImage}>
-                                <TouchableHighlight
-                                    style={styles.profileBotton}
-                                    onPress={() => {
-                                        this.setProfileModalVisibility()
+            
+        return (
+            <SafeAreaView style={styles.container}>
+                {user.userId ? (
+                    <ScrollView showsHorizontalScrollIndicator={false}>
+                        <UpdateProfileImage
+                            setProfileImage={this.setProfileImage}
+                            profileModalVisible={this.state.profileModalVisible}
+                            onUpdateProfileImage={this.onUpdateProfileImage}
+                            setProfileModalVisibility={
+                                this.setProfileModalVisibility
+                            }
+                        />
+                        <View style={styles.profileImage}>
+                            <TouchableHighlight
+                                style={styles.profileBotton}
+                                onPress={() => {
+                                    this.setProfileModalVisibility()
+                                }}
+                            >
+                                <Image
+                                    source={
+                                        profileImages[this.state.profileImage]
+                                    }
+                                    style={styles.image}
+                                />
+                            </TouchableHighlight>
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <Text
+                                style={[
+                                    styles.text,
+                                    { fontWeight: 'bold', fontSize: 50 },
+                                ]}
+                            >
+                                {user.firstName
+                                    ? user.firstName + ' ' + user.lastName
+                                    : ' '}
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.text,
+                                    { color: '#AEB5BC', fontSize: 14 },
+                                ]}
+                            >
+                                Master Chef
+                            </Text>
+                            <Text style={styles.points}>
+                                Total Points:{user.points}{' '}
+                            </Text>
+                        </View>
+
+                        {this.modal()}
+                        <View style={styles.buttonParent}>
+                            <TouchableHighlight
+                                style={styles.openButton}
+                                onPress={() => this.handleClick()}
+                            >
+                                <Text style={styles.textStyle}>Log Out</Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Badges userInfo={this.props.userInfo} />
+                        <View style={styles.statsContainer}>
+                            <View style={styles.statsBox}>
+                                <Text></Text>
+                                <Text
+                                    style={{
+                                        fontWeight: 'bold',
+                                        fontSize: 20,
+
                                     }}
                                 >
                                     <Image
