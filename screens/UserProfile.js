@@ -240,16 +240,9 @@ export class UserProfile extends React.Component {
                                         ? user.firstName
                                         : ' '}
                                 </Text>
-                                {/* <Text
-                                    style={[
-                                        styles.text,
-                                        { color: '#AEB5BC', fontSize: 14 },
-                                    ]}
-                                >
-                                    Master Chef
-                            </Text> */}
+
                                 <Text style={styles.points}>
-                                    Total Points:{user.points}{' '}
+                                    Total Points: {user.points}{' '}
                                 </Text>
                             </View>
 
