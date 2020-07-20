@@ -6,8 +6,8 @@ import {
     TouchableHighlight,
     Alert,
     TextInput,
-    Modal,
 } from 'react-native'
+import Modal from 'react-native-modal'
 import { colors } from '../../utils/constants'
 import { db, firebase } from '../../firebaseconfig'
 
@@ -24,6 +24,14 @@ const EditModal = ({ setEditModalVisibility, modalVisible, userInfo } = {}) => {
                 visible={modalVisible}
                 onRequestClose={() => {
                     Alert.alert('Modal has been closed.')
+                }}
+                style={{
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    width: '100%',
+                    height: '100%',
+                    position: 'absolute',
+                    top: -20,
+                    left: -21,
                 }}
             >
                 <View style={styles.centeredView}>

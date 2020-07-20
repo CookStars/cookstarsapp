@@ -1,12 +1,6 @@
 import React from 'react'
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableHighlight,
-    Alert,
-    Modal,
-} from 'react-native'
+import { StyleSheet, Text, View, TouchableHighlight, Alert } from 'react-native'
+import Modal from 'react-native-modal'
 import Icons from './Icons'
 import { colors } from '../../utils/constants'
 
@@ -23,41 +17,58 @@ const UpdateProfileImage = ({
                 Alert.alert('Modal has been closed.')
             }}
             transparent={true}
+            style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                top: -20,
+                left: -21,
+            }}
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <Icons setProfileImage={setProfileImage} />
-
-                    <TouchableHighlight
+                    <View
                         style={{
-                            ...styles.openButton,
-                            backgroundColor: colors.orange,
-                        }}
-                        onPress={() => {
-                            setProfileModalVisibility()
-                            onUpdateProfileImage()
+                            flex: 1,
+                            flexDirection: 'row',
+                            width: '90%',
+                            paddingTop: 15,
+                            justifyContent: 'space-between',
                         }}
                     >
-                        <Text style={styles.textStyle}>Update</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={{
-                            ...styles.openButton,
-                            backgroundColor: colors.buttonCancel,
-                        }}
-                        onPress={() => {
-                            setProfileModalVisibility()
-                        }}
-                    >
-                        <Text
+                        <TouchableHighlight
                             style={{
-                                ...styles.textStyle,
-                                color: colors.offWhite,
+                                ...styles.openButton,
+                                backgroundColor: colors.orange,
+                            }}
+                            onPress={() => {
+                                setProfileModalVisibility()
+                                onUpdateProfileImage()
                             }}
                         >
-                            Cancel
-                        </Text>
-                    </TouchableHighlight>
+                            <Text style={styles.textStyle}>Update</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            style={{
+                                ...styles.openButton,
+                                backgroundColor: colors.buttonCancel,
+                            }}
+                            onPress={() => {
+                                setProfileModalVisibility()
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    ...styles.textStyle,
+                                    color: colors.offWhite,
+                                }}
+                            >
+                                Cancel
+                            </Text>
+                        </TouchableHighlight>
+                    </View>
                 </View>
             </View>
         </Modal>
@@ -94,7 +105,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
         elevation: 2,
-        width: 200,
+        width: '45%',
+        height: 40,
     },
     textStyle: {
         color: colors.offWhite,

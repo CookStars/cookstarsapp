@@ -6,14 +6,14 @@ import {
     Image,
     TouchableOpacity,
     Dimensions,
-    Modal,
 } from 'react-native'
+import Modal from 'react-native-modal'
 import { Feather } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 import { fetchRecipes } from '../redux/actions/recipes'
 import badges from '../assets/badges'
 import { handleFavorite, checkLastCompleted } from '../utils/helper_functions'
-import {badgePoints, colors, weekdays } from '../utils/constants'
+import { badgePoints, colors, weekdays } from '../utils/constants'
 
 export class SuccessPage extends Component {
     constructor(props) {
@@ -46,16 +46,27 @@ export class SuccessPage extends Component {
             <View style={styles.container}>
                 <View>
                     <Modal
-            transparent={true}
+                        transparent={true}
                         visible={this.state.modalVisible}
                         animationType={'slide'}
                         onRequestClose={this.toggleModal}
+                        style={{
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            width: '100%',
+                            height: '100%',
+                            position: 'absolute',
+                            top: -20,
+                            left: -21,
+                        }}
+                        onBackdropPress={this.toggleModal}
                     >
                         <View style={styles.modalView}>
-             <TouchableOpacity 
-             style={styles.closeTouchable}
-             onPress={()=>
-              this.setState({modalVisible:false})}>
+                            <TouchableOpacity
+                                style={styles.closeTouchable}
+                                onPress={() =>
+                                    this.setState({ modalVisible: false })
+                                }
+                            >
                                 <Image
                                     source={require('../assets/closeIcon.png')}
                                     style={styles.closeIcon}
@@ -152,7 +163,6 @@ export class SuccessPage extends Component {
                                 day: weekdays[today + 1],
                             })
                         }
-  
                     >
                         <Image
                             source={{ uri: img }}
@@ -286,12 +296,12 @@ let styles = StyleSheet.create({
         marginTop: 7,
     },
     modalView: {
-        top: 0.25 * Dimensions.get('screen').height,
+        // top: 0.25 * Dimensions.get('screen').height,
         left: 0.1 * Dimensions.get('screen').width,
         width: 0.8 * Dimensions.get('screen').width,
         height: 0.5 * Dimensions.get('screen').height,
-     justifyContent: 'center',
-        flexDirection:'column',
+        justifyContent: 'center',
+        flexDirection: 'column',
         backgroundColor: colors.background,
         borderRadius: 20,
         // padding: 35,
@@ -305,7 +315,7 @@ let styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
- badgeImage: {
+    badgeImage: {
         top: 30,
         width: 0.25 * Dimensions.get('screen').width,
         height: 0.25 * Dimensions.get('screen').width,
