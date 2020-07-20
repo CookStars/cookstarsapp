@@ -13,6 +13,7 @@ import { ListItem } from 'react-native-elements'
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 import checkDay from '../components/single_recipe/CheckDay'
 import favoriteButton from '../components/single_recipe/favoriteButton'
+import { colors } from '../utils/constants'
 
 export default class SingleRecipe extends Component {
     constructor(props) {
@@ -69,7 +70,7 @@ export default class SingleRecipe extends Component {
                                         <Feather
                                             name="clock"
                                             size={25}
-                                            color="red"
+                                            color={colors.details}
                                             style={{ alignSelf: 'center' }}
                                         />
                                         <Text style={styles.descIconText}>
@@ -80,7 +81,7 @@ export default class SingleRecipe extends Component {
                                         <MaterialCommunityIcons
                                             name="bowl"
                                             size={25}
-                                            color="red"
+                                            color={colors.details}
                                         />
                                         <Text style={styles.descIconText}>
                                             {servings} Servings
@@ -92,7 +93,9 @@ export default class SingleRecipe extends Component {
 
                         <View style={styles.detailsContainer}>
                             <View style={styles.description}>
-                                <Text style={styles.descTitle}>Description:</Text>
+                                <Text style={styles.descTitle}>
+                                    Description:
+                                </Text>
                                 <HTML
                                     html={newTagsSummary}
                                     baseFontStyle={styles.description}
@@ -119,13 +122,13 @@ export default class SingleRecipe extends Component {
 
 const styles = StyleSheet.create({
     scrollView: {
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
     },
     container: {
         flex: 10,
         width: Dimensions.get('screen').width,
         height: 0.57 * Dimensions.get('screen').height,
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
         alignContent: 'space-between',
     },
     title: {
@@ -134,10 +137,10 @@ const styles = StyleSheet.create({
         fontSize: 28,
         marginTop: '2%',
         fontWeight: 'bold',
-        color: 'black',
+        color: colors.text,
     },
     image: {
-        borderColor: '#EBEBD3',
+        borderColor: colors.offWhite,
         alignItems: 'center',
         resizeMode: 'stretch',
     },
@@ -156,7 +159,7 @@ const styles = StyleSheet.create({
     ingredients: {
         top: 50,
         borderWidth: 3,
-        borderColor: 'silver',
+        borderColor: colors.ingredientsBorder,
         alignSelf: 'center',
         width: 0.88 * Dimensions.get('screen').width,
         fontSize: 15,
