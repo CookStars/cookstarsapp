@@ -1,4 +1,4 @@
-//add colors
+//HELLO
 const colors = {
     background: 'white',
     buttonConfirm: '#F18F01',
