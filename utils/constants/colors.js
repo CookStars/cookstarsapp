@@ -11,5 +11,7 @@ const colors = {
     bottomNav: '#718F94',
     evenRow: '#edfcf9',
     orange: '#F18F01',
+    details: '#E95353',
+    ingredientsBorder: 'silver',
 }
 export default colors
