@@ -18,10 +18,8 @@ export class HomeScreen extends Component {
 
     cards = () => {
         return weekdays.map((weekday, index) => (
-            <View style={styles.cards}>
+            <View style={styles.cards} key={index}>
                 <Cards
-                    // style={{ flexDirection: 'column' }}
-                    key={index}
                     day={weekday}
                     navigation={this.props.navigation}
                     recipe={this.props.recipes[index]}
