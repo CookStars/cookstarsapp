@@ -46,13 +46,16 @@ export class SuccessPage extends Component {
             <View style={styles.container}>
                 <View>
                     <Modal
-                        transparent={true}
+            transparent={true}
                         visible={this.state.modalVisible}
-                        animationType={'fade'}
+                        animationType={'slide'}
                         onRequestClose={this.toggleModal}
                     >
                         <View style={styles.modalView}>
-                            <TouchableOpacity onPress={this.toggleModal}>
+             <TouchableOpacity 
+             style={styles.closeTouchable}
+             onPress={()=>
+              this.setState({modalVisible:false})}>
                                 <Image
                                     source={require('../assets/closeIcon.png')}
                                     style={styles.closeIcon}
@@ -149,6 +152,7 @@ export class SuccessPage extends Component {
                                 day: weekdays[today + 1],
                             })
                         }
+  
                     >
                         <Image
                             source={{ uri: img }}
@@ -184,7 +188,7 @@ const mapDispatch = (dispatch) => {
 
 export default connect(mapState, mapDispatch)(SuccessPage)
 
-const styles = StyleSheet.create({
+let styles = StyleSheet.create({
     container: {
         borderWidth: 3,
         backgroundColor: colors.background,
@@ -286,31 +290,34 @@ const styles = StyleSheet.create({
         left: 0.1 * Dimensions.get('screen').width,
         width: 0.8 * Dimensions.get('screen').width,
         height: 0.5 * Dimensions.get('screen').height,
-        alignContent: 'center',
-        justifyContent: 'center',
+     justifyContent: 'center',
+        flexDirection:'column',
         backgroundColor: colors.background,
         borderRadius: 20,
-        padding: 35,
+        // padding: 35,
         alignItems: 'center',
         shadowColor: colors.placeHolder,
         shadowOffset: {
             width: 0,
             height: 2,
         },
-        shadowOpacity: 0.25,
+        shadowOpacity: 3,
         shadowRadius: 3.84,
         elevation: 5,
     },
-    badgeImage: {
+ badgeImage: {
         top: 30,
         width: 0.25 * Dimensions.get('screen').width,
         height: 0.25 * Dimensions.get('screen').width,
         resizeMode: 'contain',
     },
-    closeIcon: {
-        width: 0.13 * Dimensions.get('screen').width,
-        height: 0.13 * Dimensions.get('screen').width,
-        bottom: 0.1 * Dimensions.get('screen').height,
+    closeTouchable: {
         left: 0.3 * Dimensions.get('screen').width,
+        bottom: 0.1 * Dimensions.get('screen').height,
+    },
+
+    closeIcon: {
+        width: 0.15 * Dimensions.get('screen').width,
+        height: 0.15 * Dimensions.get('screen').width,
     },
 })

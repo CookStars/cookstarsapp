@@ -13,7 +13,7 @@ exports.getVeganRecipes = functions.pubsub
         // const data = await res.json()
         let newData
         const res = await axios.get(
-            `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&tags=vegan,dinner&number=10`
+            `https://api.spoonacular.com/recipes/random?apiKey=${key}&tags=vegan,main%20course,dinner&number=14`
         )
         // const data = await res.json()
         newData = refactorData(res.data)
@@ -30,7 +30,7 @@ exports.getMeatRecipes = functions.pubsub
     .onRun(async (context) => {
         let newData
         const res = await axios.get(
-            `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&tags=dinner&number=10`
+            `https://api.spoonacular.com/recipes/random?apiKey=${key}&tags=main%20course,dinner&number=14`
         )
 
         newData = refactorData(res.data)
@@ -65,9 +65,13 @@ const refactorData = (recipesAPI) => {
             spoonacularSourceUrl,
         } = recipe
 
-        if (analyzedInstructions.length > 1) {
-            continue
-        }
+          if (
+              analyzedInstructions.length > 1 ||
+              !image ||
+              !title.search(/Cake|Whipped Cream/)
+          ) {
+              continue
+          }
         const lastCompleted = ''
         const ingredients = extendedIngredients.map((ingredient) => {
             const { id, name, original, image } = ingredient
