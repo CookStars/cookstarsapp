@@ -6,8 +6,8 @@ import {
     TouchableOpacity,
     Dimensions,
 } from 'react-native'
-
 import { updatePoints } from '../../utils/helper_functions'
+import { colors } from '../../utils/constants'
 
 export default function (currStep, setCurrStep, recipe, navigation, userInfo) {
     const currRecipeSteps = recipe.analyzedInstructions[0].steps
@@ -27,7 +27,7 @@ export default function (currStep, setCurrStep, recipe, navigation, userInfo) {
                     }}
                     style={{
                         // elevation: 12,
-                        backgroundColor: '#EF233C',
+                        backgroundColor: colors.details,
                         borderRadius: 10,
                         width: 0.4 * Dimensions.get('screen').width,
                         height: 35,
@@ -36,7 +36,7 @@ export default function (currStep, setCurrStep, recipe, navigation, userInfo) {
                     }}
                 >
                     <View>
-                        <Text style={{ color: 'white' }}>NEXT</Text>
+                        <Text style={{ color: colors.offWhite }}>NEXT</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -57,7 +57,7 @@ export default function (currStep, setCurrStep, recipe, navigation, userInfo) {
                             setCurrStep(currStep - 1)
                         }}
                         style={{
-                            backgroundColor: '#EF233C',
+                            backgroundColor: colors.details,
                             borderRadius: 10,
                             width: 0.4 * Dimensions.get('screen').width,
                             height: 35,
@@ -66,7 +66,9 @@ export default function (currStep, setCurrStep, recipe, navigation, userInfo) {
                         }}
                     >
                         <View>
-                            <Text style={{ color: 'white' }}>PREVIOUS</Text>
+                            <Text style={{ color: colors.offWhite }}>
+                                PREVIOUS
+                            </Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -76,7 +78,7 @@ export default function (currStep, setCurrStep, recipe, navigation, userInfo) {
                             setCurrStep(currStep + 1)
                         }}
                         style={{
-                            backgroundColor: '#EF233C',
+                            backgroundColor: colors.details,
                             borderRadius: 10,
                             width: 0.4 * Dimensions.get('screen').width,
                             height: 35,
@@ -85,7 +87,7 @@ export default function (currStep, setCurrStep, recipe, navigation, userInfo) {
                         }}
                     >
                         <View>
-                            <Text style={{ color: 'white' }}>NEXT</Text>
+                            <Text style={{ color: colors.offWhite }}>NEXT</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -106,7 +108,7 @@ export default function (currStep, setCurrStep, recipe, navigation, userInfo) {
                             setCurrStep(currStep - 1)
                         }}
                         style={{
-                            backgroundColor: '#EF233C',
+                            backgroundColor: colors.details,
                             borderRadius: 10,
                             width: 0.4 * Dimensions.get('screen').width,
                             height: 35,
@@ -115,7 +117,9 @@ export default function (currStep, setCurrStep, recipe, navigation, userInfo) {
                         }}
                     >
                         <View>
-                            <Text style={{ color: 'white' }}>PREVIOUS</Text>
+                            <Text style={{ color: colors.offWhite }}>
+                                PREVIOUS
+                            </Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -130,7 +134,7 @@ export default function (currStep, setCurrStep, recipe, navigation, userInfo) {
                         }}
                         style={{
                             // elevation: 12,
-                            backgroundColor: '#EF233C',
+                            backgroundColor: colors.details,
                             borderRadius: 10,
                             width: 0.4 * Dimensions.get('screen').width,
                             height: 35,
@@ -139,7 +143,9 @@ export default function (currStep, setCurrStep, recipe, navigation, userInfo) {
                         }}
                     >
                         <View>
-                            <Text style={{ color: 'white' }}>FINISH</Text>
+                            <Text style={{ color: colors.offWhite }}>
+                                FINISH
+                            </Text>
                         </View>
                     </TouchableOpacity>
                 </View>
