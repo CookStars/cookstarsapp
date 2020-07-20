@@ -107,9 +107,7 @@ export class UserProfile extends React.Component {
                                     { fontWeight: 'bold', fontSize: 50 },
                                 ]}
                             >
-                                {user.firstName
-                                    ? user.firstName + ' ' + user.lastName
-                                    : ' '}
+                                {user.firstName + ' ' + user.lastName}
                             </Text>
                             <Text
                                 style={[
@@ -156,7 +154,6 @@ export class UserProfile extends React.Component {
                         <Badges userInfo={this.props.userInfo} />
                         <View style={styles.statsContainer}>
                             <View style={styles.statsBox}>
-                                <Text></Text>
                                 <Text
                                     style={{
                                         fontWeight: 'bold',
@@ -269,9 +266,9 @@ const styles = StyleSheet.create({
     openButton: {
         backgroundColor: colors.buttonConfirm,
         borderRadius: 20,
-        padding: 10,
+        padding: 20,
         elevation: 2,
-        width: '100%',
+        width: '80%',
     },
     profileImage: {
         top: 50,
@@ -344,7 +341,6 @@ const styles = StyleSheet.create({
     statsContainer: {
         flexDirection: 'row',
         alignSelf: 'center',
-        marginTop: 32,
     },
     statsBox: {
         alignItems: 'center',
