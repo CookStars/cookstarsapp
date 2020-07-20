@@ -41,23 +41,31 @@ export default class SingleRecipe extends Component {
             .split(/\<a\b[^>]*>/)
             .join('<b><i>')
             .split(/\<\/a>/)
-         .join('</i></b>')
-     
-     // const removeExtraSummary = newTagsSummary.split('.').findIndex(substr => {
-     //  substr.includes('brought to you') || substr.includes('foodista') || substr.includes('spoonacular')
-     // })
-     const removeExtraSummary = newTagsSummary.split('.').map((substr, index) => {
-      if((substr.search(/(brought\ to\ you|foodista|spoonacular|recipe\ from)/)>0)){
-        return index}
-     })
-     const indexExtraSummary = removeExtraSummary.find((str) => str !== undefined)
-     newTagsSummary = newTagsSummary.split('.').slice(0, indexExtraSummary).join('.')+'.'
+            .join('</i></b>')
+
+        const removeExtraSummary = newTagsSummary
+            .split('.')
+            .map((substr, index) => {
+                if (
+                    substr.search(
+                        /(brought\ to\ you|foodista|spoonacular|recipe\ from)/
+                    ) > 0
+                ) {
+                    return index
+                }
+            })
+        const indexExtraSummary = removeExtraSummary.find(
+            (str) => str !== undefined
+        )
+        newTagsSummary =
+            newTagsSummary.split('.').slice(0, indexExtraSummary).join('.') +
+            '.'
 
         return (
             <SafeAreaView>
                 <View>
                     <ScrollView style={styles.scrollView}>
-                        <View style={styles.container}>
+                        <View style={styles.topContainer}>
                             <View style={styles.image}>
                                 <Image
                                     source={{
@@ -101,14 +109,18 @@ export default class SingleRecipe extends Component {
                         </View>
 
                         <View style={styles.detailsContainer}>
-                            <View style={styles.descriptionContainer}>
-                                <Text style={styles.descTitle}>Description:</Text>
+             <View style={styles.descriptionContainer}>
+              <View >
+                                <Text style={styles.descTitle}>
+                                    Description:
+                                </Text>
                                 <HTML
                                     html={newTagsSummary}
                                     baseFontStyle={styles.descriptionText}
-                                />
+               />
+              </View>
                             </View>
-                            <View>
+                            <View style={styles.ingredientsContainer}>
                                 <Text style={styles.ingredientsTitle}>
                                     Ingredients:
                                 </Text>
@@ -117,10 +129,10 @@ export default class SingleRecipe extends Component {
                                 </View>
                             </View>
                         </View>
+                        <View>
+                            <View>{checkDay(this.props)}</View>
+                        </View>
                     </ScrollView>
-                </View>
-                <View>
-                    <View>{checkDay(this.props)}</View>
                 </View>
             </SafeAreaView>
         )
@@ -129,13 +141,19 @@ export default class SingleRecipe extends Component {
 
 const styles = StyleSheet.create({
     scrollView: {
+        borderColor: 'blue',
         backgroundColor: 'white',
     },
-    container: {
+    topContainer: {
         width: Dimensions.get('screen').width,
-        height: 0.55 * Dimensions.get('screen').height,
         backgroundColor: 'white',
         alignContent: 'space-between',
+        borderColor: 'red',
+        flexDirection: 'column',
+    },
+    image: {
+        alignItems: 'center',
+        resizeMode: 'stretch',
     },
     title: {
         left: '6%',
@@ -144,34 +162,55 @@ const styles = StyleSheet.create({
         marginTop: '2%',
         fontWeight: 'bold',
         color: 'black',
+        paddingBottom: 10,
     },
-    image: {
-        borderColor: '#EBEBD3',
+    descIcons: { flexDirection: 'row', top: '2%' },
+    descIconText: {
+        left: '30%',
+        fontSize: 15,
+        alignSelf: 'center',
+    },
+    descIconInnerContainer: {
+        flexDirection: 'row',
+        width: 0.8 * Dimensions.get('screen').width,
+        justifyContent: 'space-around',
+        // alignSelf: 'center',
+    },
+    descIconOuterContainer: {
+        flexDirection: 'column',
+        paddingTop: 0.03 * Dimensions.get('screen').height,
+        justifyContent: 'space-evenly',
+    },
+    detailsContainer: {
+        borderColor: 'green',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        paddingTop: 0.05 * Dimensions.get('screen').height,
+        paddingBottom: 0.1 * Dimensions.get('screen').height,
         alignItems: 'center',
-        resizeMode: 'stretch',
     },
     descriptionContainer: {
-        top: 0.02 * Dimensions.get('screen').height,
-        alignSelf: 'center',
-        justifyContent: 'center',
-        width: 0.88 * Dimensions.get('screen').width,
-        paddingBottom: 25,
-        height: 300,
-    },
- descriptionText: {
-        textAlign: 'auto',
-  fontSize: 15,
-  lineHeight:25
-        
+        top: 0.05 * Dimensions.get('screen').height,
+        borderColor: 'violet',
+        flexDirection: 'column',
+        width: 0.85 * Dimensions.get('screen').width,
+        paddingBottom: 0.1 * Dimensions.get('screen').height,
     },
     descTitle: {
         fontWeight: 'bold',
         fontSize: 18,
-     height: '10%',
-        bottom:30
+        bottom: 30,
     },
+    descriptionText: {
+        textAlign: 'auto',
+        fontSize: 15,
+        lineHeight: 25,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        paddingBottom: 40,
+    },
+
     ingredients: {
-        top: 50,
         borderWidth: 3,
         borderColor: 'silver',
         alignSelf: 'center',
@@ -182,27 +221,5 @@ const styles = StyleSheet.create({
     ingredientsTitle: {
         fontWeight: 'bold',
         fontSize: 18,
-        // height: '3%',
-        // top: '3%',
-    },
-    descIcons: { flexDirection: 'row', top: '2%' },
-    descIconText: { left: '30%', fontSize: 15, alignSelf: 'center' },
-    descIconInnerContainer: {
-        flexDirection: 'row',
-        width: 0.8 * Dimensions.get('screen').width,
-        justifyContent: 'space-around',
-        // top: '3%',
-    },
-    descIconOuterContainer: {
-        flexDirection: 'column',
-        height: '12.5%',
-        justifyContent: 'space-evenly',
-    },
-    detailsContainer: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        paddingBottom: 0.18 * Dimensions.get('screen').height,
-        alignItems: 'center',
-        // flex: 6,
     },
 })
