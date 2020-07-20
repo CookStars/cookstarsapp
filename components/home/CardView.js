@@ -47,10 +47,10 @@ export default function CardView(props) {
                     </View>
                 </TouchableOpacity>
             ) : (
-                <TouchableOpacity activeOpacity={0.7}>
-                    <View style={styles.imgContainer}></View>
-                </TouchableOpacity>
-            )}
+                    <TouchableOpacity activeOpacity={0.7}>
+                        <View style={styles.imgContainer}></View>
+                    </TouchableOpacity>
+                )}
         </View>
     )
 }
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         color: colors.text,
         fontWeight: 'bold',
-        fontSize: 19,
+        fontSize: 18,
         marginTop: 7,
         marginLeft: 31,
     },

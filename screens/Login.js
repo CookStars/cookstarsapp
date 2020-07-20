@@ -49,12 +49,12 @@ export default class Login extends Component {
     render() {
         return (
             <View style={styles.container}>
-                {/* <View style={styles.welcomeContainer}>
+                <View style={styles.welcomeContainer}>
                     <Image
-                        source={require('../assets/7a1a13c7-998b-49aa-91be-6abf9af4b9ae_200x200.png')}
+                        source={require('../assets/cookstarslogo.png')}
                         style={styles.welcomeImage}
                     />
-                </View> */}
+                </View>
                 <View style={styles.errorMessage}>
                     {this.state.errorMessage && (
                         <Text style={styles.error}>
@@ -96,8 +96,8 @@ export default class Login extends Component {
                     {this.state.loggingIn ? (
                         <ActivityIndicator size="large"></ActivityIndicator>
                     ) : (
-                        <Text style={styles.loginText}>Login</Text>
-                    )}
+                            <Text style={styles.loginText}>Login</Text>
+                        )}
                 </TouchableHighlight>
 
                 {/* Forgot password Button */}
