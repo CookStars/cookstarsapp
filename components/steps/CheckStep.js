@@ -11,7 +11,6 @@ import { checkLastCompleted } from '../../utils/helper_functions'
 import { updatePoints } from '../../utils/helper_functions'
 
 export default function (currStep, setCurrStep, recipe, navigation, userInfo) {
-    const [userPoints, setUserPoints] = useState(userInfo.points)
     const currRecipeSteps = recipe.analyzedInstructions[0].steps
     console.log('checking in step',checkLastCompleted(userInfo, recipe))
 
