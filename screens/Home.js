@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native'
 import { CardView, Cards } from '../components'
 import { weekdays } from '../utils/constants'
 import { newRecipeNotification } from '../utils/helper_functions'
@@ -80,6 +80,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     Text: {
+        margin: 10,
         fontSize: 30,
+        fontWeight: 'bold',
+    },
+    card: {
+        borderRadius: 5,
+        width: Dimensions.get('window').width,
+        height: 300,
     },
 })

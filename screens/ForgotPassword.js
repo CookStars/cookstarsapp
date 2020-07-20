@@ -74,7 +74,8 @@ export default class ForgotPassword extends Component {
                                     buttonType="outline"
                                     onPress={handleSubmit}
                                     title="Send Email"
-                                    buttonColor="#039BE5"
+                                    backgroundColor={colors.orange}
+                                    buttonColor={colors.extra}
                                     disabled={!isValid || isSubmitting}
                                 />
                             </View>

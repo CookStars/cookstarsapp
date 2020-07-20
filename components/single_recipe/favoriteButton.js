@@ -3,6 +3,7 @@ import HTML from 'react-native-render-html'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { db } from '../../firebaseconfig'
 import { AntDesign } from '@expo/vector-icons'
+import { colors } from '../../utils/constants'
 
 export default function favoriteButton(props) {
     const { userInfo, recipe } = props
@@ -28,10 +29,14 @@ export default function favoriteButton(props) {
                             alignItems: 'center',
                         }}
                     >
-                        <AntDesign name="heart" size={20} color="white" />
+                        <AntDesign
+                            name="heart"
+                            size={20}
+                            color={colors.offWhite}
+                        />
                         <Text
                             style={{
-                                color: 'white',
+                                color: colors.offWhite,
                                 left: 6,
                             }}
                         >
@@ -45,10 +50,14 @@ export default function favoriteButton(props) {
                             alignItems: 'center',
                         }}
                     >
-                        <AntDesign name="hearto" size={20} color="white" />
+                        <AntDesign
+                            name="hearto"
+                            size={20}
+                            color={colors.offWhite}
+                        />
                         <Text
                             style={{
-                                color: 'white',
+                                color: colors.offWhite,
                                 left: 6,
                             }}
                         >
@@ -63,7 +72,7 @@ export default function favoriteButton(props) {
 
 const styles = StyleSheet.create({
     favoriteButton: {
-        backgroundColor: '#EF233C',
+        backgroundColor: colors.details,
         position: 'absolute',
         top: '85%',
         right: -8,
