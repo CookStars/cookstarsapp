@@ -18,22 +18,16 @@ export class Leaderboard extends Component {
     }
 
     alert = (title, body) => {
-        Alert.alert(title, body, [{ text: 'OK', onPress: () => { } }], {
+        Alert.alert(title, body, [{ text: 'OK', onPress: () => {} }], {
             cancelable: false,
         })
     }
 
     onRefresh() {
-        console.log({ 1: 'about to change state' })
         this.setState({ refresh: true })
-        console.log({ 2: 'changed state' })
         this.props
             .getAllUsers()
-            .finally(
-                () =>
-                    console.log({ 3: 'finally' }) ||
-                    this.setState({ refresh: false })
-            )
+            .finally(() => this.setState({ refresh: false }))
     }
 
     async componentDidMount() {
@@ -43,23 +37,6 @@ export class Leaderboard extends Component {
     render() {
         const users = this.props.users.sort((item1, item2) => {
             return item2.points - item1.points
-        })
-
-        users.forEach((user) => {
-            // user.icon = Asset.fromModule(profileImages['default']).uri
-            // const imageURI = Asset.fromModule(profileImages['default']).uri
-            // console.log({ profileImages, user })
-            // console.log({
-            //     1: user.icon,
-            //     pI: profileImages[user.icon || 'default'],
-            // })
-            user.icon =
-                user.icon.length > 15
-                    ? user.icon
-                    : 'http://192.168.1.154:19001/assets/assets/profileIcons/icons8-test-account-100.png?platform=android&hash=64f6306119855c06b5d5fe9e161127bc?platform=android&dev=true&minify=false&hot=false'
-            // console.log({ 2: user.icon })
-            // 'https:www.shareicon.net/data/128x128/2016/09/15/829473_man_512x512.png'
-            // user.icon = imageURI
         })
         const rank =
             users.findIndex((item) => {
@@ -71,14 +48,12 @@ export class Leaderboard extends Component {
                     <View
                         style={{
                             height: Dimensions.get('window').height,
-
                         }}
                     >
                         <LeaderboardHeader
                             userInfo={this.props.currentUser}
                             rank={rank}
                         />
-                        {/* {this.renderHeader(rank)} */}
                         <ScrollView
                             refreshControl={
                                 <RefreshControl
@@ -92,10 +67,10 @@ export class Leaderboard extends Component {
                                 data={users}
                                 sortBy="points"
                                 labelBy="firstName"
-                                icon="icon"
+                                // icon="icon"
                                 onRowPress={(item, index) => {
                                     this.alert(
-                                        'The User ' + item.firstName + ' has',
+                                        item.firstName + ' clicked',
                                         item.points + ' points, wow!'
                                     )
                                 }}
@@ -104,20 +79,20 @@ export class Leaderboard extends Component {
                         </ScrollView>
                     </View>
                 ) : (
-                        // Activity Indicator to indicate that code is loading
-                        <View
-                            style={{
-                                width: '100%',
-                                top: '500%',
-                                alignContent: 'center',
-                            }}
-                        >
-                            <ActivityIndicator
-                                size="large"
-                                alignItems="center"
-                            ></ActivityIndicator>
-                        </View>
-                    )}
+                    // Activity Indicator to indicate that code is loading
+                    <View
+                        style={{
+                            width: '100%',
+                            top: '500%',
+                            alignContent: 'center',
+                        }}
+                    >
+                        <ActivityIndicator
+                            size="large"
+                            alignItems="center"
+                        ></ActivityIndicator>
+                    </View>
+                )}
             </View>
         )
     }

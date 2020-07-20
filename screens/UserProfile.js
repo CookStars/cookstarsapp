@@ -16,30 +16,20 @@ import { logOut, update } from '../redux/actions/user'
 import { db, firebase } from '../firebaseconfig'
 import '@firebase/firestore'
 import { RecipesList, Badges, UpdateProfileImage } from '../components'
-import * as Fonts from 'expo-font'
-import { AppLoading } from 'expo'
-
-
+import { profileImages } from '../assets/profileIcons/index'
 
 export class UserProfile extends React.Component {
     state = {
         modalVisible: false,
-        fontsLoaded: false,
         profileModalVisible: false,
-        profileImage:
-            this.props.userInfo.icon.length > 15
-                ? this.props.userInfo.icon
-                : 'http://192.168.1.154:19001/assets/assets/profileIcons/icons8-test-account-100.png?platform=android&hash=64f6306119855c06b5d5fe9e161127bc?platform=android&dev=true&minify=false&hot=false',
+        profileImage: this.props.userInfo.icon || 'default',
     }
 
     handleClick() {
         this.props.logUserOut()
     }
-    // async _loadFontsAsync() {
-    //     await Font.loadAsync(customFonts)
-    //     this.setState({ fontsLoaded: true })
-    // }
-    async componentDidMount() {
+
+    componentDidMount() {
         // listener to update any user information across screens
         db.collection('users')
             .doc(this.props.userInfo.userId)
@@ -47,19 +37,13 @@ export class UserProfile extends React.Component {
                 this.props.updateInfo(doc.data())
             })
 
-        await Fonts.loadAsync({
-            'Raleway-Black': require('../assets/fonts/Raleway-ExtraBoldItalic.ttf')
-        })
-
         this.setState({
             firstName: this.props.userInfo.firstName,
             lastName: this.props.userInfo.lastName,
             email: this.props.userInfo.email,
             foodPreference: this.props.userInfo.foodPreference,
             profileImage: this.props.userInfo.icon,
-            fontsLoaded: true
         })
-
     }
 
     modal = () => {
@@ -195,7 +179,7 @@ export class UserProfile extends React.Component {
         Alert.alert('Your profile icon has been updated')
     }
 
-    setProfileImage = (link) => this.setState({ profileImage: link })
+    setProfileImage = (profileImage) => this.setState({ profileImage })
     setProfileModalVisibility = () =>
         this.setState({
             profileModalVisible: !this.state.profileModalVisible,
@@ -245,80 +229,74 @@ export class UserProfile extends React.Component {
                                     Total Points: {user.points}{' '}
                                 </Text>
                             </View>
-
-                            {this.modal()}
-                            <View style={styles.buttonParent}>
-                                <TouchableHighlight
-                                    style={styles.openButton}
-                                    onPress={() => this.handleClick()}
+                        {this.modal()}
+                        <View style={styles.buttonParent}>
+                            <TouchableHighlight
+                                style={styles.openButton}
+                                onPress={() => this.handleClick()}
+                            >
+                                <Text style={styles.textStyle}>Log Out</Text>
+                            </TouchableHighlight>
+                        </View>
+                        <Badges userInfo={this.props.userInfo} />
+                        <View style={styles.statsContainer}>
+                            <View style={styles.statsBox}>
+                                <Text></Text>
+                                <Text
+                                    style={{
+                                        fontWeight: 'bold',
+                                        fontSize: 20,
+                                    }}
                                 >
-                                    <Text style={styles.textStyle}>Log Out</Text>
-                                </TouchableHighlight>
-                            </View>
-                            <Badges userInfo={this.props.userInfo} />
-                            <View style={styles.statsContainer}>
-                                <View style={styles.statsBox}>
-                                    <Text></Text>
-                                    <Text
-                                        style={{
-                                            fontWeight: 'bold',
-                                            fontSize: 20,
-                                            fontFamily: 'Raleway-Black'
-                                        }}
-                                    >
-                                        HISTORY
+                                    HISTORY
                                 </Text>
-                                </View>
                             </View>
+                        </View>
 
-                            <View style={{ marginTop: 32 }}>
-                                <RecipesList
-                                    userInfo={this.props.userInfo}
-                                    navigation={this.props.navigation}
-                                    noItemsText={"You haven't cooked anything yet"}
-                                    recipes={this.props.userInfo.recipeHistory}
-                                />
+                        <View style={{ marginTop: 32 }}>
+                            <RecipesList
+                                userInfo={this.props.userInfo}
+                                navigation={this.props.navigation}
+                                noItemsText={"You haven't cooked anything yet"}
+                                recipes={this.props.userInfo.recipeHistory}
+                            />
 
-                                <View style={styles.mediaCount}>
-                                    <Text style={styles.text}></Text>
-                                </View>
+                            <View style={styles.mediaCount}>
+                                <Text style={styles.text}></Text>
                             </View>
+                        </View>
 
-                            <View style={styles.statsContainer}>
-                                <View style={styles.statsBox}>
-                                    <Text></Text>
-                                    <Text
-                                        style={{
-                                            fontWeight: 'bold',
-                                            fontSize: 20,
-                                            fontFamily: 'Raleway-Black'
-                                        }}
-                                    >
-                                        FAVORITES
+                        <View style={styles.statsContainer}>
+                            <View style={styles.statsBox}>
+                                <Text></Text>
+                                <Text
+                                    style={{
+                                        fontWeight: 'bold',
+                                        fontSize: 20,
+                                    }}
+                                >
+                                    FAVORITES
                                 </Text>
-                                </View>
                             </View>
+                        </View>
 
-                            <View style={{ marginTop: 32 }}>
-                                <RecipesList
-                                    userInfo={this.props.userInfo}
-                                    navigation={this.props.navigation}
-                                    noItemsText={'No favs selected'}
-                                    recipes={this.props.userInfo.favoriteRecipes}
-                                />
-                                <View style={styles.mediaCount}>
-                                    <Text style={styles.text}></Text>
-                                </View>
+                        <View style={{ marginTop: 32 }}>
+                            <RecipesList
+                                userInfo={this.props.userInfo}
+                                navigation={this.props.navigation}
+                                noItemsText={'No favs selected'}
+                                recipes={this.props.userInfo.favoriteRecipes}
+                            />
+                            <View style={styles.mediaCount}>
+                                <Text style={styles.text}></Text>
                             </View>
-                        </ScrollView>
-                    ) : (
-                            <View></View>
-                        )}
-                </SafeAreaView>
-            )
-        } else {
-            return <AppLoading />
-        }
+                        </View>
+                    </ScrollView>
+                ) : (
+                    <View></View>
+                )}
+            </SafeAreaView>
+        )
     }
 }
 
@@ -343,8 +321,6 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#52575D',
-        fontFamily: 'Raleway-Black',
-
     },
     titleBar: {
         flexDirection: 'row',
@@ -443,15 +419,11 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignSelf: 'center',
         width: 300,
-        fontFamily: 'Raleway-Black'
     },
     infoContainer: {
         alignSelf: 'center',
         alignItems: 'center',
         marginTop: 45,
-        fontSize: 16,
-        // borderColor: 'pink'
-
     },
     statsContainer: {
         flexDirection: 'row',
@@ -527,4 +499,3 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 })
-

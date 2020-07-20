@@ -11,11 +11,10 @@ import {
     TouchableOpacity,
     Dimensions,
 } from 'react-native'
-import { db } from '../firebaseconfig'
+
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-const ingredientsLink = 'https://spoonacular.com/cdn/ingredients_500x500/'
-const equipmentLink = 'https://spoonacular.com/cdn/equipment_500x500/'
+import {checkStep, checkEquipment, checkIngredients} from '../components/steps'
 
 
 export default function Steps(props) {
@@ -23,309 +22,8 @@ export default function Steps(props) {
 
  const { navigation } = props
  let { recipe, userInfo } = props.route.params
-
- const currRecipeId = recipe.id
  const currRecipeSteps = recipe.analyzedInstructions[0].steps
  const { equipment, ingredients, number, step } = currRecipeSteps[currStep]
-
- const recipeHistory = userInfo.recipeHistory
-
- 
- const updatePoints = () => {
-  let today = new Date()
-  const dd = String(today.getDate()).padStart(2, '0')
-  const mm = String(today.getMonth() + 1).padStart(2, '0') //January is 0!
-  const yyyy = today.getFullYear()
-
-  today = mm + '/' + dd + '/' + yyyy
-
-  if (!userInfo.recipeHistory[currRecipeId]) {
-   console.log('last completed')
-   db.collection('users')
-    .doc(userInfo.userId)
-    .update({
-     points: userInfo.points + 10,
-     recipeHistory: { ...recipeHistory, [currRecipeId]: { ...recipe, lastCompleted: today } },
-    })
-  } else if (userInfo.recipeHistory[currRecipeId]) {
-   if (userInfo.recipeHistory[currRecipeId].lastCompleted !== today) {
-    db.collection('users')
-     .doc(userInfo.userId)
-     .update({
-      points: userInfo.points + 10,
-      recipeHistory: {
-       ...recipeHistory,
-       [currRecipeId]: { ...recipe, lastCompleted: today },
-      },
-     })
-     
-   }
-  }
- }
-
-  const checkStep = (currStep) => {
-   if (currStep === 0) {
-    return (
-     <View
-      style={{
-       flexDirection: 'row-reverse',
-       justifyContent: 'space-between',
-       padding: 10,
-      }}
-     >
-      <TouchableOpacity
-       onPress={() => {
-        setCurrStep(currStep + 1)
-       }}
-       style={{
-        // elevation: 12,
-        backgroundColor: '#EF233C',
-        borderRadius: 10,
-        width: 0.4 * Dimensions.get('screen').width,
-        height: 35,
-        alignItems: 'center',
-        justifyContent: 'center',
-       }}
-      >
-       <View>
-        <Text style={{ color: 'white' }}>NEXT</Text>
-       </View>
-      </TouchableOpacity>
-     </View>
-    )
-   } else if (0 < currStep && currStep < currRecipeSteps.length - 1) {
-    return (
-     <View
-      style={{
-       flexDirection: 'row',
-       justifyContent: 'space-between',
-       alignContent: 'center',
-       padding: 10,
-      }}
-     >
-      <View>
-       <TouchableOpacity
-        onPress={() => {
-         setCurrStep(currStep - 1)
-        }}
-        style={{
-         backgroundColor: '#EF233C',
-         borderRadius: 10,
-         width: 0.4 * Dimensions.get('screen').width,
-         height: 35,
-         alignItems: 'center',
-         justifyContent: 'center',
-        }}
-       >
-        <View>
-         <Text style={{ color: 'white' }}>PREVIOUS</Text>
-        </View>
-       </TouchableOpacity>
-      </View>
-      <View>
-       <TouchableOpacity
-        onPress={() => {
-         setCurrStep(currStep + 1)
-        }}
-        style={{
-         backgroundColor: '#EF233C',
-         borderRadius: 10,
-         width: 0.4 * Dimensions.get('screen').width,
-         height: 35,
-         alignItems: 'center',
-         justifyContent: 'center',
-        }}
-       >
-        <View>
-         <Text style={{ color: 'white' }}>NEXT</Text>
-        </View>
-       </TouchableOpacity>
-      </View>
-     </View>
-    )
-   } else {
-    return (
-     <View
-      style={{
-       flexDirection: 'row',
-       justifyContent: 'space-between',
-       padding: 10,
-      }}
-     >
-      <View>
-       <TouchableOpacity
-        onPress={() => {
-         setCurrStep(currStep - 1)
-        }}
-        style={{
-         backgroundColor: '#EF233C',
-         borderRadius: 10,
-         width: 0.4 * Dimensions.get('screen').width,
-         height: 35,
-         alignItems: 'center',
-         justifyContent: 'center',
-        }}
-       >
-        <View>
-         <Text style={{ color: 'white' }}>PREVIOUS</Text>
-        </View>
-       </TouchableOpacity>
-      </View>
-      <View>
-       <TouchableOpacity
-        onPress={() => {
-         updatePoints()
-         navigation.navigate('Success', {
-          recipe: recipe,
-          userInfo: userInfo,
-         })
-        }}
-        style={{
-         // elevation: 12,
-         backgroundColor: '#EF233C',
-         borderRadius: 10,
-         width: 0.4 * Dimensions.get('screen').width,
-         height: 35,
-         alignItems: 'center',
-         justifyContent: 'center',
-        }}
-       >
-        <View>
-         <Text style={{ color: 'white' }}>FINISH</Text>
-        </View>
-       </TouchableOpacity>
-      </View>
-     </View>
-    )
-   }
-  }
-
-  const checkEquipment = () => {
-   const listEquipment = equipment.map((tool, index) => {
-    const image = equipmentLink + tool.image
-    return (
-     <View key={index} style={{ alignContent: 'space-between' }}>
-      <Image
-       source={{
-        width: 0.25 * Dimensions.get('screen').width,
-        height: 0.1 * Dimensions.get('screen').height,
-        uri: image,
-       }}
-       style={{ resizeMode: 'contain' }}
-      />
-      <Text style={{ alignSelf: 'center' }}>{tool.name}</Text>
-     </View>
-    )
-   })
-
-   if (equipment.length) {
-    return (
-     <View
-      style={{
-       padding: 8,
-       alignContent: 'space-between',
-      }}
-     >
-      <View>
-       <Text style={{ padding: 5, fontSize: 18 }}>
-        Equipment
-                        </Text>
-       <ScrollView
-        // key={index}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={
-         styles.scrollArea_contentContainerStyle
-        }
-       >
-        {listEquipment}
-       </ScrollView>
-      </View>
-     </View>
-    )
-   } else {
-    return (
-     <View
-      style={{
-       flex: 10,
-       justifyContent: 'center',
-       alignItems: 'center',
-      }}
-     >
-      <Text style={{ fontSize: 18 }}>No Equipment To Show</Text>
-     </View>
-    )
-   }
-  }
-
-  const checkIngredients = () => {
-   const listIngredients = ingredients.map((ingredient, index) => {
-    const image = ingredientsLink + ingredient.image
-    return (
-     <View
-      key={index}
-      style={{ padding: 5, alignContent: 'space-between' }}
-     >
-      <Image
-       source={{
-        width: 0.25 * Dimensions.get('screen').width,
-        height: 0.1 * Dimensions.get('screen').height,
-        uri: image,
-       }}
-       style={{ resizeMode: 'contain' }}
-      />
-      <Text style={{ alignSelf: 'center' }}>
-       {ingredient.name}
-      </Text>
-     </View>
-    )
-   })
-
-   if (ingredients.length) {
-    return (
-     <View
-      style={{
-       flex: 3,
-       padding: 8,
-       alignContent: 'space-between',
-      }}
-     >
-      <View style={{}}>
-       <Text
-        style={{
-         padding: 5,
-         fontSize: 18,
-        }}
-       >
-        Ingredients
-                        </Text>
-      </View>
-      <ScrollView
-       // key={index}
-       horizontal={true}
-       showsHorizontalScrollIndicator={false}
-       contentContainerStyle={
-        styles.scrollArea_contentContainerStyle
-       }
-      >
-       {listIngredients}
-      </ScrollView>
-     </View>
-    )
-   } else {
-    return (
-     <View
-      style={{
-       flex: 10,
-       justifyContent: 'center',
-       alignItems: 'center',
-      }}
-     >
-      <Text style={{ fontSize: 18 }}>No Ingredients To Show</Text>
-     </View>
-    )
-   }
-  }
 
   return (
    <SafeAreaProvider style={{ backgroundColor: 'white' }}>
@@ -348,8 +46,8 @@ export default function Steps(props) {
       height: 0.7 * Dimensions.get('screen').height,
      }}
     >
-     <View style={styles.listContainer}>{checkEquipment()}</View>
-     <View style={styles.listContainer}>{checkIngredients()}</View>
+     <View style={styles.listContainer}>{checkEquipment(equipment)}</View>
+     <View style={styles.listContainer}>{checkIngredients(ingredients)}</View>
      <View style={{ height: '38%' }}>
       <ScrollView>
        <Text
@@ -366,7 +64,7 @@ export default function Steps(props) {
      </View>
     </View>
     <View>
-     <View style={styles.listContainer}>{checkStep(currStep)}</View>
+     <View style={styles.listContainer}>{checkStep(currStep, setCurrStep, recipe, navigation, userInfo)}</View>
     </View>
    </SafeAreaProvider>
   )

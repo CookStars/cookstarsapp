@@ -2,7 +2,6 @@ import { firebase } from '../firebaseconfig'
 
 import React, { useState } from 'react'
 import {
-    Image,
     Text,
     TextInput,
     TouchableOpacity,
@@ -52,8 +51,7 @@ export default function RegistrationScreen({ navigation }) {
                         points: 0,
                         favoriteRecipes: {},
                         recipeHistory: {},
-                        icon:
-                            'http://192.168.1.154:19001/assets/assets/profileIcons/icons8-test-account-100.png?platform=android&hash=64f6306119855c06b5d5fe9e161127bc?platform=android&dev=true&minify=false&hot=false',
+                        icon: 'default',
                     })
             })
             .catch((error) => {
@@ -69,6 +67,7 @@ export default function RegistrationScreen({ navigation }) {
                 style={{ flex: 1, width: '100%' }}
                 keyboardShouldPersistTaps="always"
             >
+                {/* First Name Input */}
                 <TextInput
                     style={styles.input}
                     placeholder="First Name"
@@ -78,6 +77,8 @@ export default function RegistrationScreen({ navigation }) {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
+
+                {/* Last Name Input */}
                 <TextInput
                     style={styles.input}
                     placeholder="Last Name"
@@ -98,6 +99,8 @@ export default function RegistrationScreen({ navigation }) {
                 >
                     Select your food preference:{' '}
                 </Text>
+
+                {/* Preference Picker */}
                 <DropDownPicker
                     items={[
                         { label: 'Vegan', value: 'vegan' },
@@ -109,6 +112,8 @@ export default function RegistrationScreen({ navigation }) {
                         setFoodPreference(itemValue.value)
                     }}
                 ></DropDownPicker>
+
+                {/* Email Input */}
                 <TextInput
                     style={styles.input}
                     placeholder="E-mail"
@@ -118,6 +123,8 @@ export default function RegistrationScreen({ navigation }) {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
+
+                {/* Password Input */}
                 <TextInput
                     style={styles.input}
                     placeholderTextColor="#aaaaaa"
@@ -138,6 +145,8 @@ export default function RegistrationScreen({ navigation }) {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
+
+                {/* Confirm Button */}
                 <TouchableOpacity
                     style={styles.button}
                     onPress={onRegisterPress}
