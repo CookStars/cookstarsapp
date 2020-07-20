@@ -1,17 +1,27 @@
 import * as firebase from "firebase";
 import "@firebase/auth";
 import "@firebase/firestore";
+import {
+  FIREBASE_API_KEY,
+  FIREBASE_AUTO_DOMAIN,
+  FIREBASE_DATABASE_URL,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_STORAGE_BUCKET,
+  FIREBASE_MESSAGE_SENDER,
+  FIREBASE_APP_ID,
+  FIREBASE_MEASUREMENT_ID
+} from '../secrets'
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
-  apiKey: "AIzaSyC64IsgzPIll9rolOYBtqpkjLlZ8MMsB3g",
-  authDomain: "cookstarswdf-94cf8.firebaseapp.com",
-  databaseURL: "https://cookstarswdf-94cf8.firebaseio.com",
-  projectId: "cookstarswdf-94cf8",
-  storageBucket: "cookstarswdf-94cf8.appspot.com",
-  messagingSenderId: "409318579317",
-  appId: "1:409318579317:web:e23d98661c6ed70a49ec3c",
-  measurementId: "G-1GYL1VR4VH",
+  apiKey: FIREBASE_API_KEY,
+  authDomain: FIREBASE_AUTO_DOMAIN,
+  databaseURL: FIREBASE_DATABASE_URL,
+  projectId: FIREBASE_PROJECT_ID,
+  storageBucket: FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: FIREBASE_MESSAGE_SENDER,
+  appId: FIREBASE_APP_ID,
+  measurementId: FIREBASE_MEASUREMENT_ID,
 };
 
 // const FireFunctions = {
