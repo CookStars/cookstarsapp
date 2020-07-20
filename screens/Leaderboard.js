@@ -39,6 +39,9 @@ export class Leaderboard extends Component {
         const users = this.props.users.sort((item1, item2) => {
             return item2.points - item1.points
         })
+        users.forEach(
+            (user) => (user.name = user.firstName + ' ' + user.lastName)
+        )
         const rank =
             users.findIndex((item) => {
                 return item.email === this.props.currentUser.email
@@ -66,7 +69,7 @@ export class Leaderboard extends Component {
                             <Lead
                                 data={users}
                                 sortBy="points"
-                                labelBy="firstName"
+                                labelBy="name"
                                 // icon="icon"
                                 onRowPress={(item, index) => {
                                     this.alert(

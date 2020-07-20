@@ -107,9 +107,7 @@ export class UserProfile extends React.Component {
                                     { fontWeight: 'bold', fontSize: 50 },
                                 ]}
                             >
-                                {user.firstName
-                                    ? user.firstName + ' ' + user.lastName
-                                    : ' '}
+                                {user.firstName + ' ' + user.lastName}
                             </Text>
                             <Text
                                 style={[
