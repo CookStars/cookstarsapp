@@ -268,9 +268,9 @@ const styles = StyleSheet.create({
     openButton: {
         backgroundColor: colors.buttonConfirm,
         borderRadius: 20,
-        padding: 10,
+        padding: 20,
         elevation: 2,
-        width: '100%',
+        width: '80%',
     },
     profileImage: {
         top: 50,
