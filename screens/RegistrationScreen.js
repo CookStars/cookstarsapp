@@ -12,6 +12,7 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { db } from '../firebaseconfig.js'
+import { colors } from '../utils/constants'
 
 export default function RegistrationScreen({ navigation }) {
     const [firstName, setFirstName] = useState('')
@@ -64,14 +65,17 @@ export default function RegistrationScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView
-                style={{ flex: 1, width: '100%' }}
+                style={{
+                    flex: 1,
+                    width: '100%',
+                }}
                 keyboardShouldPersistTaps="always"
             >
                 {/* First Name Input */}
                 <TextInput
                     style={styles.input}
                     placeholder="First Name"
-                    placeholderTextColor="#aaaaaa"
+                    placeholderTextColor={colors.placeHolder}
                     onChangeText={(text) => setFirstName(text)}
                     value={firstName}
                     underlineColorAndroid="transparent"
@@ -82,7 +86,7 @@ export default function RegistrationScreen({ navigation }) {
                 <TextInput
                     style={styles.input}
                     placeholder="Last Name"
-                    placeholderTextColor="#aaaaaa"
+                    placeholderTextColor={colors.placeHolder}
                     onChangeText={(text) => setLastName(text)}
                     value={lastName}
                     underlineColorAndroid="transparent"
@@ -117,7 +121,7 @@ export default function RegistrationScreen({ navigation }) {
                 <TextInput
                     style={styles.input}
                     placeholder="E-mail"
-                    placeholderTextColor="#aaaaaa"
+                    placeholderTextColor={colors.placeHolder}
                     onChangeText={(text) => setEmail(text)}
                     value={email}
                     underlineColorAndroid="transparent"
@@ -127,7 +131,7 @@ export default function RegistrationScreen({ navigation }) {
                 {/* Password Input */}
                 <TextInput
                     style={styles.input}
-                    placeholderTextColor="#aaaaaa"
+                    placeholderTextColor={colors.placeHolder}
                     secureTextEntry
                     placeholder="Password"
                     onChangeText={(text) => setPassword(text)}
@@ -137,7 +141,7 @@ export default function RegistrationScreen({ navigation }) {
                 />
                 <TextInput
                     style={styles.input}
-                    placeholderTextColor="#aaaaaa"
+                    placeholderTextColor={colors.placeHolder}
                     secureTextEntry
                     placeholder="Confirm Password"
                     onChangeText={(text) => setConfirmPassword(text)}
@@ -193,7 +197,7 @@ const styles = StyleSheet.create({
         height: 55,
         borderRadius: 5,
         overflow: 'hidden',
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 30,
@@ -201,17 +205,17 @@ const styles = StyleSheet.create({
         paddingLeft: 16,
     },
     button: {
-        backgroundColor: '#F18F01',
+        backgroundColor: colors.orange,
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
         height: 48,
-        borderRadius: 5,
+        borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
     },
     buttonTitle: {
-        color: 'white',
+        color: colors.offWhite,
         fontSize: 16,
         fontWeight: 'bold',
     },
@@ -222,10 +226,10 @@ const styles = StyleSheet.create({
     },
     footerText: {
         fontSize: 16,
-        color: '#2e2e2d',
+        color: colors.text,
     },
     footerLink: {
-        color: '#788eec',
+        color: colors.extra,
         fontWeight: 'bold',
         fontSize: 16,
     },

@@ -8,6 +8,7 @@ import {
     Modal,
 } from 'react-native'
 import Icons from './Icons'
+import { colors } from '../../utils/constants'
 
 const UpdateProfileImage = ({
     profileModalVisible,
@@ -30,7 +31,7 @@ const UpdateProfileImage = ({
                     <TouchableHighlight
                         style={{
                             ...styles.openButton,
-                            backgroundColor: '#F18F01',
+                            backgroundColor: colors.orange,
                         }}
                         onPress={() => {
                             setProfileModalVisibility()
@@ -56,11 +57,11 @@ const styles = StyleSheet.create({
     },
     modalView: {
         margin: 10,
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
         borderRadius: 20,
         padding: 60,
         alignItems: 'center',
-        shadowColor: '#000',
+        shadowColor: colors.placeHolder,
         shadowOffset: {
             width: 0,
             height: 2,
@@ -71,13 +72,14 @@ const styles = StyleSheet.create({
         maxHeight: 500,
     },
     openButton: {
-        backgroundColor: '#F194FF',
+        backgroundColor: colors.buttonConfirm,
         borderRadius: 20,
         padding: 10,
         elevation: 2,
+        width: 200,
     },
     textStyle: {
-        color: 'white',
+        color: colors.offWhite,
         fontWeight: 'bold',
         textAlign: 'center',
     },

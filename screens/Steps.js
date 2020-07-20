@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, ScrollView, View, Dimensions } from 'react-native'
-
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-
 import {
     checkStep,
     checkEquipment,
- checkIngredients,
-    
+    checkIngredients,
 } from '../components/steps'
-
-import {checkLastCompleted} from '../utils/helper_functions'
+import { colors } from '../utils/constants'
 
 export default function Steps(props) {
     const [currStep, setCurrStep] = useState(0)
+
     const { navigation } = props
     let { recipe, userInfo } = props.route.params
     const currRecipeSteps = recipe.analyzedInstructions[0].steps
@@ -28,7 +25,7 @@ export default function Steps(props) {
                         alignSelf: 'center',
                         fontWeight: 'bold',
                         paddingTop: '10%',
-                        color: 'tomato',
+                        color: colors.red,
                     }}
                 >
                     Step {number}
@@ -50,7 +47,7 @@ export default function Steps(props) {
                         <Text
                             style={{
                                 fontSize: 24,
-                                color: 'gray',
+                                color: colors.placeHolder,
                                 padding: 20,
                                 justifyContent: 'center',
                             }}
@@ -78,48 +75,10 @@ export default function Steps(props) {
 const styles = StyleSheet.create({
     parentContainer: {
         flex: 1,
-        backgroundColor: '#F4F1DE',
+        backgroundColor: colors.offWhite,
     },
     listContainer: {
         height: '31%',
         flexDirection: 'column',
     },
-    // image: {
-    //   top: 10,
-    //   alignItems: "center",
-    //   resizeMode: "contain",
-    //   overflow: "hidden",
-    //   borderRadius: 37,
-    // },
-    // stepContainer: {
-    //   flex: 2,
-    // },
-    // scrollArea_contentContainerStyle: {
-    //   flex: 2,
-    //   alignContent: "space-between",
-    //   flexDirection: "row",
-    // },
-    // title: {
-    //   fontSize: 32,
-    //   textAlign: "center",
-    //   marginTop: 10,
-    //   fontWeight: "bold",
-    //   color: "#F18F01",
-    //   backgroundColor: "#f4f1de",
-    // },
-    // image: {
-    //   flexDirection: "row",
-    // },
-    // step: {
-    //   padding: 30,
-    //   fontSize: 18,
-    //   backgroundColor: "#F4F1DE",
-    //   textAlign: "justify",
-    // },
-    // buttonContainer: {
-    //   backgroundColor: "#008F68",
-    //   borderRadius: 5,
-    //   padding: 8,
-    //   margin: 8,
-    // },
 })
