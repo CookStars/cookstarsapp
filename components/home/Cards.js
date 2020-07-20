@@ -79,10 +79,11 @@ const styles = StyleSheet.create({
     labelContainer: {
         position: 'absolute',
         top: 30,
-        right: '68%',
+        left: '68%',
         height: 37,
         width: '36%',
         borderRadius: 15,
+        opacity: 0.8,
         backgroundColor: colors.offWhite,
     },
     recipeOfTheDay: {

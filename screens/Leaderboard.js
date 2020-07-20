@@ -52,6 +52,7 @@ export class Leaderboard extends Component {
                     <View
                         style={{
                             height: Dimensions.get('window').height,
+                            paddingBottom: 50,
                         }}
                     >
                         <LeaderboardHeader

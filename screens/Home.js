@@ -47,7 +47,13 @@ export class HomeScreen extends Component {
                             userInfo={this.props.userInfo}
                         />
                     </View>
-                    <Text style={styles.Text}>Recipes of the Week</Text>
+                    <View
+                        style={{ backgroundColor: colors.details, height: 5 }}
+                    ></View>
+                    <Text style={styles.Text}>RECIPES OF THE WEEK</Text>
+                    <View
+                        style={{ backgroundColor: colors.details, height: 5 }}
+                    ></View>
                     {this.cards()}
                 </ScrollView>
             </View>
@@ -89,6 +95,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         paddingTop: 10,
-        paddingBottom: 10
+        paddingBottom: 10,
     },
 })
