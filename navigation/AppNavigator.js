@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { TabNav, AuthStack } from './stacks/index'
 import { connect } from 'react-redux'
 import { fetchUserInfo } from '../redux/actions/user'
+import { colors } from '../utils/constants'
 
 const Stack = createStackNavigator()
 
@@ -61,7 +62,7 @@ export default connect(mapState, mapDispatch)(AppNavigator)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: colors.background,
         alignItems: 'center',
         justifyContent: 'center',
     },
