@@ -101,11 +101,11 @@ export default class SingleRecipe extends Component {
                         </View>
 
                         <View style={styles.detailsContainer}>
-                            <View style={styles.description}>
+                            <View style={styles.descriptionContainer}>
                                 <Text style={styles.descTitle}>Description:</Text>
                                 <HTML
                                     html={newTagsSummary}
-                                    baseFontStyle={styles.description}
+                                    baseFontStyle={styles.descriptionText}
                                 />
                             </View>
                             <View>
@@ -132,9 +132,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     container: {
-        flex: 10,
         width: Dimensions.get('screen').width,
-        height: 0.57 * Dimensions.get('screen').height,
+        height: 0.55 * Dimensions.get('screen').height,
         backgroundColor: 'white',
         alignContent: 'space-between',
     },
@@ -151,17 +150,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         resizeMode: 'stretch',
     },
-    description: {
-        // top: '2%',
+    descriptionContainer: {
+        top: 0.02 * Dimensions.get('screen').height,
         alignSelf: 'center',
+        justifyContent: 'center',
         width: 0.88 * Dimensions.get('screen').width,
-        fontSize: 15,
+        paddingBottom: 25,
+        height: 300,
+    },
+ descriptionText: {
         textAlign: 'auto',
+  fontSize: 15,
+  lineHeight:25
+        
     },
     descTitle: {
         fontWeight: 'bold',
         fontSize: 18,
-        height: '10%',
+     height: '10%',
+        bottom:30
     },
     ingredients: {
         top: 50,
@@ -176,7 +183,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18,
         // height: '3%',
-        top: '3%',
+        // top: '3%',
     },
     descIcons: { flexDirection: 'row', top: '2%' },
     descIconText: { left: '30%', fontSize: 15, alignSelf: 'center' },
@@ -194,8 +201,8 @@ const styles = StyleSheet.create({
     detailsContainer: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        paddingBottom: 0.25 * Dimensions.get('screen').height,
+        paddingBottom: 0.18 * Dimensions.get('screen').height,
         alignItems: 'center',
-        flex: 6,
+        // flex: 6,
     },
 })
