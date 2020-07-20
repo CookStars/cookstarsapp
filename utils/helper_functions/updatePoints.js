@@ -1,8 +1,6 @@
 import { db } from '../../firebaseconfig'
 
-// const updatePoints = async (userInfo, recipe) => {
-export default function updatePoints(userInfo, recipe) {
-    const currRecipeId = recipe.id
+const updatePoints = async (userInfo, recipe) => {
     let today = new Date()
     const dd = String(today.getDate()).padStart(2, '0')
     const mm = String(today.getMonth() + 1).padStart(2, '0') //January is 0!
