@@ -37,11 +37,21 @@ export default class SingleRecipe extends Component {
             return <ListItem key={index} title={originalIngredDesc} />
         })
 
-        const newTagsSummary = summary
+        let newTagsSummary = summary
             .split(/\<a\b[^>]*>/)
             .join('<b><i>')
             .split(/\<\/a>/)
-            .join('</i></b>')
+         .join('</i></b>')
+     
+     // const removeExtraSummary = newTagsSummary.split('.').findIndex(substr => {
+     //  substr.includes('brought to you') || substr.includes('foodista') || substr.includes('spoonacular')
+     // })
+     const removeExtraSummary = newTagsSummary.split('.').map((substr, index) => {
+      if((substr.search(/(brought\ to\ you|foodista|spoonacular|recipe\ from)/)>0)){
+        return index}
+     })
+     const indexExtraSummary = removeExtraSummary.find((str) => str !== undefined)
+     newTagsSummary = newTagsSummary.split('.').slice(0, indexExtraSummary).join('.')+'.'
 
         return (
             <SafeAreaView>

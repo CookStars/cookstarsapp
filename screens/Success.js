@@ -47,131 +47,131 @@ export class SuccessPage extends Component {
 
         const img = recipes[today + 1].image
 
-        return (
-            <View style={styles.container}>
-                <View>
-                    <Modal
-                        transparent={true}
-                        visible={this.state.modalVisible}
-                        animationType={'fade'}
-                        onRequestClose={this.toggleModal}
-                    >
-                        <View style={styles.modalView}>
-                            <TouchableOpacity onPress={this.toggleModal}>
-                                <Image
-                                    source={require('../assets/closeIcon.png')}
-                                    style={styles.closeIcon}
-                                />
-                            </TouchableOpacity>
-                            <Text style={{ fontSize: 30, top: -50 }}>
-                                Congrats!
-                            </Text>
-                            <Text style={styles.modalText}>
-                                You Unlocked A Badge!
-                            </Text>
-                            <Image
-                                source={badges[points]}
-                                style={styles.badgeImage}
-                            />
-                        </View>
-                    </Modal>
-                </View>
-                <View style={styles.image}>
-                    <Image
-                        source={require('../assets/banner.png')}
-                        style={styles.banner}
-                    />
-                    <Image
-                        source={require('../assets/avocadodance.jpg')}
-                        style={styles.avocadoImg}
-                    />
-                </View>
-                <View style={styles.pointsContainer}>
-                    <View>
-                        <Image
-                            source={require('../assets/congratsBadge.png')}
-                            style={styles.badge}
-                        />
-                    </View>
-                    <View style={styles.textContainer}>
-                        {checkLastCompleted(userInfo, recipes[today]) ? (
-                            <Text style={styles.pointsText}>
-                                YOU EARNED 10 PTS
-                            </Text>
-                        ) : (
-                            <Text style={styles.pointsText}>
-                                YOU EARNED 0 PTS
-                            </Text>
-                        )}
-                        <Text style={styles.pointsText}>
-                            TOTAL POINTS: {points}
-                        </Text>
-                        <View style={styles.favoriteContainer}>
-                            <Text
-                                style={{
-                                    fontSize: 17,
-                                    paddingBottom: 3,
-                                }}
-                            >
-                                Enjoyed the recipe?
-                            </Text>
-                            <View>
-                                <TouchableOpacity
-                                    onPress={handleFavorite(userInfo, recipes)}
-                                    style={styles.favoriteButton}
-                                >
-                                    <View
-                                        style={{
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        <Feather
-                                            name="heart"
-                                            size={20}
-                                            color="#EF233C"
-                                        />
-                                        <Text
-                                            style={{
-                                                color: 'black',
-                                                left: 6,
-                                            }}
-                                        >
-                                            ADD FAVORITE
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </View>
-                <View style={styles.tmrwRecipe}>
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        onPress={() =>
-                            navigation.navigate('SingleRecipe', {
-                                recipe: recipes[today + 1],
-                                day: weekdays[today + 1],
-                            })
-                        }
-                    >
-                        <Image
-                            source={{ uri: img }}
-                            style={{
-                                width: Dimensions.get('screen').width,
-                                height: 0.33 * Dimensions.get('screen').height,
-                                bottom: 0,
-                            }}
-                        />
-                        <View style={styles.labelContainer}>
-                            <Text style={styles.tmrwRecipelabel}>
-                                Check Out Tomorrow's Recipe
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        )
+     return (
+             <View style={styles.container}>
+                 <View>
+                     <Modal
+                         transparent={true}
+                         visible={this.state.modalVisible}
+                         animationType={'fade'}
+                         onRequestClose={this.toggleModal}
+                     >
+                         <View style={styles.modalView}>
+                             <TouchableOpacity onPress={this.toggleModal}>
+                                 <Image
+                                     source={require('../assets/closeIcon.png')}
+                                     style={styles.closeIcon}
+                                 />
+                             </TouchableOpacity>
+                             <Text style={{ fontSize: 30, top: -50 }}>
+                                 Congrats!
+                             </Text>
+                             <Text style={styles.modalText}>
+                                 You Unlocked A Badge!
+                             </Text>
+                             <Image
+                                 source={badges[points]}
+                                 style={styles.badgeImage}
+                             />
+                         </View>
+                     </Modal>
+                 </View>
+                 <View style={styles.image}>
+                     <Image
+                         source={require('../assets/banner.png')}
+                         style={styles.banner}
+                     />
+                     <Image
+                         source={require('../assets/avocadodance.jpg')}
+                         style={styles.avocadoImg}
+                     />
+                 </View>
+                 <View style={styles.pointsContainer}>
+                     <View>
+                         <Image
+                             source={require('../assets/congratsBadge.png')}
+                             style={styles.badge}
+                         />
+                     </View>
+                     <View style={styles.textContainer}>
+                         {checkLastCompleted(userInfo, recipes[today]) ? (
+                             <Text style={styles.pointsText}>
+                                 YOU EARNED 10 PTS
+                             </Text>
+                         ) : (
+                             <Text style={styles.pointsText}>
+                                 YOU EARNED 0 PTS
+                             </Text>
+                         )}
+                         <Text style={styles.pointsText}>
+                             TOTAL POINTS: {points}
+                         </Text>
+                         <View style={styles.favoriteContainer}>
+                             <Text
+                                 style={{
+                                     fontSize: 17,
+                                     paddingBottom: 3,
+                                 }}
+                             >
+                                 Enjoyed the recipe?
+                             </Text>
+                             <View>
+                                 <TouchableOpacity
+                                     onPress={handleFavorite(userInfo, recipes)}
+                                     style={styles.favoriteButton}
+                                 >
+                                     <View
+                                         style={{
+                                             flexDirection: 'row',
+                                             alignItems: 'center',
+                                         }}
+                                     >
+                                         <Feather
+                                             name="heart"
+                                             size={20}
+                                             color="#EF233C"
+                                         />
+                                         <Text
+                                             style={{
+                                                 color: 'black',
+                                                 left: 6,
+                                             }}
+                                         >
+                                             ADD FAVORITE
+                                         </Text>
+                                     </View>
+                                 </TouchableOpacity>
+                             </View>
+                         </View>
+                     </View>
+                 </View>
+                 <View style={styles.tmrwRecipe}>
+                     <TouchableOpacity
+                         activeOpacity={0.7}
+                         onPress={() =>
+                             navigation.navigate('SingleRecipe', {
+                                 recipe: recipes[today + 1],
+                                 day: weekdays[today + 1],
+                             })
+                         }
+                     >
+                         <Image
+                             source={{ uri: img }}
+                             style={{
+                                 width: Dimensions.get('screen').width,
+                                 height: 0.33 * Dimensions.get('screen').height,
+                                 bottom: 0,
+                             }}
+                         />
+                         <View style={styles.labelContainer}>
+                             <Text style={styles.tmrwRecipelabel}>
+                                 Check Out Tomorrow's Recipe
+                             </Text>
+                         </View>
+                     </TouchableOpacity>
+                 </View>
+             </View>
+     )
     }
 }
 
@@ -190,7 +190,7 @@ const mapDispatch = (dispatch) => {
 export default connect(mapState, mapDispatch)(SuccessPage)
 
 const styles = StyleSheet.create({
-    container: {
+ container: {
         borderWidth: 3,
         backgroundColor: 'white',
         alignItems: 'center',
