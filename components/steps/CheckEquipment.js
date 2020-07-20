@@ -25,9 +25,6 @@ export default function checkEquipment(equipment) {
                         // key={index}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={
-                            styles.scrollArea_contentContainerStyle
-                        }
                     >
                         {listEquipment(equipment)}
                     </ScrollView>

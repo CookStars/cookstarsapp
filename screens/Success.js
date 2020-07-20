@@ -9,11 +9,11 @@ import {
     Modal,
 } from 'react-native'
 import { Feather } from '@expo/vector-icons'
-import { db } from '../firebaseconfig'
 import { connect } from 'react-redux'
 import { fetchRecipes } from '../redux/actions/recipes'
 import badges from '../assets/badges'
-import { colors, weekdays } from '../utils/constants'
+import { handleFavorite, checkLastCompleted } from '../utils/helper_functions'
+import {badgePoints, colors, weekdays } from '../utils/constants'
 
 export class SuccessPage extends Component {
     constructor(props) {
@@ -25,49 +25,22 @@ export class SuccessPage extends Component {
     }
 
     toggleModal() {
-        console.log('huhu', this.state.modalVisible)
         this.setState({ modalVisible: !this.state.modalVisible })
     }
     componentDidMount() {
-        const badgePoints = [10, 50, 100, 200, 300, 450]
-        const { navigation, recipes, userInfo } = this.props
+        const { points } = this.props.route.params
 
-        if (badgePoints.includes(userInfo.points)) {
+        if (badgePoints.includes(points)) {
             this.toggleModal()
         }
     }
 
     render() {
-        const { navigation, recipes, userInfo } = this.props
+        const { navigation, recipes } = this.props
+        const { userInfo, points } = this.props.route.params
         const today = new Date().getDay()
-        const currRecipeId = recipes[today].id
 
         const img = recipes[today + 1].image
-
-        const handleFavorite = () => {
-            db.collection('users')
-                .doc(userInfo.userId)
-                .update({
-                    favoriteRecipes: {
-                        ...userInfo.favoriteRecipes,
-                        [recipes[today].id]: recipes[today],
-                    },
-                })
-        }
-        const checkLastCompleted = () => {
-            let date = new Date()
-            const dd = String(date.getDate()).padStart(2, '0')
-            const mm = String(date.getMonth() + 1).padStart(2, '0') //January is 0!
-            const yyyy = date.getFullYear()
-
-            date = mm + '/' + dd + '/' + yyyy
-            return !userInfo.recipeHistory[currRecipeId] ||
-                userInfo.recipeHistory[currRecipeId].lastCompleted !== date ? (
-                <Text style={styles.pointsText}>YOU EARNED 10 PTS!</Text>
-            ) : (
-                <Text style={styles.pointsText}>YOU EARNED 0 PTS!</Text>
-            )
-        }
 
         return (
             <View style={styles.container}>
@@ -77,7 +50,6 @@ export class SuccessPage extends Component {
                         visible={this.state.modalVisible}
                         animationType={'fade'}
                         onRequestClose={this.toggleModal}
-                        shadow={true}
                     >
                         <View style={styles.modalView}>
                             <TouchableOpacity onPress={this.toggleModal}>
@@ -89,17 +61,11 @@ export class SuccessPage extends Component {
                             <Text style={{ fontSize: 30, top: -50 }}>
                                 Congrats!
                             </Text>
-                            <Text
-                                style={{
-                                    fontSize: 25,
-                                    top: -45,
-                                    textAlign: 'center',
-                                }}
-                            >
+                            <Text style={styles.modalText}>
                                 You Unlocked A Badge!
                             </Text>
                             <Image
-                                source={badges[userInfo.points]}
+                                source={badges[points]}
                                 style={styles.badgeImage}
                             />
                         </View>
@@ -123,17 +89,19 @@ export class SuccessPage extends Component {
                         />
                     </View>
                     <View style={styles.textContainer}>
-                        {checkLastCompleted()}
+                        {checkLastCompleted(userInfo, recipes[today]) ? (
+                            <Text style={styles.pointsText}>
+                                YOU EARNED 10 PTS
+                            </Text>
+                        ) : (
+                            <Text style={styles.pointsText}>
+                                YOU EARNED 0 PTS
+                            </Text>
+                        )}
                         <Text style={styles.pointsText}>
-                            TOTAL POINTS: {userInfo.points}
+                            TOTAL POINTS: {points}
                         </Text>
-                        <View
-                            style={{
-                                bottom: -20,
-                                backgroundColor: colors.background,
-                                borderWidth: 1,
-                            }}
-                        >
+                        <View style={styles.favoriteContainer}>
                             <Text
                                 style={{
                                     fontSize: 17,
@@ -144,20 +112,8 @@ export class SuccessPage extends Component {
                             </Text>
                             <View>
                                 <TouchableOpacity
-                                    onPress={handleFavorite}
-                                    style={{
-                                        borderWidth: 1,
-                                        borderColor: colors.details,
-                                        backgroundColor: 'transparent',
-                                        bottom: -2,
-                                        right: -8,
-                                        borderRadius: 10,
-                                        width: '80%',
-                                        height: 35,
-                                        alignItems: 'center',
-                                        alignSelf: 'center',
-                                        justifyContent: 'center',
-                                    }}
+                                    onPress={handleFavorite(userInfo, recipes)}
+                                    style={styles.favoriteButton}
                                 >
                                     <View
                                         style={{
@@ -217,7 +173,7 @@ export class SuccessPage extends Component {
 // Map State + Dispatch
 const mapState = (state) => ({
     recipes: state.recipes,
-    userInfo: state.user,
+    // userInfo: state.user,
 })
 
 const mapDispatch = (dispatch) => {
@@ -242,6 +198,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
+    },
+    modalText: {
+        fontSize: 25,
+        top: -45,
+        textAlign: 'center',
     },
     image: {
         width: Dimensions.get('screen').width,
@@ -283,6 +244,24 @@ const styles = StyleSheet.create({
     badge: {
         width: 0.35 * Dimensions.get('screen').width,
         height: 0.45 * Dimensions.get('screen').width,
+    },
+    favoriteContainer: {
+        bottom: -20,
+        backgroundColor: 'white',
+        borderWidth: 1,
+    },
+    favoriteButton: {
+        borderWidth: 1,
+        borderColor: '#EF233C',
+        backgroundColor: 'transparent',
+        bottom: -2,
+        right: -8,
+        borderRadius: 10,
+        width: '80%',
+        height: 35,
+        alignItems: 'center',
+        alignSelf: 'center',
+        justifyContent: 'center',
     },
 
     labelContainer: {

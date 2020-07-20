@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import HTML from 'react-native-render-html'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { db } from '../../firebaseconfig'
 import { AntDesign } from '@expo/vector-icons'

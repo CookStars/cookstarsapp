@@ -32,9 +32,6 @@ export default function checkIngredients(ingredients) {
                     // key={index}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={
-                        styles.scrollArea_contentContainerStyle
-                    }
                 >
                     {listIngredients(ingredients)}
                 </ScrollView>
@@ -54,10 +51,3 @@ export default function checkIngredients(ingredients) {
         )
     }
 }
-const styles = StyleSheet.create({
- scrollArea_contentContainerStyle: {
-      flex: 2,
-      alignContent: "space-between",
-      flexDirection: "row",
-    },
-})

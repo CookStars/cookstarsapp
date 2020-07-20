@@ -15,7 +15,6 @@ export default function Steps(props) {
     let { recipe, userInfo } = props.route.params
     const currRecipeSteps = recipe.analyzedInstructions[0].steps
     const { equipment, ingredients, number, step } = currRecipeSteps[currStep]
-
     return (
         <SafeAreaProvider style={{ backgroundColor: 'white' }}>
             <View>
