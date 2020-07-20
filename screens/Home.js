@@ -6,12 +6,17 @@ import { newRecipeNotification } from '../utils/helper_functions'
 import { connect } from 'react-redux'
 import { fetchRecipes } from '../redux/actions/recipes'
 import { colors } from '../utils/constants'
+import * as Fonts from 'expo-font'
+import { AppLoading } from 'expo'
+
 
 const today = new Date().getDay()
 newRecipeNotification()
 
 export class HomeScreen extends Component {
-    componentDidMount() {
+
+
+    async componentDidMount() {
         const pref = this.props.userInfo.foodPreference
         this.props.getRecipes(pref)
     }
@@ -79,8 +84,13 @@ const styles = StyleSheet.create({
         alignContent: 'space-around',
         flexDirection: 'row',
         justifyContent: 'space-around',
+
     },
     Text: {
         fontSize: 30,
+        // fontFamily: 'Raleway-Black',
+        marginBottom: 20,
+        fontWeight: 'bold'
+
     },
 })
