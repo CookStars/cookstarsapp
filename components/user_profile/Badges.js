@@ -31,7 +31,7 @@ const Badges = ({ userInfo } = {}) => {
                     <Image
                         source={badges[badgeId]}
                         style={{
-                            tintColor: 'grey',
+                            tintColor: colors.placeHolder,
                             opacity: 0.2,
                             width: 0.2 * Dimensions.get('screen').width,
                             height: 0.2 * Dimensions.get('screen').width,

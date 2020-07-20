@@ -31,7 +31,7 @@ const UpdateProfileImage = ({
                     <TouchableHighlight
                         style={{
                             ...styles.openButton,
-                            backgroundColor: '#F18F01',
+                            backgroundColor: colors.orange,
                         }}
                         onPress={() => {
                             setProfileModalVisibility()
@@ -57,11 +57,11 @@ const styles = StyleSheet.create({
     },
     modalView: {
         margin: 10,
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
         borderRadius: 20,
         padding: 60,
         alignItems: 'center',
-        shadowColor: '#000',
+        shadowColor: colors.placeHolder,
         shadowOffset: {
             width: 0,
             height: 2,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         width: 200,
     },
     textStyle: {
-        color: 'white',
+        color: colors.offWhite,
         fontWeight: 'bold',
         textAlign: 'center',
     },
