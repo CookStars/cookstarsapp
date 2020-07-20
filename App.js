@@ -13,6 +13,9 @@ if (!global.atob) {
 }
 
 YellowBox.ignoreWarnings(['Setting a timer'])
+YellowBox.ignoreWarnings([
+    'VirtualizedLists should never be nested inside plain ScrollViews with the same orientation - use another VirtualizedList-backed container instead.',
+])
 
 export default function App() {
     // console.log(process.env.REACT_APP_NOT_SECRET_CODE)

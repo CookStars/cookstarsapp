@@ -156,7 +156,6 @@ export class UserProfile extends React.Component {
                         <Badges userInfo={this.props.userInfo} />
                         <View style={styles.statsContainer}>
                             <View style={styles.statsBox}>
-                                <Text></Text>
                                 <Text
                                     style={{
                                         fontWeight: 'bold',
@@ -343,7 +342,6 @@ const styles = StyleSheet.create({
     statsContainer: {
         flexDirection: 'row',
         alignSelf: 'center',
-        marginTop: 32,
     },
     statsBox: {
         alignItems: 'center',
