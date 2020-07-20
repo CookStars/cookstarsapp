@@ -23,32 +23,32 @@ import { colors } from '../utils/constants'
 import { profileImages } from '../assets/profileIcons/index'
 
 export class UserProfile extends React.Component {
- state = {
-  modalVisible: false,
-  profileModalVisible: false,
-  profileImage: this.props.userInfo.icon || 'default',
- }
+    state = {
+        modalVisible: false,
+        profileModalVisible: false,
+        profileImage: this.props.userInfo.icon || 'default',
+    }
 
- handleClick() {
-  this.props.logUserOut()
- }
+    handleClick() {
+        this.props.logUserOut()
+    }
 
- componentDidMount() {
-  // listener to update any user information across screens
-  db.collection('users')
-   .doc(this.props.userInfo.userId)
-   .onSnapshot((doc) => {
-    this.props.updateInfo(doc.data())
-   })
+    componentDidMount() {
+        // listener to update any user information across screens
+        db.collection('users')
+            .doc(this.props.userInfo.userId)
+            .onSnapshot((doc) => {
+                this.props.updateInfo(doc.data())
+            })
 
-  this.setState({
-   firstName: this.props.userInfo.firstName,
-   lastName: this.props.userInfo.lastName,
-   email: this.props.userInfo.email,
-   foodPreference: this.props.userInfo.foodPreference,
-   profileImage: this.props.userInfo.icon,
-  })
- }
+        this.setState({
+            firstName: this.props.userInfo.firstName,
+            lastName: this.props.userInfo.lastName,
+            email: this.props.userInfo.email,
+            foodPreference: this.props.userInfo.foodPreference,
+            profileImage: this.props.userInfo.icon,
+        })
+    }
 
     onUpdateProfileImage = async () => {
         await db
@@ -162,56 +162,55 @@ export class UserProfile extends React.Component {
                                 >
                                     HISTORY
                                 </Text>
-        </View>
-       </View>
+                            </View>
+                        </View>
 
-       <View style={{ marginTop: 32 }}>
-        <RecipesList
-         userInfo={this.props.userInfo}
-         navigation={this.props.navigation}
-         noItemsText={"You haven't cooked anything yet"}
-         recipes={this.props.userInfo.recipeHistory}
-        />
+                        <View style={{ marginTop: 32 }}>
+                            <RecipesList
+                                userInfo={this.props.userInfo}
+                                navigation={this.props.navigation}
+                                noItemsText={"You haven't cooked anything yet"}
+                                recipes={this.props.userInfo.recipeHistory}
+                            />
 
-        <View style={styles.mediaCount}>
-         <Text style={styles.text}></Text>
-        </View>
-       </View>
+                            <View style={styles.mediaCount}>
+                                <Text style={styles.text}></Text>
+                            </View>
+                        </View>
 
-       <View style={styles.statsContainer}>
-        <View style={styles.statsBox}>
-         <Text></Text>
-         <Text
-          style={{
-           fontWeight: 'bold',
-           fontSize: 20,
-          }}
-         >
-          FAVORITES
+                        <View style={styles.statsContainer}>
+                            <View style={styles.statsBox}>
+                                <Text></Text>
+                                <Text
+                                    style={{
+                                        fontWeight: 'bold',
+                                        fontSize: 20,
+                                    }}
+                                >
+                                    FAVORITES
                                 </Text>
-        </View>
-       </View>
+                            </View>
+                        </View>
 
-       <View style={{ marginTop: 32 }}>
-        <RecipesList
-         userInfo={this.props.userInfo}
-         navigation={this.props.navigation}
-         noItemsText={'No favs selected'}
-         recipes={this.props.userInfo.favoriteRecipes}
-        />
-        <View style={styles.mediaCount}>
-         <Text style={styles.text}></Text>
-        </View>
-       </View>
-      </ScrollView>
-     ) : (
-       <View></View>
-      )}
-    </SafeAreaView>
-   )
-  }
- }
-
+                        <View style={{ marginTop: 32 }}>
+                            <RecipesList
+                                userInfo={this.props.userInfo}
+                                navigation={this.props.navigation}
+                                noItemsText={'No favs selected'}
+                                recipes={this.props.userInfo.favoriteRecipes}
+                            />
+                            <View style={styles.mediaCount}>
+                                <Text style={styles.text}></Text>
+                            </View>
+                        </View>
+                    </ScrollView>
+                ) : (
+                    <View></View>
+                )}
+            </SafeAreaView>
+        )
+    }
+}
 
 // Map State + Dispatch
 const mapState = (state) => ({
