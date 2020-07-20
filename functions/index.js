@@ -41,20 +41,7 @@ exports.getMeatRecipes = functions.pubsub
         return null
     })
 
-// return null;
-//   });
 
-// exports.newUserSignUp = functions.auth.user().onCreate((user) => {
-//   return admin.firestore().collection('users').doc(user.uid).set({
-//     email: user.email,
-//     firstName: '',
-//     lastName: '',
-//     points: 0,
-//     foodPreference: '',
-//     favoriteRecipes: {},
-//     recipeHistory: {},
-//   });
-// });
 
 exports.userDeleted = functions.auth.user().onDelete((user) => {
     const doc = admin.firestore().collection('users').doc(user.uid)
