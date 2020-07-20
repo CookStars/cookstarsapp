@@ -34,9 +34,8 @@ export default function Cards(props) {
                                     : 'https://webknox.com/recipeImages/641671-556x370.jpg',
                             }}
                             style={{
-                                width: 0.45 * Dimensions.get('screen').width,
-                                height: 0.45 * Dimensions.get('screen').width,
-                                borderRadius: 30,
+                                width: Dimensions.get('screen').width,
+                                height: 300,
                             }}
                         />
                         <View style={styles.labelContainer}>
@@ -53,9 +52,8 @@ export default function Cards(props) {
                                     'https://webknox.com/recipeImages/641671-556x370.jpg',
                             }}
                             style={{
-                                width: 0.45 * Dimensions.get('screen').width,
-                                height: 0.45 * Dimensions.get('screen').width,
-                                borderRadius: 30,
+                                width: Dimensions.get('screen').width,
+                                height: 300,
                             }}
                         />
                         <View style={styles.labelContainer}>
@@ -70,32 +68,30 @@ export default function Cards(props) {
 
 const styles = StyleSheet.create({
     cardContainer: {
-        width: '50%',
-        height: '22%',
+        overflow: 'hidden',
         alignItems: 'center',
     },
     imgContainer: {
-        width: 0.5 * Dimensions.get('screen').width,
-        height: 0.6 * Dimensions.get('screen').width,
+        width: Dimensions.get('screen').width,
+        height: 200,
         alignItems: 'center',
         paddingBottom: 10,
     },
     labelContainer: {
         position: 'absolute',
-        top: 145,
+        top: 30,
+        right: '68%',
         height: 37,
-        width: '60%',
-        borderRadius: 20,
-        alignSelf: 'center',
+        width: '36%',
+        borderRadius: 15,
         backgroundColor: colors.offWhite,
     },
     recipeOfTheDay: {
-        opacity: 0.9,
         backgroundColor: 'transparent',
         color: colors.text,
-        fontSize: 19,
+        fontSize: 17,
         fontWeight: 'bold',
-        margin: 5,
+        margin: 7,
         textAlign: 'center',
     },
 })
