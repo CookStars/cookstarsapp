@@ -2,6 +2,7 @@ import React from 'react'
 
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import weekdays from '../../utils/constants/weekdays'
+import { colors } from '../../utils/constants'
 
 export default function checkDay(props) {
     const today = weekdays[new Date().getDay()]
@@ -20,7 +21,7 @@ export default function checkDay(props) {
                         })
                     }}
                     style={{
-                        backgroundColor: '#EF233C',
+                        backgroundColor: colors.details,
                         borderRadius: 10,
                         width: '100%',
                         height: 35,
@@ -30,7 +31,9 @@ export default function checkDay(props) {
                     }}
                 >
                     <View>
-                        <Text style={{ color: 'white' }}>START RECIPE</Text>
+                        <Text style={{ color: colors.offWhite }}>
+                            START RECIPE
+                        </Text>
                     </View>
                 </TouchableOpacity>
             </View>
