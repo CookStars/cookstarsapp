@@ -5,6 +5,7 @@ import { FormInput, FormButton, ErrorMessage } from '../components'
 // import ErrorMessage from '../components/ErrorMessage'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
+import { colors } from '../utils/constants'
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -63,7 +64,7 @@ export default class ForgotPassword extends Component {
                                 placeholder="Enter email"
                                 autoCapitalize="none"
                                 iconName="ios-mail"
-                                iconColor="#2C384A"
+                                iconColor={colors.extra}
                                 onBlur={handleBlur('email')}
                             />
                             <ErrorMessage
@@ -74,7 +75,8 @@ export default class ForgotPassword extends Component {
                                     buttonType="outline"
                                     onPress={handleSubmit}
                                     title="Send Email"
-                                    buttonColor="#039BE5"
+                                    backgroundColor={colors.orange}
+                                    buttonColor={colors.buttonConfirm}
                                     disabled={!isValid || isSubmitting}
                                 />
                             </View>
@@ -90,11 +92,10 @@ export default class ForgotPassword extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         marginTop: 150,
     },
     text: {
-        color: '#333',
+        color: colors.text,
         fontSize: 24,
         marginLeft: 25,
     },
