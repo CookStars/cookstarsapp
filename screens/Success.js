@@ -287,10 +287,10 @@ const styles = StyleSheet.create({
 
     labelContainer: {
         position: 'absolute',
-        bottom: '3%',
+        bottom: '10%',
         height: 40,
         width: 0.75 * Dimensions.get('screen').width,
-        borderRadius: 15,
+        borderRadius: 20,
         backgroundColor: colors.details,
         alignSelf: 'center',
     },
