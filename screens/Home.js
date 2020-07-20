@@ -5,6 +5,7 @@ import { weekdays } from '../utils/constants'
 import { newRecipeNotification } from '../utils/helper_functions'
 import { connect } from 'react-redux'
 import { fetchRecipes } from '../redux/actions/recipes'
+import { colors } from '../utils/constants'
 
 const today = new Date().getDay()
 newRecipeNotification()
@@ -67,7 +68,7 @@ export default connect(mapState, mapDispatch)(HomeScreen)
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
+        backgroundColor: colors.background,
         alignItems: 'center',
         justifyContent: 'center',
     },
