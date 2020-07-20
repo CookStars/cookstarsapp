@@ -46,17 +46,16 @@ export class SuccessPage extends Component {
             <View style={styles.container}>
                 <View>
                     <Modal
-                        transparent={true}
+            transparent={true}
                         visible={this.state.modalVisible}
-                        animationType={'fade'}
+                        animationType={'slide'}
                         onRequestClose={this.toggleModal}
                     >
                         <View style={styles.modalView}>
              <TouchableOpacity 
              style={styles.closeTouchable}
              onPress={()=>
-              {console.log('pressed')
-              this.setState({modalVisible:false})}}>
+              this.setState({modalVisible:false})}>
                                 <Image
                                     source={require('../assets/closeIcon.png')}
                                     style={styles.closeIcon}
@@ -189,7 +188,7 @@ const mapDispatch = (dispatch) => {
 
 export default connect(mapState, mapDispatch)(SuccessPage)
 
-const styles = StyleSheet.create({
+let styles = StyleSheet.create({
     container: {
         borderWidth: 3,
         backgroundColor: colors.background,
@@ -291,24 +290,22 @@ const styles = StyleSheet.create({
         left: 0.1 * Dimensions.get('screen').width,
         width: 0.8 * Dimensions.get('screen').width,
         height: 0.5 * Dimensions.get('screen').height,
-        alignContent: 'center',
-        justifyContent: 'center',
+     justifyContent: 'center',
+        flexDirection:'column',
         backgroundColor: colors.background,
         borderRadius: 20,
-        padding: 35,
+        // padding: 35,
         alignItems: 'center',
         shadowColor: colors.placeHolder,
         shadowOffset: {
             width: 0,
             height: 2,
         },
-        shadowOpacity: 0.25,
+        shadowOpacity: 3,
         shadowRadius: 3.84,
         elevation: 5,
     },
  badgeImage: {
-  borderColor: 'red', 
-  borderWidth:3,
         top: 30,
         width: 0.25 * Dimensions.get('screen').width,
         height: 0.25 * Dimensions.get('screen').width,
