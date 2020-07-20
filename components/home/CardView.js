@@ -8,7 +8,7 @@ import {
     Modal,
     Dimensions,
 } from 'react-native'
-import { colors, weekdays } from '../../utils/constants'
+import { colors } from '../../utils/constants'
 
 export default function CardView(props) {
     const { navigation, recipes, userInfo, day } = props
