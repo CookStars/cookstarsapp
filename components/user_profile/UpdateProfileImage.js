@@ -40,6 +40,24 @@ const UpdateProfileImage = ({
                     >
                         <Text style={styles.textStyle}>Update</Text>
                     </TouchableHighlight>
+                    <TouchableHighlight
+                        style={{
+                            ...styles.openButton,
+                            backgroundColor: colors.buttonCancel,
+                        }}
+                        onPress={() => {
+                            setProfileModalVisibility()
+                        }}
+                    >
+                        <Text
+                            style={{
+                                ...styles.textStyle,
+                                color: colors.offWhite,
+                            }}
+                        >
+                            Cancel
+                        </Text>
+                    </TouchableHighlight>
                 </View>
             </View>
         </Modal>
@@ -59,7 +77,7 @@ const styles = StyleSheet.create({
         margin: 10,
         backgroundColor: colors.background,
         borderRadius: 20,
-        padding: 60,
+        padding: 80,
         alignItems: 'center',
         shadowColor: colors.placeHolder,
         shadowOffset: {
@@ -68,8 +86,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5,
-        maxHeight: 500,
+        elevation: 2,
+        maxHeight: 550,
     },
     openButton: {
         backgroundColor: colors.buttonConfirm,
