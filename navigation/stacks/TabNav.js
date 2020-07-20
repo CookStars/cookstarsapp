@@ -4,6 +4,7 @@ import HomeStack from './HomeStack'
 import UserProfileStack from './UserProfileStack'
 import LeaderboardStack from './LeaderboardStack'
 import { AntDesign } from '@expo/vector-icons'
+import { colors } from '../../utils/constants'
 
 const Tab = createBottomTabNavigator()
 
@@ -31,10 +32,10 @@ export default function TabNav(props) {
                 headerShown: false,
             })}
             tabBarOptions={{
-                activeTintColor: 'tomato',
-                inactiveTintColor: 'gray',
+                activeTintColor: colors.details,
+                inactiveTintColor: colors.placeHolder,
                 showLabel: false,
-                style: { backgroundColor: '#F4F1DE' },
+                style: { backgroundColor: colors.offWhite },
             }}
         >
             <Tab.Screen name="Home">

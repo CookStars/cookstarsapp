@@ -1,6 +1,7 @@
 import React from 'react'
 import { Text, View, Image, Dimensions } from 'react-native'
 import badges from '../../assets/badges/index'
+import { colors } from '../../utils/constants'
 
 const Badges = ({ userInfo } = {}) => {
     const badgeIds = Object.keys(badges).sort((a, b) => a - b)
@@ -30,7 +31,7 @@ const Badges = ({ userInfo } = {}) => {
                     <Image
                         source={badges[badgeId]}
                         style={{
-                            tintColor: 'grey',
+                            tintColor: colors.placeHolder,
                             opacity: 0.2,
                             width: 0.2 * Dimensions.get('screen').width,
                             height: 0.2 * Dimensions.get('screen').width,
@@ -76,7 +77,7 @@ const Badges = ({ userInfo } = {}) => {
                     fontSize: 19,
                     paddingTop: '5%',
                     left: '40%',
-                    color: 'violet',
+                    color: colors.extra,
                 }}
             >
                 {pointsLeft()} Points To Next Badge

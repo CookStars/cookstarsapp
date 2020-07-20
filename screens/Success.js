@@ -2,24 +2,19 @@ import React, { Component } from 'react'
 import {
     StyleSheet,
     Text,
-    ScrollView,
     View,
-    Button,
     Image,
-    Alert,
-    SafeAreaView,
     TouchableOpacity,
     Dimensions,
-    ImageBackground,
     Modal,
 } from 'react-native'
 import { Feather } from '@expo/vector-icons'
-import { db } from '../firebaseconfig'
 import { connect } from 'react-redux'
 import { fetchRecipes } from '../redux/actions/recipes'
 import badges from '../assets/badges'
-import { badgePoints, weekdays } from '../utils/constants'
 import { handleFavorite, checkLastCompleted } from '../utils/helper_functions'
+import {badgePoints, colors, weekdays } from '../utils/constants'
+
 export class SuccessPage extends Component {
     constructor(props) {
         super(props)
@@ -129,11 +124,11 @@ export class SuccessPage extends Component {
                                         <Feather
                                             name="heart"
                                             size={20}
-                                            color="#EF233C"
+                                            color={colors.details}
                                         />
                                         <Text
                                             style={{
-                                                color: 'black',
+                                                color: colors.text,
                                                 left: 6,
                                             }}
                                         >
@@ -192,7 +187,7 @@ export default connect(mapState, mapDispatch)(SuccessPage)
 const styles = StyleSheet.create({
     container: {
         borderWidth: 3,
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
         alignItems: 'center',
         flexDirection: 'column',
         alignContent: 'space-between',
@@ -227,7 +222,7 @@ const styles = StyleSheet.create({
     },
     pointsContainer: {
         borderWidth: 2,
-        borderColor: 'grey',
+        borderColor: colors.placeHolder,
         flexDirection: 'row',
         alignContent: 'center',
         width: 0.95 * Dimensions.get('screen').width,
@@ -240,7 +235,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 18,
         paddingVertical: 10,
-        color: 'grey',
+        color: colors.placeHolder,
         fontWeight: 'bold',
     },
     tmrwRecipe: {
@@ -271,17 +266,17 @@ const styles = StyleSheet.create({
 
     labelContainer: {
         position: 'absolute',
-        bottom: '3%',
+        bottom: '10%',
         height: 40,
         width: 0.75 * Dimensions.get('screen').width,
-        borderRadius: 15,
-        backgroundColor: '#EF233C',
+        borderRadius: 20,
+        backgroundColor: colors.details,
         alignSelf: 'center',
     },
     tmrwRecipelabel: {
         opacity: 0.9,
         backgroundColor: 'transparent',
-        color: 'white',
+        color: colors.offWhite,
         alignSelf: 'center',
         fontSize: 18,
         marginTop: 7,
@@ -293,11 +288,11 @@ const styles = StyleSheet.create({
         height: 0.5 * Dimensions.get('screen').height,
         alignContent: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
         borderRadius: 20,
         padding: 35,
         alignItems: 'center',
-        shadowColor: '#000',
+        shadowColor: colors.placeHolder,
         shadowOffset: {
             width: 0,
             height: 2,
@@ -319,49 +314,3 @@ const styles = StyleSheet.create({
         left: 0.3 * Dimensions.get('screen').width,
     },
 })
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'space-between',
-//     backgroundColor: '#000',
-//     alignItems: 'center',
-//     width: '100%',
-//   },
-//   h1: {
-//     color: '#008F68',
-//     fontSize: 40,
-//   },
-//   h2: {
-//     color: '#FAE042',
-//     fontSize: 18,
-//     marginTop: 8,
-//   },
-// image: {
-//   width: 300,
-//   height: 260,
-//   justifyContent: 'center',
-// },
-// buttonContainer: {
-//   backgroundColor: '#008F68',
-//   borderRadius: 5,
-//   padding: 8,
-//   margin: 8,
-// },
-// topContainer: {
-//   flex: 2,
-//   justifyContent: 'center',
-//   alignItems: 'center',
-// },
-// middleContainer: {
-//   flex: 3,
-//   justifyContent: 'flex-start',
-//   alignItems: 'center',
-// },
-// bottomContainer: {
-//   justifyContent: 'flex-end',
-//   width: '90%',
-//   margin: 20,
-//   padding: 10,
-// },
-// });
