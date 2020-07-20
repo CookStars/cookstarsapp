@@ -35,8 +35,8 @@ export default function CardView(props) {
                                     : 'https://webknox.com/recipeImages/641671-556x370.jpg',
                             }}
                             style={{
-                                width: Dimensions.get('screen').width,
-                                height: 300,
+                                width: Dimensions.get('window').width,
+                                height: '125%',
                             }}
                         />
                         <View style={styles.labelContainer}>
@@ -57,21 +57,22 @@ export default function CardView(props) {
 
 const styles = StyleSheet.create({
     cardContainer: {
-        borderRadius: 5,
-        width: Dimensions.get('window').width,
-        height: 300,
+        overflow: 'hidden',
+        // borderRadius: 15,
+        // width: Dimensions.get('window').width,
+        height: 250,
     },
     imgContainer: {
-        width: 411,
+        width: Dimensions.get('window').width,
         height: 205,
     },
     labelContainer: {
         position: 'absolute',
-        top: 50,
+        top: 100,
         left: -20,
         height: 40,
-        width: 190,
-        borderRadius: 20,
+        width: 210,
+        borderRadius: 15,
         backgroundColor: colors.offWhite,
     },
     recipeOfTheDay: {

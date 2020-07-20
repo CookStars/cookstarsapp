@@ -18,13 +18,16 @@ export class HomeScreen extends Component {
 
     cards = () => {
         return weekdays.map((weekday, index) => (
-            <Cards
-                key={index}
-                day={weekday}
-                navigation={this.props.navigation}
-                recipe={this.props.recipes[index]}
-                userInfo={this.props.userInfo}
-            />
+            <View style={styles.cards}>
+                <Cards
+                    // style={{ flexDirection: 'column' }}
+                    key={index}
+                    day={weekday}
+                    navigation={this.props.navigation}
+                    recipe={this.props.recipes[index]}
+                    userInfo={this.props.userInfo}
+                />
+            </View>
         ))
     }
 
@@ -37,13 +40,15 @@ export class HomeScreen extends Component {
                         styles.scrollArea_contentContainerStyle
                     }
                 >
-                    <CardView
-                        style={styles.card}
-                        day={weekdays[today]}
-                        navigation={this.props.navigation}
-                        recipes={this.props.recipes}
-                        userInfo={this.props.userInfo}
-                    />
+                    <View style={styles.card}>
+                        <CardView
+                            style={styles.card}
+                            day={weekdays[today]}
+                            navigation={this.props.navigation}
+                            recipes={this.props.recipes}
+                            userInfo={this.props.userInfo}
+                        />
+                    </View>
                     <Text style={styles.Text}>Recipes of the Week</Text>
                     {this.cards()}
                 </ScrollView>
@@ -68,26 +73,22 @@ export default connect(mapState, mapDispatch)(HomeScreen)
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.background,
+        backgroundColor: '#F4F1DE',
         alignItems: 'center',
         justifyContent: 'center',
     },
     scrollArea_contentContainerStyle: {
-        paddingTop: '20%',
-        paddingBottom: '10%',
+        paddingTop: '7%',
         flexWrap: 'wrap',
-        alignContent: 'space-around',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
+        alignContent: 'center',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        width: Dimensions.get('window').width,
     },
     Text: {
         margin: 10,
+        textAlign: 'center',
         fontSize: 30,
         fontWeight: 'bold',
-    },
-    card: {
-        borderRadius: 5,
-        width: Dimensions.get('window').width,
-        height: 300,
     },
 })
