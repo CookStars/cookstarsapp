@@ -1,20 +1,28 @@
 import React from 'react'
 import { Text, View, Image } from 'react-native'
 import { profileImages } from '../../assets/profileIcons/index'
+import { colors } from '../../utils/constants'
 
 const LeaderboardHeader = ({ userInfo, rank } = {}) => {
     const icon = userInfo.icon || 'default'
     return (
         <View
-            colors={[, '#F2CC8F', '#F4F1DE']}
             style={{
-                backgroundColor: '#F18F01',
+                backgroundColor: colors.orange,
                 padding: 15,
                 paddingTop: 35,
                 alignItems: 'center',
             }}
         >
-            <Text style={{ fontSize: 25, color: 'white' }}>Leaderboard</Text>
+            <Text
+                style={{
+                    fontSize: 25,
+                    color: colors.offWhite,
+                    fontWeight: 'bold',
+                }}
+            >
+                Leaderboard
+            </Text>
             <View
                 style={{
                     flexDirection: 'row',
@@ -22,12 +30,13 @@ const LeaderboardHeader = ({ userInfo, rank } = {}) => {
                     alignItems: 'center',
                     marginBottom: 15,
                     marginTop: 20,
-                    backgroundColor: '#F18F01',
+                    backgroundColor: colors.orange,
                 }}
             >
                 <Text
                     style={{
-                        color: 'white',
+                        color: colors.offWhite,
+                        fontWeight: 'bold',
                         fontSize: 25,
                         flex: 1,
                         textAlign: 'right',
@@ -47,7 +56,8 @@ const LeaderboardHeader = ({ userInfo, rank } = {}) => {
                 />
                 <Text
                     style={{
-                        color: 'white',
+                        color: colors.offWhite,
+                        fontWeight: 'bold',
                         fontSize: 25,
                         flex: 1,
                         marginLeft: 40,

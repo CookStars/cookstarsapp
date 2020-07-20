@@ -9,5 +9,7 @@ const colors = {
     extra: '#4BBBC8',
     modal: 'white',
     bottomNav: '#718F94',
+    evenRow: '#edfcf9',
+    orange: '#F18F01',
 }
 export default colors
