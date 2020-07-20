@@ -1,3 +1,4 @@
+//add colors
 const colors = {
     background: 'white',
     buttonConfirm: '#F18F01',
