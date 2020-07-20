@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
         opacity: 0.9,
         backgroundColor: 'transparent',
         color: colors.text,
+        fontWeight: 'bold',
         fontSize: 19,
         marginTop: 7,
         marginLeft: 31,

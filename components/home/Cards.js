@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
         width: 0.5 * Dimensions.get('screen').width,
         height: 0.6 * Dimensions.get('screen').width,
         alignItems: 'center',
+        paddingBottom: 10,
     },
     labelContainer: {
         position: 'absolute',
@@ -93,6 +94,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         color: colors.text,
         fontSize: 19,
+        fontWeight: 'bold',
         margin: 5,
         textAlign: 'center',
     },
