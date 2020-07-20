@@ -8,18 +8,13 @@ import {
     ScrollView,
     TouchableHighlight,
     Alert,
+    TextInput,
+    Modal,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { logOut, update } from '../redux/actions/user'
-import { db } from '../firebaseconfig'
+import { db, firebase } from '../firebaseconfig'
 import '@firebase/firestore'
-import {
-    RecipesList,
-    Badges,
-    UpdateProfileImage,
-    EditModal,
-} from '../components'
-import { colors } from '../utils/constants'
 import { RecipesList, Badges, UpdateProfileImage } from '../components'
 import * as Fonts from 'expo-font'
 import { AppLoading } from 'expo'
@@ -64,6 +59,128 @@ export class UserProfile extends React.Component {
 
     }
 
+    modal = () => {
+        return (
+            <View style={styles.centeredView}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {
+                        Alert.alert('Modal has been closed.')
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={styles.modalText}>
+                                Edit Your Profile Info
+                            </Text>
+
+                            <Text>First Name:</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="First Name"
+                                placeholderTextColor="#aaaaaa"
+                                onChangeText={(text) =>
+                                    this.setState({ firstName: text })
+                                }
+                                value={this.state.firstName}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                            <Text>Last Name:</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Last Name"
+                                placeholderTextColor="#aaaaaa"
+                                onChangeText={(text) =>
+                                    this.setState({ lastName: text })
+                                }
+                                value={this.state.lastName}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                            <Text>Email:</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="E-mail"
+                                placeholderTextColor="#aaaaaa"
+                                onChangeText={(text) =>
+                                    this.setState({ email: text })
+                                }
+                                value={this.state.email}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+
+                            <TouchableHighlight
+                                style={{
+                                    ...styles.openButton,
+                                    backgroundColor: '#2196F3',
+                                }}
+                                onPress={() => {
+                                    this.setState({
+                                        modalVisible: !this.state.modalVisible,
+                                    })
+                                }}
+                            >
+                                <Text style={styles.textStyle}>Cancel</Text>
+                            </TouchableHighlight>
+
+                            <TouchableHighlight
+                                style={{
+                                    ...styles.openButton,
+                                    top: 15,
+                                    backgroundColor: '#2196F3',
+                                }}
+                                onPress={async () => {
+                                    await db
+                                        .collection('users')
+                                        .doc(this.props.userInfo.userId)
+                                        .update({
+                                            firstName: this.state.firstName,
+                                            lastName: this.state.lastName,
+                                            // foodPreference:
+                                        })
+
+                                    // Update Email
+                                    var user = firebase.auth().currentUser
+                                    user.updateEmail(this.state.email)
+                                        .then(function () {
+                                            // Update successful.
+                                        })
+                                        .catch(function (error) {
+                                            console.log(error)
+                                        })
+
+                                    this.setState({
+                                        modalVisible: !this.state.modalVisible,
+                                    })
+                                }}
+                            >
+                                <Text style={styles.textStyle}>Confirm</Text>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                </Modal>
+
+                <TouchableHighlight
+                    style={styles.openButton}
+                    onPress={() => {
+                        this.setState({
+                            modalVisible: !this.state.modalVisible,
+                            firstName: this.props.userInfo.firstName,
+                            lastName: this.props.userInfo.lastName,
+                            email: this.props.userInfo.email,
+                        })
+                    }}
+                >
+                    <Text style={styles.textStyle}>Edit Profile</Text>
+                </TouchableHighlight>
+            </View>
+        )
+    }
+
     onUpdateProfileImage = async () => {
         await db
             .collection('users')
@@ -79,10 +196,6 @@ export class UserProfile extends React.Component {
     setProfileModalVisibility = () =>
         this.setState({
             profileModalVisible: !this.state.profileModalVisible,
-        })
-    setEditModalVisibility = () =>
-        this.setState({
-            modalVisible: !this.state.modalVisible,
         })
 
     render() {
@@ -131,7 +244,7 @@ export class UserProfile extends React.Component {
                             <Text
                                 style={[
                                     styles.text,
-                                    { color: colors.placeHolder, fontSize: 14 },
+                                    { color: '#AEB5BC', fontSize: 14 },
                                 ]}
                             >
                                 Master Chef
@@ -140,35 +253,15 @@ export class UserProfile extends React.Component {
                                 Total Points:{user.points}{' '}
                             </Text>
                         </View>
-                        <View
-                            style={{
-                                flex: 1,
-                                flexDirection: 'row',
-                                alignItems: 'stretch',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <EditModal
-                                modalVisible={this.state.modalVisible}
-                                setEditModalVisibility={
-                                    this.setEditModalVisibility
-                                }
-                                userInfo={this.props.userInfo}
-                            />
-                            <View style={styles.buttonParent}>
-                                <TouchableHighlight
-                                    style={{
-                                        ...styles.openButton,
-                                        backgroundColor: colors.buttonCancel,
-                                        alignSelf: 'center',
-                                    }}
-                                    onPress={() => this.handleClick()}
-                                >
-                                    <Text style={styles.textStyle}>
-                                        Log Out
-                                    </Text>
-                                </TouchableHighlight>
-                            </View>
+
+                        {this.modal()}
+                        <View style={styles.buttonParent}>
+                            <TouchableHighlight
+                                style={styles.openButton}
+                                onPress={() => this.handleClick()}
+                            >
+                                <Text style={styles.textStyle}>Log Out</Text>
+                            </TouchableHighlight>
                         </View>
                         <Badges userInfo={this.props.userInfo} />
                         <View style={styles.statsContainer}>
@@ -304,10 +397,9 @@ export default connect(mapState, mapDispatch)(UserProfile)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.background,
+        backgroundColor: '#fff',
     },
     text: {
-        color: colors.text,
         color: '#52575D',
         fontFamily: 'Raleway-Black',
 
@@ -340,22 +432,23 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     openButton: {
-        backgroundColor: colors.buttonConfirm,
+        backgroundColor: '#F194FF',
         borderRadius: 20,
         padding: 10,
         elevation: 2,
-        width: '100%',
     },
+    //PROFILE IMAGE STYLING
+    //VIEW
     profileImage: {
         top: 50,
-        backgroundColor: colors.background,
+        backgroundColor: 'red',
         height: 100,
         width: 100,
         alignSelf: 'center',
     },
     //TOUCHABLE HIGHLIGHT
     profileBotton: {
-        backgroundColor: colors.extra,
+        backgroundColor: '#F194FF',
         height: 100,
         width: 100,
         alignItems: 'center',
@@ -427,26 +520,68 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
     },
+    recent: {
+        marginLeft: 78,
+        marginTop: 32,
+        marginBottom: 6,
+        fontSize: 10,
+    },
+    recentItem: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        marginBottom: 16,
+    },
+    recentItemIndicator: {
+        backgroundColor: '#CABFAB',
+        padding: 4,
+        height: 12,
+        width: 12,
+        borderRadius: 6,
+        marginTop: 20,
+    },
+    buttonContainer: {
+        backgroundColor: '#F18F01',
+        borderColor: 'white',
+        borderWidth: 1,
+        borderRadius: 20,
+        fontSize: 24,
+        fontWeight: 'bold',
+        overflow: 'hidden',
+        padding: 20,
+        textAlign: 'center',
+    },
     buttonParent: {
         alignSelf: 'center',
-        marginTop: 22,
-        width: '50%',
+        marginTop: 10,
     },
     points: {
-        borderColor: colors.borderColor,
-        backgroundColor: colors.extra,
+        borderColor: 'white',
+        backgroundColor: '#F6E27F',
         marginTop: 15,
         borderStartWidth: 1,
+        borderRadius: 12,
+        fontWeight: 'bold',
+        overflow: 'visible',
+        padding: 4,
+        textAlign: 'center',
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
         borderRadius: 20,
         fontWeight: 'bold',
         overflow: 'visible',
-        padding: 10,
-        textAlign: 'center',
-        width: 200,
-    },
-    textStyle: {
-        color: colors.text,
-        fontWeight: 'bold',
+        padding: 20,
         textAlign: 'center',
     },
 })

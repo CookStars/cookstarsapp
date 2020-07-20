@@ -11,7 +11,6 @@ import {
 } from 'react-native'
 import { firebase } from '../firebaseconfig'
 import 'firebase/functions'
-import { colors } from '../utils/constants'
 
 export default class Login extends Component {
     state = {
@@ -49,12 +48,14 @@ export default class Login extends Component {
     render() {
         return (
             <View style={styles.container}>
-                {/* <View style={styles.welcomeContainer}>
-                    <Image
-                        source={require('../assets/7a1a13c7-998b-49aa-91be-6abf9af4b9ae_200x200.png')}
-                        style={styles.welcomeImage}
-                    />
-                </View> */}
+                <View style={styles.welcomeContainer}>
+                    {/*
+          ADD LOGO HERE
+          <Image
+            source={require("../assets/images/logo_actory.png")}
+            style={styles.welcomeImage}
+          /> */}
+                </View>
                 <View style={styles.errorMessage}>
                     {this.state.errorMessage && (
                         <Text style={styles.error}>
@@ -129,11 +130,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.offWhite,
+        backgroundColor: '#F4F1DE',
     },
     inputContainer: {
-        borderBottomColor: colors.offWhite,
-        backgroundColor: colors.background,
+        borderBottomColor: '#F2CC8F',
+        backgroundColor: '#FFFFFF',
         borderRadius: 30,
         borderBottomWidth: 1,
         width: 250,
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     inputs: {
         height: 45,
         marginLeft: 16,
-        borderBottomColor: colors.offWhite,
+        borderBottomColor: '#F2CC8F',
         flex: 1,
     },
     inputIcon: {
@@ -164,11 +165,10 @@ const styles = StyleSheet.create({
         borderRadius: 30,
     },
     loginButton: {
-        backgroundColor: colors.orange,
+        backgroundColor: '#F18F01',
     },
     loginText: {
-        color: colors.offWhite,
-        fontWeight: 'bold',
+        color: 'white',
     },
     welcomeContainer: {
         alignItems: 'center',

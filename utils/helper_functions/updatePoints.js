@@ -1,11 +1,13 @@
 import { db } from '../../firebaseconfig'
 
+
 export default function updatePoints(userInfo, recipe) {
-    const currRecipeId = recipe.id
+ const currRecipeId = recipe.id
     let today = new Date()
     const dd = String(today.getDate()).padStart(2, '0')
     const mm = String(today.getMonth() + 1).padStart(2, '0') //January is 0!
     const yyyy = today.getFullYear()
+    
 
     today = mm + '/' + dd + '/' + yyyy
 
@@ -16,7 +18,7 @@ export default function updatePoints(userInfo, recipe) {
             .update({
                 points: userInfo.points + 10,
                 recipeHistory: {
-                    ...userInfo.recipeHistory,
+                    ...recipeHistory,
                     [currRecipeId]: { ...recipe, lastCompleted: today },
                 },
             })
@@ -34,3 +36,5 @@ export default function updatePoints(userInfo, recipe) {
         }
     }
 }
+
+
