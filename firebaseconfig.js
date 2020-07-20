@@ -10,7 +10,7 @@ import {
   FIREBASE_MESSAGE_SENDER,
   FIREBASE_APP_ID,
   FIREBASE_MEASUREMENT_ID
-} from '../secrets'
+} from './secrets'
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
