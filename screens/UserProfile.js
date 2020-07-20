@@ -187,48 +187,57 @@ export class UserProfile extends React.Component {
 
     render() {
         let user = this.props.userInfo
-        if (this.state.fontsLoaded) {
-            return (
-                <SafeAreaView style={styles.container}>
-                    {user.userId ? (
-                        <ScrollView showsHorizontalScrollIndicator={false}>
-                            <UpdateProfileImage
-                                setProfileImage={this.setProfileImage}
-                                profileModalVisible={this.state.profileModalVisible}
-                                onUpdateProfileImage={this.onUpdateProfileImage}
-                                setProfileModalVisibility={
-                                    this.setProfileModalVisibility
-                                }
-                            />
-                            <View style={styles.profileImage}>
-                                <TouchableHighlight
-                                    style={styles.profileBotton}
-                                    onPress={() => {
-                                        this.setProfileModalVisibility()
-                                    }}
-                                >
-                                    <Image
-                                        source={{ uri: this.state.profileImage }}
-                                        style={styles.image}
-                                    />
-                                </TouchableHighlight>
-                            </View>
-                            <View style={styles.infoContainer}>
-                                <Text
-                                    style={[
-                                        styles.text,
-                                        { fontWeight: 'bold', fontSize: 50 },
-                                    ]}
-                                >
-                                    {user.firstName
-                                        ? user.firstName
-                                        : ' '}
-                                </Text>
+        return (
+            <SafeAreaView style={styles.container}>
+                {user.userId ? (
+                    <ScrollView showsHorizontalScrollIndicator={false}>
+                        <UpdateProfileImage
+                            setProfileImage={this.setProfileImage}
+                            profileModalVisible={this.state.profileModalVisible}
+                            onUpdateProfileImage={this.onUpdateProfileImage}
+                            setProfileModalVisibility={
+                                this.setProfileModalVisibility
+                            }
+                        />
+                        <View style={styles.profileImage}>
+                            <TouchableHighlight
+                                style={styles.profileBotton}
+                                onPress={() => {
+                                    this.setProfileModalVisibility()
+                                }}
+                            >
+                                <Image
+                                    source={
+                                        profileImages[this.state.profileImage]
+                                    }
+                                    style={styles.image}
+                                />
+                            </TouchableHighlight>
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <Text
+                                style={[
+                                    styles.text,
+                                    { fontWeight: 'bold', fontSize: 50 },
+                                ]}
+                            >
+                                {user.firstName
+                                    ? user.firstName + ' ' + user.lastName
+                                    : ' '}
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.text,
+                                    { color: '#AEB5BC', fontSize: 14 },
+                                ]}
+                            >
+                                Master Chef
+                            </Text>
+                            <Text style={styles.points}>
+                                Total Points:{user.points}{' '}
+                            </Text>
+                        </View>
 
-                                <Text style={styles.points}>
-                                    Total Points: {user.points}{' '}
-                                </Text>
-                            </View>
                         {this.modal()}
                         <View style={styles.buttonParent}>
                             <TouchableHighlight
