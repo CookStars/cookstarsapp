@@ -8,6 +8,7 @@ import {
     Modal,
     Dimensions,
 } from 'react-native'
+import { colors } from '../../utils/constants'
 
 export default function Cards(props) {
     const { day, navigation, recipe, userInfo } = props
@@ -80,19 +81,19 @@ const styles = StyleSheet.create({
     },
     labelContainer: {
         position: 'absolute',
-        top: 150,
+        top: 145,
         height: 37,
-        width: 100,
-        borderRadius: 15,
+        width: '60%',
+        borderRadius: 20,
         alignSelf: 'center',
-        backgroundColor: 'rgba(255,255,255,1)',
+        backgroundColor: colors.offWhite,
     },
     recipeOfTheDay: {
         opacity: 0.9,
         backgroundColor: 'transparent',
-        color: 'rgba(35,40,58,1)',
+        color: colors.text,
         fontSize: 19,
-        marginTop: 7,
+        margin: 5,
         textAlign: 'center',
     },
 })
