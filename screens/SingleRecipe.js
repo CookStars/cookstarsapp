@@ -130,10 +130,11 @@ export default class SingleRecipe extends Component {
                                 </View>
                             </View>
                         </View>
-                        <View>
+                        
+           </ScrollView>
+           <View>
                             <View>{checkDay(this.props)}</View>
                         </View>
-                    </ScrollView>
                 </View>
             </SafeAreaView>
         )
