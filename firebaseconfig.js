@@ -24,11 +24,7 @@ var firebaseConfig = {
   measurementId: FIREBASE_MEASUREMENT_ID,
 };
 
-// const FireFunctions = {
-//   passwordReset: email => {
-//     // return firebase.auth().sendPasswordResetEmail(email)
-//   }
-// }
+
 
 
 // Initialize Firebase
