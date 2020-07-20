@@ -8,7 +8,6 @@ import {
     Modal,
 } from 'react-native'
 import Icons from './Icons'
-import { colors } from '../../utils/constants'
 
 const UpdateProfileImage = ({
     profileModalVisible,
@@ -72,11 +71,10 @@ const styles = StyleSheet.create({
         maxHeight: 500,
     },
     openButton: {
-        backgroundColor: colors.buttonConfirm,
+        backgroundColor: '#F194FF',
         borderRadius: 20,
         padding: 10,
         elevation: 2,
-        width: 200,
     },
     textStyle: {
         color: colors.offWhite,

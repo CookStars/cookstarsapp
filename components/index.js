@@ -8,7 +8,6 @@ import FormButton from './forgot_password/FormButton'
 import FormInput from './forgot_password/FormInput'
 import ErrorMessage from './ErrorMessage'
 import LeaderboardHeader from './leaderboard/LeaderboardHeader'
-import EditModal from './user_profile/EditModal'
 
 export {
     Cards,
@@ -21,5 +20,4 @@ export {
     FormInput,
     ErrorMessage,
     LeaderboardHeader,
-    EditModal,
 }
