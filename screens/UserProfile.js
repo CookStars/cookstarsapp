@@ -16,11 +16,15 @@ import { logOut, update } from '../redux/actions/user'
 import { db, firebase } from '../firebaseconfig'
 import '@firebase/firestore'
 import { RecipesList, Badges, UpdateProfileImage } from '../components'
+import * as Fonts from 'expo-font'
+import { AppLoading } from 'expo'
 import { profileImages } from '../assets/profileIcons/index'
+
 
 export class UserProfile extends React.Component {
     state = {
         modalVisible: false,
+        fontsLoaded: false,
         profileModalVisible: false,
         profileImage: this.props.userInfo.icon || 'default',
     }
@@ -28,8 +32,11 @@ export class UserProfile extends React.Component {
     handleClick() {
         this.props.logUserOut()
     }
-
-    componentDidMount() {
+    // async _loadFontsAsync() {
+    //     await Font.loadAsync(customFonts)
+    //     this.setState({ fontsLoaded: true })
+    // }
+    async componentDidMount() {
         // listener to update any user information across screens
         db.collection('users')
             .doc(this.props.userInfo.userId)
@@ -37,13 +44,19 @@ export class UserProfile extends React.Component {
                 this.props.updateInfo(doc.data())
             })
 
+        await Fonts.loadAsync({
+            'Raleway-Black': require('../assets/fonts/Raleway-ExtraBoldItalic.ttf')
+        })
+
         this.setState({
             firstName: this.props.userInfo.firstName,
             lastName: this.props.userInfo.lastName,
             email: this.props.userInfo.email,
             foodPreference: this.props.userInfo.foodPreference,
             profileImage: this.props.userInfo.icon,
+            fontsLoaded: true
         })
+
     }
 
     modal = () => {
@@ -187,6 +200,9 @@ export class UserProfile extends React.Component {
 
     render() {
         let user = this.props.userInfo
+ gfonts
+        if (this.state.fontsLoaded) {
+            
         return (
             <SafeAreaView style={styles.container}>
                 {user.userId ? (
@@ -255,57 +271,112 @@ export class UserProfile extends React.Component {
                                     style={{
                                         fontWeight: 'bold',
                                         fontSize: 20,
+
                                     }}
                                 >
-                                    HISTORY
-                                </Text>
+                                    <Image
+                                        source={{ uri: this.state.profileImage }}
+                                        style={styles.image}
+                                    />
+                                </TouchableHighlight>
                             </View>
-                        </View>
-
-                        <View style={{ marginTop: 32 }}>
-                            <RecipesList
-                                userInfo={this.props.userInfo}
-                                navigation={this.props.navigation}
-                                noItemsText={"You haven't cooked anything yet"}
-                                recipes={this.props.userInfo.recipeHistory}
-                            />
-
-                            <View style={styles.mediaCount}>
-                                <Text style={styles.text}></Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.statsContainer}>
-                            <View style={styles.statsBox}>
-                                <Text></Text>
+                            <View style={styles.infoContainer}>
                                 <Text
-                                    style={{
-                                        fontWeight: 'bold',
-                                        fontSize: 20,
-                                    }}
+                                    style={[
+                                        styles.text,
+                                        { fontWeight: 'bold', fontSize: 50 },
+                                    ]}
                                 >
-                                    FAVORITES
+                                    {user.firstName
+                                        ? user.firstName
+                                        : ' '}
+                                </Text>
+                                {/* <Text
+                                    style={[
+                                        styles.text,
+                                        { color: '#AEB5BC', fontSize: 14 },
+                                    ]}
+                                >
+                                    Master Chef
+                            </Text> */}
+                                <Text style={styles.points}>
+                                    Total Points:{user.points}{' '}
                                 </Text>
                             </View>
-                        </View>
 
-                        <View style={{ marginTop: 32 }}>
-                            <RecipesList
-                                userInfo={this.props.userInfo}
-                                navigation={this.props.navigation}
-                                noItemsText={'No favs selected'}
-                                recipes={this.props.userInfo.favoriteRecipes}
-                            />
-                            <View style={styles.mediaCount}>
-                                <Text style={styles.text}></Text>
+                            {this.modal()}
+                            <View style={styles.buttonParent}>
+                                <TouchableHighlight
+                                    style={styles.openButton}
+                                    onPress={() => this.handleClick()}
+                                >
+                                    <Text style={styles.textStyle}>Log Out</Text>
+                                </TouchableHighlight>
                             </View>
-                        </View>
-                    </ScrollView>
-                ) : (
-                    <View></View>
-                )}
-            </SafeAreaView>
-        )
+                            <Badges userInfo={this.props.userInfo} />
+                            <View style={styles.statsContainer}>
+                                <View style={styles.statsBox}>
+                                    <Text></Text>
+                                    <Text
+                                        style={{
+                                            fontWeight: 'bold',
+                                            fontSize: 20,
+                                            fontFamily: 'Raleway-Black'
+                                        }}
+                                    >
+                                        HISTORY
+                                </Text>
+                                </View>
+                            </View>
+
+                            <View style={{ marginTop: 32 }}>
+                                <RecipesList
+                                    userInfo={this.props.userInfo}
+                                    navigation={this.props.navigation}
+                                    noItemsText={"You haven't cooked anything yet"}
+                                    recipes={this.props.userInfo.recipeHistory}
+                                />
+
+                                <View style={styles.mediaCount}>
+                                    <Text style={styles.text}></Text>
+                                </View>
+                            </View>
+
+                            <View style={styles.statsContainer}>
+                                <View style={styles.statsBox}>
+                                    <Text></Text>
+                                    <Text
+                                        style={{
+                                            fontWeight: 'bold',
+                                            fontSize: 20,
+                                            fontFamily: 'Raleway-Black'
+                                        }}
+                                    >
+                                        FAVORITES
+                                </Text>
+                                </View>
+                            </View>
+
+                            <View style={{ marginTop: 32 }}>
+                                <RecipesList
+                                    userInfo={this.props.userInfo}
+                                    navigation={this.props.navigation}
+                                    noItemsText={'No favs selected'}
+                                    recipes={this.props.userInfo.favoriteRecipes}
+                                />
+                                <View style={styles.mediaCount}>
+                                    <Text style={styles.text}></Text>
+                                </View>
+                            </View>
+                        </ScrollView>
+                    ) : (
+                            <View></View>
+                        )}
+                </SafeAreaView>
+            )
+        } else {
+            return <AppLoading />
+        }
     }
 }
 
@@ -330,6 +401,8 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#52575D',
+        fontFamily: 'Raleway-Black',
+
     },
     titleBar: {
         flexDirection: 'row',
@@ -428,11 +501,15 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignSelf: 'center',
         width: 300,
+        fontFamily: 'Raleway-Black'
     },
     infoContainer: {
         alignSelf: 'center',
         alignItems: 'center',
         marginTop: 45,
+        fontSize: 16,
+        // borderColor: 'pink'
+
     },
     statsContainer: {
         flexDirection: 'row',
@@ -508,3 +585,4 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 })
+

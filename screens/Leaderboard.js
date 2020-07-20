@@ -18,7 +18,7 @@ export class Leaderboard extends Component {
     }
 
     alert = (title, body) => {
-        Alert.alert(title, body, [{ text: 'OK', onPress: () => {} }], {
+        Alert.alert(title, body, [{ text: 'OK', onPress: () => { } }], {
             cancelable: false,
         })
     }
@@ -48,6 +48,7 @@ export class Leaderboard extends Component {
                     <View
                         style={{
                             height: Dimensions.get('window').height,
+
                         }}
                     >
                         <LeaderboardHeader
@@ -70,7 +71,7 @@ export class Leaderboard extends Component {
                                 // icon="icon"
                                 onRowPress={(item, index) => {
                                     this.alert(
-                                        item.firstName + ' clicked',
+                                        'The User ' + item.firstName + ' has',
                                         item.points + ' points, wow!'
                                     )
                                 }}
@@ -79,20 +80,20 @@ export class Leaderboard extends Component {
                         </ScrollView>
                     </View>
                 ) : (
-                    // Activity Indicator to indicate that code is loading
-                    <View
-                        style={{
-                            width: '100%',
-                            top: '500%',
-                            alignContent: 'center',
-                        }}
-                    >
-                        <ActivityIndicator
-                            size="large"
-                            alignItems="center"
-                        ></ActivityIndicator>
-                    </View>
-                )}
+                        // Activity Indicator to indicate that code is loading
+                        <View
+                            style={{
+                                width: '100%',
+                                top: '500%',
+                                alignContent: 'center',
+                            }}
+                        >
+                            <ActivityIndicator
+                                size="large"
+                                alignItems="center"
+                            ></ActivityIndicator>
+                        </View>
+                    )}
             </View>
         )
     }
