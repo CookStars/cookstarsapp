@@ -10,7 +10,6 @@ npm-debug.*
 web-build/
 firebaseconfig.js
 package-lock.json
-.env
 
 # macOS
 .DS_Store

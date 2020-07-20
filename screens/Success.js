@@ -2,10 +2,15 @@ import React, { Component } from 'react'
 import {
     StyleSheet,
     Text,
+    ScrollView,
     View,
+    Button,
     Image,
+    Alert,
+    SafeAreaView,
     TouchableOpacity,
     Dimensions,
+    ImageBackground,
     Modal,
 } from 'react-native'
 import { Feather } from '@expo/vector-icons'
@@ -13,7 +18,16 @@ import { db } from '../firebaseconfig'
 import { connect } from 'react-redux'
 import { fetchRecipes } from '../redux/actions/recipes'
 import badges from '../assets/badges'
-import { colors, weekdays } from '../utils/constants'
+
+const weekdays = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+]
 
 export class SuccessPage extends Component {
     constructor(props) {
@@ -130,7 +144,7 @@ export class SuccessPage extends Component {
                         <View
                             style={{
                                 bottom: -20,
-                                backgroundColor: colors.background,
+                                backgroundColor: 'white',
                                 borderWidth: 1,
                             }}
                         >
@@ -147,7 +161,7 @@ export class SuccessPage extends Component {
                                     onPress={handleFavorite}
                                     style={{
                                         borderWidth: 1,
-                                        borderColor: colors.details,
+                                        borderColor: '#EF233C',
                                         backgroundColor: 'transparent',
                                         bottom: -2,
                                         right: -8,
@@ -168,11 +182,11 @@ export class SuccessPage extends Component {
                                         <Feather
                                             name="heart"
                                             size={20}
-                                            color={colors.details}
+                                            color="#EF233C"
                                         />
                                         <Text
                                             style={{
-                                                color: colors.text,
+                                                color: 'black',
                                                 left: 6,
                                             }}
                                         >
@@ -231,7 +245,7 @@ export default connect(mapState, mapDispatch)(SuccessPage)
 const styles = StyleSheet.create({
     container: {
         borderWidth: 3,
-        backgroundColor: colors.background,
+        backgroundColor: 'white',
         alignItems: 'center',
         flexDirection: 'column',
         alignContent: 'space-between',
@@ -261,7 +275,7 @@ const styles = StyleSheet.create({
     },
     pointsContainer: {
         borderWidth: 2,
-        borderColor: colors.placeHolder,
+        borderColor: 'grey',
         flexDirection: 'row',
         alignContent: 'center',
         width: 0.95 * Dimensions.get('screen').width,
@@ -274,7 +288,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 18,
         paddingVertical: 10,
-        color: colors.placeHolder,
+        color: 'grey',
         fontWeight: 'bold',
     },
     tmrwRecipe: {
@@ -287,17 +301,17 @@ const styles = StyleSheet.create({
 
     labelContainer: {
         position: 'absolute',
-        bottom: '10%',
+        bottom: '3%',
         height: 40,
         width: 0.75 * Dimensions.get('screen').width,
-        borderRadius: 20,
-        backgroundColor: colors.details,
+        borderRadius: 15,
+        backgroundColor: '#EF233C',
         alignSelf: 'center',
     },
     tmrwRecipelabel: {
         opacity: 0.9,
         backgroundColor: 'transparent',
-        color: colors.offWhite,
+        color: 'white',
         alignSelf: 'center',
         fontSize: 18,
         marginTop: 7,
@@ -309,11 +323,11 @@ const styles = StyleSheet.create({
         height: 0.5 * Dimensions.get('screen').height,
         alignContent: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.background,
+        backgroundColor: 'white',
         borderRadius: 20,
         padding: 35,
         alignItems: 'center',
-        shadowColor: colors.placeHolder,
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 2,
@@ -335,3 +349,49 @@ const styles = StyleSheet.create({
         left: 0.3 * Dimensions.get('screen').width,
     },
 })
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'space-between',
+//     backgroundColor: '#000',
+//     alignItems: 'center',
+//     width: '100%',
+//   },
+//   h1: {
+//     color: '#008F68',
+//     fontSize: 40,
+//   },
+//   h2: {
+//     color: '#FAE042',
+//     fontSize: 18,
+//     marginTop: 8,
+//   },
+// image: {
+//   width: 300,
+//   height: 260,
+//   justifyContent: 'center',
+// },
+// buttonContainer: {
+//   backgroundColor: '#008F68',
+//   borderRadius: 5,
+//   padding: 8,
+//   margin: 8,
+// },
+// topContainer: {
+//   flex: 2,
+//   justifyContent: 'center',
+//   alignItems: 'center',
+// },
+// middleContainer: {
+//   flex: 3,
+//   justifyContent: 'flex-start',
+//   alignItems: 'center',
+// },
+// bottomContainer: {
+//   justifyContent: 'flex-end',
+//   width: '90%',
+//   margin: 20,
+//   padding: 10,
+// },
+// });

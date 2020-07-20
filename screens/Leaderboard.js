@@ -11,7 +11,6 @@ import Lead from 'react-native-leaderboard'
 import { fetchAllUsers } from '../redux/actions/users'
 import { connect } from 'react-redux'
 import { LeaderboardHeader } from '../components'
-import { colors } from '../utils/constants'
 
 export class Leaderboard extends Component {
     state = {
@@ -61,6 +60,7 @@ export class Leaderboard extends Component {
                                 <RefreshControl
                                     refreshing={this.state.refresh}
                                     onRefresh={() => this.onRefresh()}
+                                    tintColor="red"
                                 />
                             }
                         >
@@ -75,7 +75,7 @@ export class Leaderboard extends Component {
                                         item.points + ' points, wow!'
                                     )
                                 }}
-                                evenRowColor={colors.evenRow}
+                                evenRowColor="#edfcf9"
                             />
                         </ScrollView>
                     </View>

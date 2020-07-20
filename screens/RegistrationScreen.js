@@ -12,7 +12,6 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { db } from '../firebaseconfig.js'
-import { colors } from '../utils/constants'
 
 export default function RegistrationScreen({ navigation }) {
     const [firstName, setFirstName] = useState('')
@@ -65,17 +64,14 @@ export default function RegistrationScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView
-                style={{
-                    flex: 1,
-                    width: '100%',
-                }}
+                style={{ flex: 1, width: '100%' }}
                 keyboardShouldPersistTaps="always"
             >
                 {/* First Name Input */}
                 <TextInput
                     style={styles.input}
                     placeholder="First Name"
-                    placeholderTextColor={colors.placeHolder}
+                    placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setFirstName(text)}
                     value={firstName}
                     underlineColorAndroid="transparent"
@@ -86,7 +82,7 @@ export default function RegistrationScreen({ navigation }) {
                 <TextInput
                     style={styles.input}
                     placeholder="Last Name"
-                    placeholderTextColor={colors.placeHolder}
+                    placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setLastName(text)}
                     value={lastName}
                     underlineColorAndroid="transparent"
@@ -121,7 +117,7 @@ export default function RegistrationScreen({ navigation }) {
                 <TextInput
                     style={styles.input}
                     placeholder="E-mail"
-                    placeholderTextColor={colors.placeHolder}
+                    placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setEmail(text)}
                     value={email}
                     underlineColorAndroid="transparent"
@@ -131,7 +127,7 @@ export default function RegistrationScreen({ navigation }) {
                 {/* Password Input */}
                 <TextInput
                     style={styles.input}
-                    placeholderTextColor={colors.placeHolder}
+                    placeholderTextColor="#aaaaaa"
                     secureTextEntry
                     placeholder="Password"
                     onChangeText={(text) => setPassword(text)}
@@ -141,7 +137,7 @@ export default function RegistrationScreen({ navigation }) {
                 />
                 <TextInput
                     style={styles.input}
-                    placeholderTextColor={colors.placeHolder}
+                    placeholderTextColor="#aaaaaa"
                     secureTextEntry
                     placeholder="Confirm Password"
                     onChangeText={(text) => setConfirmPassword(text)}
@@ -197,7 +193,7 @@ const styles = StyleSheet.create({
         height: 55,
         borderRadius: 5,
         overflow: 'hidden',
-        backgroundColor: colors.background,
+        backgroundColor: 'white',
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 30,
@@ -205,17 +201,17 @@ const styles = StyleSheet.create({
         paddingLeft: 16,
     },
     button: {
-        backgroundColor: colors.orange,
+        backgroundColor: '#F18F01',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
         height: 48,
-        borderRadius: 20,
+        borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
     },
     buttonTitle: {
-        color: colors.offWhite,
+        color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
     },
@@ -226,10 +222,10 @@ const styles = StyleSheet.create({
     },
     footerText: {
         fontSize: 16,
-        color: colors.text,
+        color: '#2e2e2d',
     },
     footerLink: {
-        color: colors.extra,
+        color: '#788eec',
         fontWeight: 'bold',
         fontSize: 16,
     },
