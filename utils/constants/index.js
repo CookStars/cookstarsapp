@@ -1,3 +1,3 @@
 import weekdays from './weekdays'
-
-export { weekdays }
+import badgePoints from './badgePoints'
+export { weekdays, badgePoints}

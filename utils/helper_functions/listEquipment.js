@@ -9,7 +9,7 @@ import {
 const equipmentLink = 'https://spoonacular.com/cdn/equipment_500x500/'
 
 const listEquipment = (equipment) => {
- console.log(equipment)
+return (
     equipment.map((tool, index) => {
         const image = equipmentLink + tool.image
         return (
@@ -26,5 +26,6 @@ const listEquipment = (equipment) => {
             </View>
         )
     })
+)
 }
 export default listEquipment
