@@ -1,6 +1,11 @@
 # CookStars
 
-CookStars is a mobile App that challenges users to cook at home by offering recipes and ranking users by earning points and badges.
+CookStars is a mobile App that challenges users to cook at home by offering recipes and ranking users by earning points and badges. You can check it out using Expo Client app and this QR-code:
+
+<p align="center">
+  <img src="Expo_Client.png" alt="icon of Expo Client app" />
+  <img src="QR-code.png" alt="QR-code to try out CookStars app on Expo" />
+</p>
 
 ## Inspiration & short preview
 
@@ -17,7 +22,6 @@ Upon login the user will be directed to the Home Page with all the recipes of th
   <img src="Login.gif" alt="GIF showcasing: Login screen, Home page, Recipe details, Step-by-Step instructions, Success page" />
 </p>
 
-
 The global Leaderboard is a collection of all users and their points. The user can see their rank and their points earned among other app users'.
 
 <p align="center">
@@ -29,7 +33,6 @@ User Profile features a personalized icon, user's details, favorite recipes & re
 <p align="center">
   <img src="UserProfile.gif" alt="GIF showcasing: User Profile page, Editing User Profile, changing User's Icon" />
 </p>
-
 
 ## How we built it
 
