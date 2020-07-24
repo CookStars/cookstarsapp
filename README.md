@@ -12,6 +12,7 @@ We built Cookstars to help people save money and avoid the frustration of planni
 There are three main parts in the app: Home Page, Leaderboard and User's Profile. The user can easily navigate the app through the bottom navigation bar.
 
 Upon login the user will be directed to the Home Page with all the recipes of the week. From here the user can view recipe details and start cooking through step-by-step instructions. Upon completing the recipe of the day the user is awarded points that can unlock badges.
+<<<<<<< HEAD
 ![GIF showcasing: Login screen, Home page, Recipe details, Step-by-Step instructions, Success page](Login.gif)
 
 The global Leaderboard is a collection of all users and their points. The user can see their rank and their points earned among other app users'.
@@ -20,6 +21,15 @@ The global Leaderboard is a collection of all users and their points. The user c
 User Profile features a personalized icon, user's details, favorite recipes & recipe history, unlocked badges and number of points towards the next one. The user is also able to modify their personal information there.
 (show user profile, show edit profile, show change icon)
 ![GIF showcasing: User Profile page, Editing User Profile, changing User's Icon](UserProfile.gif)
+=======
+(Login screen, Show home page, Recipe details, Step-by-Step 2nd page, Success page).
+
+The global Leaderboard is a collection of all users and their points. The user can see their rank and their points earned among other app users'.
+(show Leaderboard, show refreshing leaderboard)
+
+User Profile features a personalized icon, user's details, favorite recipes & recipe history, unlocked badges and number of points towards the next one. The user is also able to modify their personal information there.
+(show user profile, show edit profile, show change icon)
+>>>>>>> 746ef9daefc5633331cc3755cb7d526577cb5c5f
 
 ## How we built it
 
@@ -36,7 +46,7 @@ React Native, although very similar to React, works differently when developing 
 
 We already have an extensive list of unique features to work on in the future like creating more recipe options and implementing live cooking with friends. Stay tuned!
 
-### Authors
+## Authors
 
 -   **Erica Liu** - _Initial work_ - [ELiu925](https://github.com/eliu925)
 -   **Asim Samuel** - _Initial work_ - [lordofdorne](https://github.com/lordofdorne)
