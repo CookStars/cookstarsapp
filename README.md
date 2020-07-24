@@ -12,13 +12,24 @@ We built Cookstars to help people save money and avoid the frustration of planni
 There are three main parts in the app: Home Page, Leaderboard and User's Profile. The user can easily navigate the app through the bottom navigation bar.
 
 Upon login the user will be directed to the Home Page with all the recipes of the week. From here the user can view recipe details and start cooking through step-by-step instructions. Upon completing the recipe of the day the user is awarded points that can unlock badges.
-![GIF showcasing: Login screen, Home page, Recipe details, Step-by-Step instructions, Success page](Login.gif)
+
+<p align="center">
+  <img src="Login.gif" alt="GIF showcasing: Login screen, Home page, Recipe details, Step-by-Step instructions, Success page" />
+</p>
+
 
 The global Leaderboard is a collection of all users and their points. The user can see their rank and their points earned among other app users'.
-![GIF showcasing: Leaderboard, Refreshing Leaderboard](Leaderboard-recording.gif)
+
+<p align="center">
+  <img src="Leaderboard-recording.gif" alt="GIF showcasing: Leaderboard, Refreshing Leaderboard" />
+</p>
 
 User Profile features a personalized icon, user's details, favorite recipes & recipe history, unlocked badges and number of points towards the next one. The user is also able to modify their personal information there.
-![GIF showcasing: User Profile page, Editing User Profile, changing User's Icon](UserProfile.gif)
+
+<p align="center">
+  <img src="UserProfile.gif" alt="GIF showcasing: User Profile page, Editing User Profile, changing User's Icon" />
+</p>
+
 
 ## How we built it
 
@@ -28,8 +39,8 @@ The application uses API called Spoonacular to provide recipes on a weekly basis
 
 ## Challenges we faced
 
-While building the app always has many challenges we were able to overcome or circumnavigate all of them by efficient planning, communication and thoughtful guidance of our instructor - David Patlut and fellow - Nes Martinez. That being said some of the major hurdles we encountered involved learning new technologies in short time.
-React Native, although very similar to React, works differently when developing on Mobile. Another one is Firebase - transitioning to a NoSQL database took some rewiring but we were quick to learn these new skills and apply them.
+While building an app always has its many challenges we were able to overcome or circumnavigate all of them by efficient planning, communication and thoughtful guidance of our instructor - David Patlut and fellow - Nes Martinez. That being said some of the major hurdles we encountered involved learning new technologies in short time.
+React Native, although very similar to React, works differently when developing on Mobile. Similarly in Firebase, learning to transition to a NoSQL database took some rewiring but we were quick to learn these new skills and apply them.
 
 ## Future plans
 
